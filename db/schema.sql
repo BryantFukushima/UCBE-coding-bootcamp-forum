@@ -1,8 +1,8 @@
-CREATE DATABASE ucbe_forum_db
+CREATE DATABASE ucbe_forum_db;
 
-USE ucbe_forum_db
+USE ucbe_forum_db;
 
-CREATE TABLE users (
+CREATE TABLE users(
     id INT AUTO_INCREMENT NOT NULL,
     user VARCHAR(45) NOT NULL,
     username VARCHAR(45) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE users (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE posts (
+CREATE TABLE posts(
     id INT AUTO_INCREMENT NOT NULL,
     user_id INT NOT NULL,
     date_posted VARCHAR(45) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE posts (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE comments (
+CREATE TABLE comments(
     id INT AUTO_INCREMENT NOT NULL,
     post_id INT NOT NULL,
     comment VARCHAR(45) NOT NULL,
@@ -29,15 +29,15 @@ CREATE TABLE comments (
     category VARCHAR(45) NOT NULL,
     post TEXT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (post_id) REFERENCES users(id)
 );
 
-CREATE TABLE likes (
+CREATE TABLE likes(
     id INT AUTO_INCREMENT NOT NULL,
     user_id INT NOT NULL,
-    table VARCHAR(45) NOT NULL,
-    table_id INT NOT NULL,
-    liked BOOLEAN NULL,
-    PRIMARY KEY (id),
+    type VARCHAR(45) NOT NULL,
+    type_id INT NOT NULL,
+    liked BOOLEAN,
+    PRIMARY KEY (id)
 );
 
