@@ -37,7 +37,7 @@ CREATE TABLE likes(
     user_id INT NOT NULL,
     type VARCHAR(45) NOT NULL,
     type_id INT NOT NULL,
-    liked BOOLEAN,
+    liked BOOLEAN NULL,
     PRIMARY KEY (id)
 );
 
