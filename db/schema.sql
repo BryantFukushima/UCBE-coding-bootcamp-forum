@@ -5,7 +5,7 @@ USE ucbe_forum_db;
 CREATE TABLE users(
     id INT AUTO_INCREMENT NOT NULL,
     user VARCHAR(45) NOT NULL,
-    username VARCHAR(45) NOT NULL,
+    username VARCHAR(45) NOT NULL UNIQUE,
     password VARCHAR(45) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -13,7 +13,7 @@ CREATE TABLE users(
 CREATE TABLE posts(
     id INT AUTO_INCREMENT NOT NULL,
     user_id INT NOT NULL,
-    date_posted VARCHAR(45) NOT NULL,
+    tim TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     title VARCHAR(45) NOT NULL,
     category VARCHAR(45) NOT NULL,
     post TEXT NOT NULL,
