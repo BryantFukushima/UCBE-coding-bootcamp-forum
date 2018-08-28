@@ -3,6 +3,7 @@ var inquirer = require('inquirer');
 var express = require('express');
 var app = express();
 var bcrypt = require('bcryptjs');
+var flash = require('req-flash');
 
 //session stuff
     var cookieParser = require('cookie-parser');
@@ -24,6 +25,9 @@ var bcrypt = require('bcryptjs');
     app.use(bodyParser.json());
 
 var path = require("path");
+app.use(express.static("public"));
+
+app.use(flash());
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -83,49 +87,45 @@ app.get("/" , function(req,res) {
     res.send("hi");
 })
 
-
-app.get("/signup" , function(req,res) {
-    res.sendFile(path.join(__dirname, "public/signup.html"));
+app.get("/errors" , function(req,res) {
+    res.send(req.flash());
 });
 
 app.post("/signing-in" , function(req,res) {
-    console.log(req.body.username);
-
-    bcrypt.genSalt(10, function(err, salt) {
+    if (req.body.user == "" || req.body.username == "" || req.body.password == "") {
+        req.flash('errorM' , 'All Fields Required');
+        res.redirect('/signup.html');
+    } else {
+        bcrypt.genSalt(10, function(err, salt) {
         // res.send(salt);
         bcrypt.hash(req.body.password, salt, function(err, p_hash) { 
 
             connection.query('INSERT INTO users (user, username, password) VALUES (?, ?, ?)', [req.body.user, req.body.username, p_hash],function (error, results, fields) {
 
-              var what_user_sees = "";
-              if (error){
-                what_user_sees = 'you need to use a unique email';
-              }else{
-                what_user_sees = 'you have signed up - please go login at the login route';
-              }
-
-              res.send(what_user_sees);
+                  if (error){
+                    req.flash('errorM' , 'Username already taken');
+                    res.redirect('/signup.html');
+                  }else{
+                    req.flash('errorM' , 'Sign Up Successful, please login to continue');
+                    res.redirect('/login.html');
+                  }
               
+                });
             });
         });
-    });
+    }
       
-});
-
-app.get("/login" , function(req,res) {
-    res.sendFile(path.join(__dirname, "public/login.html"));
 });
 
 app.post("/logging-in" , function(req,res) {
     connection.query('SELECT * FROM users WHERE username = ?', [req.body.username],function (error, results, fields) {
 
       if (error) throw error;
-
-      // res.json(results);
       
       if (results.length == 0){
-        res.send('Username Invalid');
-      }else {
+        req.flash('errorM' , 'Invalid Username');
+        res.redirect("/login.html");
+      } else {
         bcrypt.compare(req.body.password, results[0].password, function(err, result) {
             
             if (result == true){
@@ -133,10 +133,11 @@ app.post("/logging-in" , function(req,res) {
               req.session.username = results[0].username;
               req.session.user= results[0].user;
 
-              res.send('you are logged in as ' + results[0].user);
+              res.redirect("/another-page");
 
-            }else{
-              res.redirect('/login');
+            } else {
+                req.flash('errorM' , 'Incorrect Password');
+                res.redirect("/login.html");
             }
         });
       }
@@ -154,7 +155,7 @@ app.get('/another-page', function(req, res){
 
 app.get('/logout', function(req, res){
     req.session.destroy(function(err){
-        res.send('you are logged out');
+        res.redirect('/login.html');
     })
 });
 
