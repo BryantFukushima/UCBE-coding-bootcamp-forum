@@ -1,6 +1,6 @@
 # UCBE Coding Bootcamp Forum
 
-## Development
+## Getting Started
 
 ```shell
 npm install
