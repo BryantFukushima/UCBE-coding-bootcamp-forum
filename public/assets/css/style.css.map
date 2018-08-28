@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["sass/base.sass","sass/_signup.sass","sass/_login.sass","sass/_user-profile.sass"],"names":[],"mappings":"AAEA;EACC;;;ACDD;EACC;;;ACDD;EACC;;;ACDD;EACC","file":"style.css"}
+{"version":3,"sourceRoot":"","sources":["sass/base.sass","sass/_signup.sass","sass/_login.sass","sass/_user-profile.sass"],"names":[],"mappings":"AAMA;EACC,YANU;;;ACCX;EACC;;;ACDD;EACC;;;ACDD;EACC","file":"style.css"}

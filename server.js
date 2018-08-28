@@ -8,12 +8,9 @@ var path = require("path");
 
 //Session Init
 var cookieParser = require('cookie-parser');
-
 var session = require('express-session');
-
 //allow sessions
 app.use(session({ secret: 'app', cookie: { maxAge: 1 * 1000 * 60 * 60 * 24 * 365 } }));
-
 app.use(cookieParser());
 
 //Allow POST route
@@ -97,15 +94,14 @@ app.get("/errors", function(req, res) {
 
 //Signup
 app.post("/signing-in", function(req, res) {
-    //missig field
+
+    //missing field
     if (req.body.user == "" || req.body.username == "" || req.body.password == "") {
         req.flash('errorM', 'All Fields Required');
         res.redirect('/signup.html');
     } else {
         bcrypt.genSalt(10, function(err, salt) {
-            // res.send(salt);
             bcrypt.hash(req.body.password, salt, function(err, p_hash) {
-
                 connection.query('INSERT INTO users (user, username, password) VALUES (?, ?, ?)', [req.body.user, req.body.username, p_hash], function(error, results, fields) {
 
                     //username availability check
@@ -116,12 +112,10 @@ app.post("/signing-in", function(req, res) {
                         req.flash('errorM', 'Sign Up Successful, please login to continue');
                         res.redirect('/login.html');
                     }
-
                 });
             });
         });
     }
-
 });
 
 //Log In
@@ -139,13 +133,11 @@ app.post("/logging-in", function(req, res) {
 
                 //successful login
                 if (result == true) {
-
                     req.session.username = results[0].username;
                     req.session.user = results[0].user;
-
                     res.redirect("/another-page");
-
                 } else {
+
                     //incorrect password
                     req.flash('errorM', 'Incorrect Password');
                     res.redirect("/login.html");
@@ -161,7 +153,6 @@ app.get('/another-page', function(req, res) {
         user: req.session.user,
         username: req.session.username
     }
-
     res.json(user_info);
 });
 
