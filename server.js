@@ -4,30 +4,32 @@ var express = require('express');
 var app = express();
 var bcrypt = require('bcryptjs');
 var flash = require('req-flash');
-
-//session stuff
-    var cookieParser = require('cookie-parser');
-
-    var session = require('express-session');
-
-    //allow sessions
-    app.use(session({ secret: 'app', cookie: { maxAge: 1*1000*60*60*24*365 }}));
-
-    app.use(cookieParser());
-
-//you need this to be able to process information sent to a POST route
-    var bodyParser = require('body-parser');
-
-    // parse application/x-www-form-urlencoded
-    app.use(bodyParser.urlencoded({ extended: true }));
-
-    // parse application/json
-    app.use(bodyParser.json());
-
 var path = require("path");
-app.use(express.static("public"));
 
+//Session Init
+var cookieParser = require('cookie-parser');
+
+var session = require('express-session');
+
+//allow sessions
+app.use(session({ secret: 'app', cookie: { maxAge: 1 * 1000 * 60 * 60 * 24 * 365 } }));
+
+app.use(cookieParser());
+
+//Allow POST route
+var bodyParser = require('body-parser');
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// parse application/json
+app.use(bodyParser.json());
+
+//Allow redirect messages
 app.use(flash());
+
+//Public route
+app.use(express.static("public"));
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -83,82 +85,93 @@ var connection = mysql.createConnection({
 //     });
 // };
 
-app.get("/" , function(req,res) {
+//Root
+app.get("/", function(req, res) {
     res.send("hi");
 })
 
-app.get("/errors" , function(req,res) {
+//Error Messages
+app.get("/errors", function(req, res) {
     res.send(req.flash());
 });
 
-app.post("/signing-in" , function(req,res) {
+//Signup
+app.post("/signing-in", function(req, res) {
+    //missig field
     if (req.body.user == "" || req.body.username == "" || req.body.password == "") {
-        req.flash('errorM' , 'All Fields Required');
+        req.flash('errorM', 'All Fields Required');
         res.redirect('/signup.html');
     } else {
         bcrypt.genSalt(10, function(err, salt) {
-        // res.send(salt);
-        bcrypt.hash(req.body.password, salt, function(err, p_hash) { 
+            // res.send(salt);
+            bcrypt.hash(req.body.password, salt, function(err, p_hash) {
 
-            connection.query('INSERT INTO users (user, username, password) VALUES (?, ?, ?)', [req.body.user, req.body.username, p_hash],function (error, results, fields) {
+                connection.query('INSERT INTO users (user, username, password) VALUES (?, ?, ?)', [req.body.user, req.body.username, p_hash], function(error, results, fields) {
 
-                  if (error){
-                    req.flash('errorM' , 'Username already taken');
-                    res.redirect('/signup.html');
-                  }else{
-                    req.flash('errorM' , 'Sign Up Successful, please login to continue');
-                    res.redirect('/login.html');
-                  }
-              
+                    //username availability check
+                    if (error) {
+                        req.flash('errorM', 'Username already taken');
+                        res.redirect('/signup.html');
+                    } else {
+                        req.flash('errorM', 'Sign Up Successful, please login to continue');
+                        res.redirect('/login.html');
+                    }
+
                 });
             });
         });
     }
-      
+
 });
 
-app.post("/logging-in" , function(req,res) {
-    connection.query('SELECT * FROM users WHERE username = ?', [req.body.username],function (error, results, fields) {
+//Log In
+app.post("/logging-in", function(req, res) {
+    connection.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(error, results, fields) {
 
-      if (error) throw error;
-      
-      if (results.length == 0){
-        req.flash('errorM' , 'Invalid Username');
-        res.redirect("/login.html");
-      } else {
-        bcrypt.compare(req.body.password, results[0].password, function(err, result) {
-            
-            if (result == true){
+        if (error) throw error;
 
-              req.session.username = results[0].username;
-              req.session.user= results[0].user;
+        //username check
+        if (results.length == 0) {
+            req.flash('errorM', 'Invalid Username/Password');
+            res.redirect("/login.html");
+        } else {
+            bcrypt.compare(req.body.password, results[0].password, function(err, result) {
 
-              res.redirect("/another-page");
+                //successful login
+                if (result == true) {
 
-            } else {
-                req.flash('errorM' , 'Incorrect Password');
-                res.redirect("/login.html");
-            }
-        });
-      }
+                    req.session.username = results[0].username;
+                    req.session.user = results[0].user;
+
+                    res.redirect("/another-page");
+
+                } else {
+                    //incorrect password
+                    req.flash('errorM', 'Incorrect Password');
+                    res.redirect("/login.html");
+                }
+            });
+        }
     });
 });
 
-app.get('/another-page', function(req, res){
+//User Profile Page
+app.get('/another-page', function(req, res) {
     var user_info = {
-        user : req.session.user,
+        user: req.session.user,
         username: req.session.username
     }
 
     res.json(user_info);
 });
 
-app.get('/logout', function(req, res){
-    req.session.destroy(function(err){
+//Session Logout
+app.get('/logout', function(req, res) {
+    req.session.destroy(function(err) {
         res.redirect('/login.html');
     })
 });
 
-app.listen(3000, function(){
+app.listen(3000, function() {
     console.log("listening on 3000");
 });
