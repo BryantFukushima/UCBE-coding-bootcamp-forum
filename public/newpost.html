@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style type="text/css">
+        form {
+        width: 50%;
+        margin: auto;
+    }
+
+    input, textarea {
+        width: 100%;
+        display: block;
+        margin: auto;
+    }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <form method="POST" action="/createpost">
+        <select name="category">
+            <option value="html&css">HTML & CSS</option>
+            <option value="javascript">Javascript</option>
+            <option value="node">Node.js</option>
+            <option value="mysql">Mysql</option>
+        </select>
+        <input type="text" name="title" placeholder="Title">
+        <textarea rows="5" name="post" placeholder="Type Something..."></textarea>
+        <button type="submit">Submit</button>
+    </form>
+<!--     <div class="indPosts">
+        
+    </div> -->
+</body>
+
+</html>
