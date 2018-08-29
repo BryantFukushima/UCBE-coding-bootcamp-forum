@@ -1,7 +1,7 @@
 var mysql = require('mysql');
-var inquirer = require('inquirer');
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 var flash = require('req-flash');
 var path = require("path");
@@ -12,9 +12,6 @@ var session = require('express-session');
 //allow sessions
 app.use(session({ secret: 'app', cookie: { maxAge: 1 * 1000 * 60 * 60 * 24 * 365 } }));
 app.use(cookieParser());
-
-//Allow POST route
-var bodyParser = require('body-parser');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,6 +28,7 @@ app.use(express.static("views"));
 //View engine to ejs
 app.set('view engine', 'ejs');
 
+// mysql connection
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -39,51 +37,47 @@ var connection = mysql.createConnection({
     database: "ucbe_forum_db"
 });
 
-// connection.connect(function(err) {
-//     if (err) {
-//         throw err;
-//     } else {
-//         console.log("connected as id " + connection.threadId + "\n");
-//         newPost();
-//     }
-// });
+//Post Route
+app.get('/posts', function(req, res) {
+    connection.query('SELECT title, category, post FROM posts', function(err, results, fields) {
+        res.json(results);
+    });
+});
 
-// function newPost() {
-//     inquirer.prompt([{
-//         type: 'input',
-//         message: 'Title: ',
-//         name: 'title'
-//     },
-//     {
-//         type: 'list',
-//         message: 'Category: ',
-//         choices: ['Javascript', 'HTML&CSS', 'MYSQL', 'Node.js', 'Bootstrap'],
-//         name: 'category'
-//     },
-//     {
-//         type: 'input',
-//         message: 'Post: ',
-//         name: 'post'
-//     }
-//     ]).then(function(inquirerResponse) {
-//         console.log(inquirerResponse.title + inquirerResponse.category + inquirerResponse.post);
-//         var newDate = new Date().toDateString();
-//         var title = inquirerResponse.title;
-//         var category = inquirerResponse.category;
-//         var post = inquirerResponse.post;
-//         var data = {
-//             user_id: 2,
-//             date_posted: newDate,
-//             title: title,
-//             category: category,
-//             post: post
-//         }
-//         connection.query('INSERT INTO posts SET ?', data);
-//         connection.query('SELECT title, category, post FROM posts', function(err, res) {
-//             console.log(res[0]);
-//         });
-//     });
-// };
+//Comment Route
+app.get('/comments', function(req, res) {
+    connection.query('SELECT comment FROM comments', function(err, results, fields) {
+        res.json(results);
+    });
+});
+
+//Create Post
+app.post('/createpost', function(req, res) {
+    var title = req.body.title;
+    var category = req.body.category;
+    var post = req.body.post;
+    var postData = {
+        user_id: 2,
+        title: title,
+        category: category,
+        post: post
+    };
+    connection.query('INSERT INTO posts SET ?', postData, function(err, response) {
+        res.redirect('/post.html');
+    });
+});
+
+//Create Comment
+app.post('/createcomment', function(req, res) {
+    var comment = req.body.comment;
+    var commentData = {
+        post_id: 3,
+        comment: comment
+    };
+    connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
+        res.redirect('/post.html');
+    });
+});
 
 //Root
 app.get("/", function(req, res) {
