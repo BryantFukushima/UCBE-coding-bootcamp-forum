@@ -24,12 +24,10 @@ CREATE TABLE posts(
 CREATE TABLE comments(
     id INT AUTO_INCREMENT NOT NULL,
     post_id INT NOT NULL,
-    comment VARCHAR(45) NOT NULL,
-    title VARCHAR(45) NOT NULL,
-    category VARCHAR(45) NOT NULL,
-    post TEXT NOT NULL,
+    tim TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    comment TEXT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (post_id) REFERENCES users(id)
+    FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
 CREATE TABLE likes(
