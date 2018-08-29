@@ -84,9 +84,8 @@ app.get("/", function(req, res) {
     res.send("hi");
 })
 
-//Error Messages
-app.get("/errors", function(req, res) {
-    res.send(req.flash());
+app.get("/signup" , function(req,res) {
+    res.render('pages/signup' , {err: req.flash()});
 });
 
 //Signup
@@ -95,7 +94,7 @@ app.post("/signing-in", function(req, res) {
     //missing field
     if (req.body.user == "" || req.body.username == "" || req.body.password == "") {
         req.flash('errorM', 'All Fields Required');
-        res.redirect('/signup.html');
+        res.redirect('/signup');
     } else {
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(req.body.password, salt, function(err, p_hash) {
@@ -104,10 +103,9 @@ app.post("/signing-in", function(req, res) {
                     //username availability check
                     if (error) {
                         req.flash('errorM', 'Username already taken');
-                        res.redirect('/signup.html');
+                        res.redirect('/signup');
                     } else {
-                        req.flash('errorM', 'Sign Up Successful, please login to continue');
-                        res.redirect('/login');
+                        login(req,res);
                     }
                 });
             });
@@ -117,10 +115,14 @@ app.post("/signing-in", function(req, res) {
 
 //Log In
 app.get("/login" , function(req,res) {
-    res.render('pages/login');
+    res.render('pages/login' , {err: req.flash()});
 });
 
 app.post("/logging-in", function(req, res) {
+    login(req,res);
+});
+
+function login(req , res) {
     connection.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(error, results, fields) {
 
         if (error) throw error;
@@ -146,7 +148,7 @@ app.post("/logging-in", function(req, res) {
             });
         }
     });
-});
+}
 
 //User Profile Page
 app.get('/another-page', function(req, res) {
