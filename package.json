@@ -19,9 +19,17 @@
   },
   "homepage": "https://github.com/BryantFukushima/UCBE-coding-bootcamp-forum#readme",
   "dependencies": {
+<<<<<<< HEAD
     "body-parser": "^1.18.3",
+=======
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+>>>>>>> ed1923fe5aa7b705655b53f998a676866a3ade80
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
     "inquirer": "^6.2.0",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "req-flash": "0.0.3"
   }
 }
