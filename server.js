@@ -26,7 +26,10 @@ app.use(bodyParser.json());
 app.use(flash());
 
 //Public route
-app.use(express.static("public"));
+app.use(express.static("views"));
+
+//View engine to ejs
+app.set('view engine', 'ejs');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -110,7 +113,7 @@ app.post("/signing-in", function(req, res) {
                         res.redirect('/signup.html');
                     } else {
                         req.flash('errorM', 'Sign Up Successful, please login to continue');
-                        res.redirect('/login.html');
+                        res.redirect('/login');
                     }
                 });
             });
@@ -119,6 +122,10 @@ app.post("/signing-in", function(req, res) {
 });
 
 //Log In
+app.get("/login" , function(req,res) {
+    res.render('pages/login');
+});
+
 app.post("/logging-in", function(req, res) {
     connection.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(error, results, fields) {
 
@@ -127,7 +134,7 @@ app.post("/logging-in", function(req, res) {
         //username check
         if (results.length == 0) {
             req.flash('errorM', 'Invalid Username/Password');
-            res.redirect("/login.html");
+            res.redirect("/login");
         } else {
             bcrypt.compare(req.body.password, results[0].password, function(err, result) {
 
@@ -140,7 +147,7 @@ app.post("/logging-in", function(req, res) {
 
                     //incorrect password
                     req.flash('errorM', 'Incorrect Password');
-                    res.redirect("/login.html");
+                    res.redirect("/login");
                 }
             });
         }
@@ -159,7 +166,7 @@ app.get('/another-page', function(req, res) {
 //Session Logout
 app.get('/logout', function(req, res) {
     req.session.destroy(function(err) {
-        res.redirect('/login.html');
+        res.redirect('/login');
     })
 });
 
