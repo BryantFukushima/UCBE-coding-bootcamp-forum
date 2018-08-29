@@ -138,7 +138,7 @@ function login(req , res) {
                 if (result == true) {
                     req.session.username = results[0].username;
                     req.session.user = results[0].user;
-                    res.redirect("/another-page");
+                    res.redirect("/userpage");
                 } else {
 
                     //incorrect password
@@ -151,12 +151,12 @@ function login(req , res) {
 }
 
 //User Profile Page
-app.get('/another-page', function(req, res) {
+app.get('/userpage', function(req, res) {
     var user_info = {
         user: req.session.user,
         username: req.session.username
     }
-    res.json(user_info);
+    res.render("pages/user" , user_info)
 });
 
 //Session Logout
