@@ -37,47 +37,69 @@ var connection = mysql.createConnection({
     database: "ucbe_forum_db"
 });
 
-//Post Route
-app.get('/posts', function(req, res) {
-    connection.query('SELECT title, category, post FROM posts', function(err, results, fields) {
-        res.json(results);
+//Landing Page route 
+app.get('/', function(req, res) {
+
+});
+
+//Full Post Page route
+app.get('/post/:id', function(req, res) {
+    var postId = req.params.id;
+    connection.query('SELECT * FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = ?', postId, function(err, results, fields) {
+        // res.json(results);
+        var postInfo = {
+            post_id: req.params.id,
+            title: results[0].title,
+            category: results[0].category,
+            post: results[0].post,
+            comments: results
+        }
+        res.render('pages/post',
+            postInfo);
+    });
+
+
+});
+
+//Create Comment Form
+app.post('/createcomment', function(req, res) {
+    var comPId = req.body.post_id;
+    var comment = req.body.comment;
+    var commentData = {
+        post_id: comPId,
+        comment: comment
+    };
+    connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
+        res.redirect('/post/' + comPId);
     });
 });
 
-//Comment Route
-app.get('/comments', function(req, res) {
-    connection.query('SELECT comment FROM comments', function(err, results, fields) {
-        res.json(results);
-    });
+// app.get('/')
+
+//Create Post Page route
+app.get('/newpost', function(req, res) {
+    res.render('pages/newpost');
 });
 
-//Create Post
+//Create Post Form
 app.post('/createpost', function(req, res) {
     var title = req.body.title;
     var category = req.body.category;
     var post = req.body.post;
     var postData = {
-        user_id: 2,
+        user_id: 1,
         title: title,
         category: category,
         post: post
     };
     connection.query('INSERT INTO posts SET ?', postData, function(err, response) {
-        res.redirect('/post.html');
+        connection.query('SELECT * FROM posts WHERE id = (SELECT MAX(id) FROM posts)', function(err, response) {
+            res.redirect('/post/' + response[0].id);
+        });
     });
 });
 
-//Create Comment
-app.post('/createcomment', function(req, res) {
-    var comment = req.body.comment;
-    var commentData = {
-        post_id: 3,
-        comment: comment
-    };
-    connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
-        res.redirect('/post.html');
-    });
-});
+
 
 //Root
 app.get("/", function(req, res) {
@@ -116,7 +138,7 @@ app.post("/signing-in", function(req, res) {
 });
 
 //Log In
-app.get("/login" , function(req,res) {
+app.get("/login", function(req, res) {
     res.render('pages/login');
 });
 
