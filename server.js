@@ -43,14 +43,16 @@ app.get('/post/:id', function(req, res) {
     connection.query('SELECT * FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = ?', postId, function(err, results, fields) {
         // res.json(results);
         var postInfo = {
-            post_id: req.params.id,
+            user: req.session.ID,
+            post_id: postId,
             title: results[0].title,
             category: results[0].category,
             post: results[0].post,
-            comments: results
+            comments: results,
+            loginErr: req.flash()
         }
-        res.render('pages/post',
-            postInfo);
+        res.render('pages/post', postInfo);
+        // res.json(req.session.username);
     });
 });
 
@@ -58,18 +60,37 @@ app.get('/post/:id', function(req, res) {
 app.post('/createcomment', function(req, res) {
     var comPId = req.body.post_id;
     var comment = req.body.comment;
-    var commentData = {
-        post_id: comPId,
-        comment: comment
-    };
-    connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
+    if (req.session.username) {
+        var commentData = {
+            post_id: comPId,
+            comment: comment
+        };
+        connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
+            res.redirect('/post/' + comPId);
+        });
+    } else {
+        req.flash("errLogin", "Please log in.");
         res.redirect('/post/' + comPId);
-    });
+    }
 });
 
 //Create Post Page route
 app.get('/newpost', function(req, res) {
-    res.render('pages/newpost');
+    var userLogin;
+    if (req.session.username) {
+        userLogin = {
+            loginErrPost: "",
+            user_id: req.session.ID
+        }
+        res.render('pages/newpost', userLogin);
+    } else {
+        userLogin = {
+            loginErrPost: "Login to create post.",
+            user_id: req.session.ID
+        }
+        res.render('pages/newpost', userLogin);
+    }
+
 });
 
 //Create Post Form
@@ -84,9 +105,17 @@ app.post('/createpost', function(req, res) {
         post: post
     };
     connection.query('INSERT INTO posts SET ?', postData, function(err, response) {
-        connection.query('SELECT * FROM posts WHERE id = (SELECT MAX(id) FROM posts)', function(err, response) {
-            res.redirect('/post/' + response[0].id);
-        });
+
+        if (err) {
+            req.flash("errLogin", "Please log in.");
+            res.redirect('/newpost');
+        } else {
+            connection.query('SELECT * FROM posts WHERE id = (SELECT MAX(id) FROM posts)', function(err, response) {
+
+                res.redirect('/post/' + response[0].id);
+
+            });
+        }
     });
 });
 
@@ -95,11 +124,16 @@ app.post('/likes', function(req, res) {
     var likeData = {
         user_id: req.session.ID,
         type: req.body.type,
-        type_id: req.body.post_id,
+        type_id: req.body.type_id,
         liked: req.body.like
     };
     connection.query('INSERT INTO likes SET ?', likeData, function(err, response) {
-        res.json(response);
+        if (err) {
+            req.flash("errLogin", "Please log in.");
+            res.redirect("/post/" + req.body.post_id);
+        } else {
+            res.redirect("/post/" + req.body.post_id);
+        }
     });
 });
 
@@ -108,8 +142,8 @@ app.get("/", function(req, res) {
     res.send("hi");
 })
 
-app.get("/signup" , function(req,res) {
-    res.render('pages/signup' , {err: req.flash()});
+app.get("/signup", function(req, res) {
+    res.render('pages/signup', { err: req.flash() });
 });
 
 //Signup
@@ -129,7 +163,7 @@ app.post("/signing-in", function(req, res) {
                         req.flash('errorM', 'Username already taken');
                         res.redirect('/signup');
                     } else {
-                        login(req,res);
+                        login(req, res);
                     }
                 });
             });
@@ -138,15 +172,15 @@ app.post("/signing-in", function(req, res) {
 });
 
 //Log In
-app.get("/login" , function(req,res) {
-    res.render('pages/login' , {err: req.flash()});
+app.get("/login", function(req, res) {
+    res.render('pages/login', { err: req.flash() });
 });
 
 app.post("/logging-in", function(req, res) {
-    login(req,res);
+    login(req, res);
 });
 
-function login(req , res) {
+function login(req, res) {
     connection.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(error, results, fields) {
 
         if (error) throw error;
@@ -163,7 +197,7 @@ function login(req , res) {
                     req.session.username = results[0].username;
                     req.session.user = results[0].user;
                     req.session.avatar = results[0].avatar;
-                    req.session.ID = results[0].id; 
+                    req.session.ID = results[0].id;
                     res.redirect("/userpage");
                 } else {
 
@@ -181,9 +215,10 @@ app.get('/userpage', function(req, res) {
     var user_info = {
         user: req.session.user,
         username: req.session.username,
-        avatar: req.session.avatar
+        avatar: req.session.avatar,
+        id: req.session.ID
     }
-    res.render("pages/user" , user_info)
+    res.render("pages/user", user_info)
 });
 
 //Session Logout

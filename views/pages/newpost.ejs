@@ -4,12 +4,13 @@
 <head>
     <title></title>
     <style type="text/css">
-        form {
+    form {
         width: 50%;
         margin: auto;
     }
 
-    input, textarea {
+    input,
+    textarea {
         width: 100%;
         display: block;
         margin: auto;
@@ -19,8 +20,12 @@
 
 <body>
     <header>
-        
     </header>
+    <div class="login-err-msg">
+        <% if(loginErrPost) { %>
+            <%= loginErrPost %>
+        <% } %>
+    </div>
     <form method="POST" action="/createpost">
         <select name="category">
             <option value="html&css">HTML & CSS</option>
@@ -30,7 +35,11 @@
         </select>
         <input type="text" name="title" placeholder="Title">
         <textarea rows="5" name="post" placeholder="Type Something..."></textarea>
-        <button type="submit">Submit</button>
+        <% if(user_id) { %>
+            <button type="submit">Submit</button>
+        <% } else { %>
+            <button type="submit" disabled>Submit</button>
+        <% } %>
     </form>
 </body>
 

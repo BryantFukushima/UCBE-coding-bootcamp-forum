@@ -1,53 +1,84 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title></title>
 </head>
+
 <body>
-
-<p><%= title %></p>
-<p><%= category %></p>
-<p><%= post %></p>
-<form method="POST" action="/likes">
-    <input type="hidden" name="post_id" value="<%= post_id %>">
-    <input type="hidden" name="type" value="post">
-    <input type="hidden" name="like" value="1">
-    <button type="submit">Like</button>
-</form>
-<form method="POST" action="/likes">
-    <input type="hidden" name="post_id" value="<%= post_id %>">
-    <input type="hidden" name="type" value="post">
-    <input type="hidden" name="like" value="0">
-    <button type="submit">Dislike</button>
-</form>
-
-
-<form method="POST" action="/createcomment">
-    <input type="hidden" name="post_id" value="<%= post_id %>">
-    <textarea rows="5" name="comment" placeholder="Type Something..."></textarea>
-    <button type="submit">Submit</button>
-</form>
-
-<% for (var i in comments) { %>
-<p><%= comments[i].comment %></p>
-<form method="POST" action="/likes">
-    <input type="hidden" name="post_id" value="<%= post_id %>">
-    <input type="hidden" name="type" value="comment">
-    <input type="hidden" name="like" value="1">
-    <button type="submit">Like</button>
-</form>
-<form method="POST" action="/likes">
-    <input type="hidden" name="post_id" value="<%= post_id %>">
-    <input type="hidden" name="type" value="comment">
-    <input type="hidden" name="like" value="0">
-    <button type="submit">Dislike</button>
-</form>
-<% } %>
-
-
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+    <div class="login-err-msg">
+        <%= loginErr.errLogin %>
+    </div>
+    <p>
+        <%= title %>
+    </p>
+    <p>
+        <%= category %>
+    </p>
+    <p>
+        <%= post %>
+    </p>
+    <form method="POST" action="/likes">
+        <input type="hidden" name="post_id" value="<%= post_id %>">
+        <input type="hidden" name="type_id" value="<%= post_id %>">
+        <input type="hidden" name="type" value="post">
+        <input type="hidden" name="like" value="1">
+        <% if(user) { %>
+            <button type="submit">Like</button>
+        <% } else { %>
+            <button type="submit" disabled>Like</button>
+        <% } %>
+    </form>
+    <form method="POST" action="/likes">
+        <input type="hidden" name="post_id" value="<%= post_id %>">
+        <input type="hidden" name="type_id" value="<%= post_id %>">
+        <input type="hidden" name="type" value="post">
+        <input type="hidden" name="like" value="0">
+        <% if(user) { %>
+            <button type="submit">Dislike</button>
+        <% } else { %>
+	        <button type="submit" disabled>Dislike</button>
+        <% } %>
+    </form>
+    <form method="POST" action="/createcomment">
+        <input type="hidden" name="post_id" value="<%= post_id %>">
+        <textarea rows="5" name="comment" placeholder="Type Something..."></textarea>
+        <% if(user) { %>
+            <button type="submit">Submit</button>
+        <% } else { %>
+            <button type="submit" disabled>Submit</button>
+        <% } %>
+    </form>
+    <% for (var i in comments) { %>
+        <% if (comments[0].comment != null) { %>
+            <p>
+                <%= comments[i].comment %>
+            </p>
+            <form method="POST" action="/likes">
+                <input type="hidden" name="post_id" value="<%= post_id %>">
+                <input type="hidden" name="type_id" value="<%= comments[i].id %>">
+                <input type="hidden" name="type" value="comment">
+                <input type="hidden" name="like" value="1">
+                <% if(user) { %>
+                    <button type="submit">Like</button>
+                <% } else { %>
+                    <button type="submit" disabled>Like</button>
+                <% } %>
+            </form>
+            <form method="POST" action="/likes">
+                <input type="hidden" name="post_id" value="<%= post_id %>">
+                <input type="hidden" name="type_id" value="<%= comments[i].id %>">
+                <input type="hidden" name="type" value="comment">
+                <input type="hidden" name="like" value="0">
+                <% if(user) { %>
+                    <button type="submit">Dislike</button>
+                <% } else { %>
+                    <button type="submit" disabled>Dislike</button>
+                <% } %>
+            </form>
+    <% } %>
+        <% } %>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </body>
+
 </html>
