@@ -25,7 +25,13 @@
 <form method="POST" action="/createcomment">
     <input type="hidden" name="post_id" value="<%= post_id %>">
     <textarea rows="5" name="comment" placeholder="Type Something..."></textarea>
-    <button type="submit">Submit</button>
+    <% if (user) { %>
+        <p>Signed in as: <%= user %></p>
+        <button type="submit">Submit</button>
+    <% } else { %> 
+        <a href="/login">Sign in</a>
+        <button type="submit" disabled="true">Submit</button>
+    <% } %>
 </form>
 
 <% for (var i in comments) { %>

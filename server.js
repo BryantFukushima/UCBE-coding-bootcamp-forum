@@ -37,18 +37,25 @@ var connection = mysql.createConnection({
     database: "ucbe_forum_db"
 });
 
+//Root page
+app.get("/", function(req, res) {
+    connection.query('SELECT * FROM posts LEFT JOIN likes ON posts.id = likes.type_id ORDER BY liked')
+})
+
 //Full Post Page route
 app.get('/post/:id', function(req, res) {
     var postId = req.params.id;
+    //selecting all from posts and comments db table
     connection.query('SELECT * FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = ?', postId, function(err, results, fields) {
-        // res.json(results);
         var postInfo = {
+            user: req.session.user,
             post_id: req.params.id,
             title: results[0].title,
             category: results[0].category,
             post: results[0].post,
             comments: results
         }
+        //Rendering Post.ejs page
         res.render('pages/post',
             postInfo);
     });
@@ -62,6 +69,7 @@ app.post('/createcomment', function(req, res) {
         post_id: comPId,
         comment: comment
     };
+
     connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
         res.redirect('/post/' + comPId);
     });
@@ -83,8 +91,11 @@ app.post('/createpost', function(req, res) {
         category: category,
         post: post
     };
+    //Insert a new post into posts db table
     connection.query('INSERT INTO posts SET ?', postData, function(err, response) {
+        //Select the most recent post from posts db table
         connection.query('SELECT * FROM posts WHERE id = (SELECT MAX(id) FROM posts)', function(err, response) {
+            //Redirecting page
             res.redirect('/post/' + response[0].id);
         });
     });
@@ -98,18 +109,15 @@ app.post('/likes', function(req, res) {
         type_id: req.body.post_id,
         liked: req.body.like
     };
+    //Insert a new like row in likes db table
     connection.query('INSERT INTO likes SET ?', likeData, function(err, response) {
         res.json(response);
     });
 });
 
-//Root
-app.get("/", function(req, res) {
-    res.send("hi");
-})
-
-app.get("/signup" , function(req,res) {
-    res.render('pages/signup' , {err: req.flash()});
+//Sign up route
+app.get("/signup", function(req, res) {
+    res.render('pages/signup', { err: req.flash() });
 });
 
 //Signup
@@ -129,7 +137,7 @@ app.post("/signing-in", function(req, res) {
                         req.flash('errorM', 'Username already taken');
                         res.redirect('/signup');
                     } else {
-                        login(req,res);
+                        login(req, res);
                     }
                 });
             });
@@ -138,15 +146,15 @@ app.post("/signing-in", function(req, res) {
 });
 
 //Log In
-app.get("/login" , function(req,res) {
-    res.render('pages/login' , {err: req.flash()});
+app.get("/login", function(req, res) {
+    res.render('pages/login', { err: req.flash() });
 });
 
 app.post("/logging-in", function(req, res) {
-    login(req,res);
+    login(req, res);
 });
 
-function login(req , res) {
+function login(req, res) {
     connection.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(error, results, fields) {
 
         if (error) throw error;
@@ -163,7 +171,7 @@ function login(req , res) {
                     req.session.username = results[0].username;
                     req.session.user = results[0].user;
                     req.session.avatar = results[0].avatar;
-                    req.session.ID = results[0].id; 
+                    req.session.ID = results[0].id;
                     res.redirect("/userpage");
                 } else {
 
@@ -183,7 +191,7 @@ app.get('/userpage', function(req, res) {
         username: req.session.username,
         avatar: req.session.avatar
     }
-    res.render("pages/user" , user_info)
+    res.render("pages/user", user_info)
 });
 
 //Session Logout
