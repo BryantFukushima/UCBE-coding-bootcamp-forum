@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Welcome <%= user %></title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+<body>
+
+	<div class="user-page">
+		<div class="avatar"></div>
+		<h1><%= user %></h1>
+		<h2><%= username %></h2>
+		<h2>
+			<% if (avatar = 1) { %>
+				<p>one</p>
+			<% } else { %>
+				<p>two</p>
+			<% } %>
+		</h2>
+	</div>
+
+</body>
+</html>
