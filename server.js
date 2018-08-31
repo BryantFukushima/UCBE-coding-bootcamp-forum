@@ -162,6 +162,7 @@ function login(req , res) {
                     req.session.username = results[0].username;
                     req.session.user = results[0].user;
                     req.session.avatar = results[0].avatar;
+                    req.session.userID = results[0].id;
                     res.redirect("/userpage");
                 } else {
 
@@ -179,7 +180,8 @@ app.get('/userpage', function(req, res) {
     var user_info = {
         user: req.session.user,
         username: req.session.username,
-        avatar: req.session.avatar
+        avatar: req.session.avatar,
+        id: req.session.userID
     }
     res.render("pages/user" , user_info)
 });
