@@ -90,6 +90,7 @@ app.post('/createpost', function(req, res) {
     });
 });
 
+//Inserting likes
 app.post('/likes', function(req, res) {
     var likeData = {
         user_id: req.session.ID,
