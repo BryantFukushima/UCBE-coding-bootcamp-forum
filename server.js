@@ -37,11 +37,6 @@ var connection = mysql.createConnection({
     database: "ucbe_forum_db"
 });
 
-//Landing Page route 
-app.get('/', function(req, res) {
-
-});
-
 //Full Post Page route
 app.get('/post/:id', function(req, res) {
     var postId = req.params.id;
@@ -57,8 +52,6 @@ app.get('/post/:id', function(req, res) {
         res.render('pages/post',
             postInfo);
     });
-
-
 });
 
 //Create Comment Form
@@ -74,8 +67,6 @@ app.post('/createcomment', function(req, res) {
     });
 });
 
-// app.get('/')
-
 //Create Post Page route
 app.get('/newpost', function(req, res) {
     res.render('pages/newpost');
@@ -87,7 +78,7 @@ app.post('/createpost', function(req, res) {
     var category = req.body.category;
     var post = req.body.post;
     var postData = {
-        user_id: 1,
+        user_id: req.session.ID,
         title: title,
         category: category,
         post: post
@@ -99,7 +90,17 @@ app.post('/createpost', function(req, res) {
     });
 });
 
-
+app.post('/likes', function(req, res) {
+    var likeData = {
+        user_id: req.session.ID,
+        type: req.body.type,
+        type_id: req.body.post_id,
+        liked: req.body.like
+    };
+    connection.query('INSERT INTO likes SET ?', likeData, function(err, response) {
+        res.json(response);
+    });
+});
 
 //Root
 app.get("/", function(req, res) {
@@ -147,7 +148,6 @@ app.post("/logging-in", function(req, res) {
 function login(req , res) {
     connection.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(error, results, fields) {
 
-            console.log(results);
         if (error) throw error;
 
         //username check
@@ -162,6 +162,7 @@ function login(req , res) {
                     req.session.username = results[0].username;
                     req.session.user = results[0].user;
                     req.session.avatar = results[0].avatar;
+                    req.session.ID = results[0].id; 
                     res.redirect("/userpage");
                 } else {
 
