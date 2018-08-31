@@ -8,8 +8,20 @@
 <p><%= title %></p>
 <p><%= category %></p>
 <p><%= post %></p>
-
-
+<form method="POST" action="/likes">
+	<input type="hidden" name="post_id" value="<%= post_id %>">
+    <input type="hidden" name="type_id" value="<%= post_id %>">
+    <input type="hidden" name="type" value="post">
+    <input type="hidden" name="like" value="1">
+    <button type="submit">Like</button>
+</form>
+<form method="POST" action="/likes">
+	<input type="hidden" name="post_id" value="<%= post_id %>">
+    <input type="hidden" name="type_id" value="<%= post_id %>">
+    <input type="hidden" name="type" value="post">
+    <input type="hidden" name="like" value="0">
+    <button type="submit">Dislike</button>
+</form>
 
 
 <form method="POST" action="/createcomment">
@@ -20,6 +32,20 @@
 
 <% for (var i in comments) { %>
 <p><%= comments[i].comment %></p>
+<form method="POST" action="/likes">
+	<input type="hidden" name="post_id" value="<%= post_id %>">
+    <input type="hidden" name="type_id" value="<%= comments[i].id %>">
+    <input type="hidden" name="type" value="comment">
+    <input type="hidden" name="like" value="1">
+    <button type="submit">Like</button>
+</form>
+<form method="POST" action="/likes">
+	<input type="hidden" name="post_id" value="<%= post_id %>">
+    <input type="hidden" name="type_id" value="<%= comments[i].id %>">
+    <input type="hidden" name="type" value="comment">
+    <input type="hidden" name="like" value="0">
+    <button type="submit">Dislike</button>
+</form>
 <% } %>
 
 
