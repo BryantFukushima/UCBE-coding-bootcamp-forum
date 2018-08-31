@@ -7,6 +7,7 @@ CREATE TABLE users(
     user VARCHAR(45) NOT NULL,
     username VARCHAR(45) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
+    avatar INT DEFAULT 1,
     PRIMARY KEY (id)
 );
 

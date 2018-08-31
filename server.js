@@ -125,6 +125,7 @@ app.post("/logging-in", function(req, res) {
 function login(req , res) {
     connection.query('SELECT * FROM users WHERE username = ?', [req.body.username], function(error, results, fields) {
 
+            console.log(results);
         if (error) throw error;
 
         //username check
@@ -138,6 +139,7 @@ function login(req , res) {
                 if (result == true) {
                     req.session.username = results[0].username;
                     req.session.user = results[0].user;
+                    req.session.avatar = results[0].avatar;
                     res.redirect("/userpage");
                 } else {
 
@@ -154,7 +156,8 @@ function login(req , res) {
 app.get('/userpage', function(req, res) {
     var user_info = {
         user: req.session.user,
-        username: req.session.username
+        username: req.session.username,
+        avatar: req.session.avatar
     }
     res.render("pages/user" , user_info)
 });
