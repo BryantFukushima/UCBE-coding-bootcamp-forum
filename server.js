@@ -43,6 +43,7 @@ app.get('/post/:id', function(req, res) {
     connection.query('SELECT * FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = ?', postId, function(err, results, fields) {
         // res.json(results);
         var postInfo = {
+            user: req.session.ID,
             post_id: postId,
             title: results[0].title,
             category: results[0].category,
