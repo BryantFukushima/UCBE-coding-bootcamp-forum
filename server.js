@@ -49,8 +49,8 @@ app.get('/post/:id', function(req, res) {
             post: results[0].post,
             comments: results
         }
-        res.render('pages/post',
-            postInfo);
+        res.render('pages/post', postInfo);
+        // res.json(results);
     });
 });
 
