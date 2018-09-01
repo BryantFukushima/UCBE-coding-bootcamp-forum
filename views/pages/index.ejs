@@ -7,24 +7,17 @@
 
 <body>
     <header>
+        <% ../partials/header %>
     </header>
-    <div class="intro-main">
-        <div class="intro-text">
+    <div id="intro-main">
+        <div id="intro-text">
             <h1>UCBE Forum</h1>
             <p>Message</p>
             <a href="/newpost">Start A Post</a>
         </div>
     </div>
-    <div class="main-posts">
-        <% for (var i in list) { %>
-        <div>
-            <p><%= list[i].title %></p>
-            <p><%= list[i].category %></p>
-            <p><%= list[i].user %></p>
-            <p><%= list[i].post %></p>
-            <p><%= list[i].postlikes %></p>
-        </div>
-    <% } %>
+    <div id="topposts">
+        
     </div>
 </body>
 

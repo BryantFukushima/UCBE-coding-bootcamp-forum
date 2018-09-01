@@ -37,18 +37,6 @@ var connection = mysql.createConnection({
     database: "ucbe_forum_db"
 });
 
-//Root
-app.get("/", function(req, res) {
-    //sql to select and order posts based on # of likes
-    connection.query('SELECT likes.type, COUNT(likes.type_id) AS postlikes, posts.*, users.id, users.user FROM likes LEFT JOIN posts ON likes.type_id = posts.id LEFT JOIN users ON posts.user_id = users.id WHERE likes.type = "post" GROUP BY likes.type, posts.id ORDER BY mostlikes DESC', function(err, results, fields) {
-        var topHits = {
-            list: results
-        }
-        // res.json(results);
-        res.render('pages/', topHits);
-    });
-});
-
 //Full Post Page route
 app.get('/post/:id', function(req, res) {
     var postId = req.params.id;
@@ -149,12 +137,16 @@ app.post('/likes', function(req, res) {
     });
 });
 
-//Signup route
+//Root
+app.get("/", function(req, res) {
+    res.send("hi");
+})
+
 app.get("/signup", function(req, res) {
     res.render('pages/signup', { err: req.flash() });
 });
 
-//Signup field
+//Signup
 app.post("/signing-in", function(req, res) {
 
     //missing field
@@ -206,7 +198,7 @@ function login(req, res) {
                     req.session.user = results[0].user;
                     req.session.avatar = results[0].avatar;
                     req.session.ID = results[0].id;
-                    res.redirect("/userpage/" + req.session.user);
+                    res.redirect("/userpage");
                 } else {
 
                     //incorrect password
@@ -219,18 +211,14 @@ function login(req, res) {
 }
 
 //User Profile Page
-app.get('/userpage/:user', function(req, res) {
-    //sql to select users posts ordering by time posted
-    connection.query('SELECT likes.type, COUNT(likes.type_id) AS postlikes, posts.*, users.id, users.user FROM likes LEFT JOIN posts ON likes.type_id = posts.id LEFT JOIN users ON posts.user_id = users.id WHERE users.user = ? GROUP BY likes.type, posts.id ORDER BY posts.tim DESC', req.params.user, function(err, results, fields) {
-        var user_info = {
-            user: req.session.user,
-            username: req.session.username,
-            avatar: req.session.avatar,
-            id: req.session.ID,
-            userP: results
-        }
-        res.render("pages/user", user_info);
-    });
+app.get('/userpage', function(req, res) {
+    var user_info = {
+        user: req.session.user,
+        username: req.session.username,
+        avatar: req.session.avatar,
+        id: req.session.ID
+    }
+    res.render("pages/user", user_info)
 });
 
 //Session Logout
