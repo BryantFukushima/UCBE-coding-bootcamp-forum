@@ -37,16 +37,26 @@ var connection = mysql.createConnection({
     database: "ucbe_forum_db"
 });
 
+// SELECT posts.*, COUNT(comments.post_id) AS numb_comments, users.user FROM posts LEFT JOIN comments ON posts.id = comments.post_id LEFT JOIN users ON posts.user_id = users.id GROUP BY posts.id, comments.post_id;
+
+// SELECT posts.id, posts.title, posts.category, posts.tim, likes.type, COUNT(likes.type_id) AS postlikes, users.user, COUNT(comments.post_id) FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id WHERE likes.type = "post" GROUP BY posts.id;
+
 //Root
 app.get("/", function(req, res) {
-    //sql to select and order posts based on # of likes
-    connection.query('SELECT likes.type, COUNT(likes.type_id) AS postlikes, posts.*, users.id, users.user FROM likes LEFT JOIN posts ON likes.type_id = posts.id LEFT JOIN users ON posts.user_id = users.id WHERE likes.type = "post" GROUP BY likes.type, posts.id ORDER BY mostlikes DESC', function(err, results, fields) {
-        var topHits = {
-            list: results
+    // sql to select and order posts based on # of likes
+    connection.query('SELECT posts.id, posts.title, posts.category, posts.tim, COUNT(likes.liked) AS num_likes, users.username FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id WHERE likes.type = "post" OR posts.id > 0 GROUP BY posts.id ORDER BY posts.tim DESC;', function(err, results1, fields) {
+        likesData = results1;
+        connection.query('SELECT COUNT(comments.comment) AS num_comments FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id GROUP BY posts.id ORDER BY posts.tim DESC', function(err, results2, fields) {
+            commentData = results2;
+            var topHits = {
+            posts: likesData,
+            comments: commentData
         }
-        // res.json(results);
         res.render('pages/', topHits);
+        // res.json(topHits);
+        });
     });
+
 });
 
 //Full Post Page route

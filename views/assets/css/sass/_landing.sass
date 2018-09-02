@@ -1,0 +1,91 @@
+//_landing.sass
+
+.intro-main
+    height: 500px
+    background: #000
+    width: 100%
+
+    .intro-text-but
+        display: inline-block
+        margin: 8rem
+
+        h1
+            font-size: 6rem
+            color: $content-bg-color
+
+        p
+            font-size: 2rem
+            color: $content-bg-color
+
+        a
+            background: $primary-color
+            border-radius: .5rem
+            color: $button-font-color
+            font-size: 2rem
+            padding: 1rem
+            text-decoration: none
+
+.main-posts
+
+    .posts
+        // height: 100px
+        background: $content-bg-color
+        border: $content-border-color .2rem solid
+        border-radius: 1rem
+        margin: 3rem
+        padding: .5rem 1.5rem 3rem
+        cursor: pointer
+
+
+        &:after
+            @extend %clearfix
+
+        [class^="post"]
+            display: block
+
+        p
+            display: inline-block
+
+        .posts-text
+            float: left
+
+            .text-rowone
+
+                p
+                    &:first-child
+                        font-size: 2.4rem
+                        text-decoration: underline
+                        margin: 0
+                        margin-right: 1rem
+
+                    &:nth-child(2)
+                        display: inline-block
+                    a
+                        text-decoration: none
+                        color: $primary-color
+                        font-size: 1.4rem
+
+                        &:hover
+                            color: darken($primary-color, 20)
+
+            .text-rowtwo
+
+                p
+                    margin: 0
+                    font-size: 1.4rem
+                    
+                    &:last-child
+                        margin-left: 2rem
+
+        .posts-likes
+            float: right
+
+            p
+                font-size: 2rem
+                margin: 0
+                margin-top: 2.4rem
+
+
+
+        
+

@@ -1,5 +1,22 @@
+.main-posts .posts:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+html {
+  font-size: 10px;
+  font-family: "Roboto", sans-serif;
+}
+
 body {
   background: #D8D8D8;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  box-shadow: box-sizing;
 }
 
 .signup-container {
@@ -14,6 +31,82 @@ body {
   height: 100px;
   width: 100px;
   background-color: #FFFFFF;
+}
+
+.intro-main {
+  height: 500px;
+  background: #000;
+  width: 100%;
+}
+.intro-main .intro-text-but {
+  display: inline-block;
+  margin: 8rem;
+}
+.intro-main .intro-text-but h1 {
+  font-size: 6rem;
+  color: #F1F1F1;
+}
+.intro-main .intro-text-but p {
+  font-size: 2rem;
+  color: #F1F1F1;
+}
+.intro-main .intro-text-but a {
+  background: #4AB0C6;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 2rem;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.main-posts .posts {
+  background: #F1F1F1;
+  border: #979797 0.2rem solid;
+  border-radius: 1rem;
+  margin: 3rem;
+  padding: 0.5rem 1.5rem 3rem;
+  cursor: pointer;
+}
+.main-posts .posts [class^=post] {
+  display: block;
+}
+.main-posts .posts p {
+  display: inline-block;
+}
+.main-posts .posts .posts-text {
+  float: left;
+}
+.main-posts .posts .posts-text .text-rowone p:first-child {
+  font-size: 2.4rem;
+  text-decoration: underline;
+  margin: 0;
+  margin-right: 1rem;
+}
+.main-posts .posts .posts-text .text-rowone p:nth-child(2) {
+  display: inline-block;
+}
+.main-posts .posts .posts-text .text-rowone p a {
+  text-decoration: none;
+  color: #4AB0C6;
+  font-size: 1.4rem;
+}
+.main-posts .posts .posts-text .text-rowone p a:hover {
+  color: #297281;
+}
+.main-posts .posts .posts-text .text-rowtwo p {
+  margin: 0;
+  font-size: 1.4rem;
+}
+.main-posts .posts .posts-text .text-rowtwo p:last-child {
+  margin-left: 2rem;
+}
+.main-posts .posts .posts-likes {
+  float: right;
+}
+.main-posts .posts .posts-likes p {
+  font-size: 2rem;
+  margin: 0;
+  margin-top: 2.4rem;
 }
 
 /*# sourceMappingURL=style.css.map */

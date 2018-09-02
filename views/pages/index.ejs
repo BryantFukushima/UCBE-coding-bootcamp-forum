@@ -2,29 +2,55 @@
 <html>
 
 <head>
-    <title></title>
+    <% include ../partials/head %>
 </head>
 
 <body>
     <header>
     </header>
     <div class="intro-main">
-        <div class="intro-text">
+        <div class="intro-text-but">
             <h1>UCBE Forum</h1>
             <p>Message</p>
             <a href="/newpost">Start A Post</a>
         </div>
     </div>
     <div class="main-posts">
-        <% for (var i in list) { %>
-        <div>
-            <p><%= list[i].title %></p>
-            <p><%= list[i].category %></p>
-            <p><%= list[i].user %></p>
-            <p><%= list[i].post %></p>
-            <p><%= list[i].postlikes %></p>
-        </div>
-    <% } %>
+        <% for (var i in posts) { %>
+            <div class="posts" onclick="location.href='/posts/<%= posts[i].id %>'">
+                <div class="posts-text">
+                    <div class="text-rowone">
+                        <p>
+                            <%= posts[i].title %>
+                        </p>
+                        <p>
+                            <a href="/userpage/<%= posts[i].username %>">- <%= posts[i].username %>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="text-rowtwo">
+                        <p>
+                            Topic:
+                            <%= posts[i].category %>
+                        </p>
+                        <% if (comments[i].num_comments > 1) { %>
+                            <p>
+                                <%= comments[i].num_comments %> Comments
+                            </p>
+                        <% } else {%>
+                            <p>
+                                <%= comments[i].num_comments %> Comment
+                            </p>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="posts-likes">
+                    <p>
+                        <%= posts[i].num_likes %>
+                    </p>
+                </div>
+            </div>
+            <% } %>
     </div>
 </body>
 
