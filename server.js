@@ -58,7 +58,6 @@ app.get("/", function(req, res) {
     });
 
 });
->>>>>>> display-posts-ky
 
 //Full Post Page route
 app.get('/post/:id', function(req, res) {
@@ -66,13 +65,8 @@ app.get('/post/:id', function(req, res) {
     //selecting all from posts and comments db table
     connection.query('SELECT * FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = ?', postId, function(err, results, fields) {
         var postInfo = {
-<<<<<<< HEAD
-            user: req.session.user,
-            post_id: req.params.id,
-=======
             user: req.session.ID,
             post_id: postId,
->>>>>>> display-posts-ky
             title: results[0].title,
             category: results[0].category,
             post: results[0].post,
