@@ -216,7 +216,7 @@ function login(req, res) {
                     req.session.user = results[0].user;
                     req.session.avatar = results[0].avatar;
                     req.session.ID = results[0].id;
-                    res.redirect("/userpage/" + req.session.user);
+                    res.redirect("/userpage/" + req.session.ID);
                 } else {
 
                     //incorrect password
@@ -229,17 +229,41 @@ function login(req, res) {
 }
 
 //User Profile Page
-app.get('/userpage/:user', function(req, res) {
+app.get('/userpage/:user_id', function(req, res) {
     //sql to select users posts ordering by time posted
-    connection.query('SELECT likes.type, COUNT(likes.type_id) AS postlikes, posts.*, users.id, users.user FROM likes LEFT JOIN posts ON likes.type_id = posts.id LEFT JOIN users ON posts.user_id = users.id WHERE users.user = ? GROUP BY likes.type, posts.id ORDER BY posts.tim DESC', req.params.user, function(err, results, fields) {
-        var user_info = {
-            user: req.session.user,
-            username: req.session.username,
-            avatar: req.session.avatar,
-            id: req.session.ID,
-            userP: results
-        }
-        res.render("pages/user", user_info);
+    // connection.query('SELECT likes.type, COUNT(likes.type_id) AS postlikes, posts.*, users.id, users.user FROM likes LEFT JOIN posts ON likes.type_id = posts.id LEFT JOIN users ON posts.user_id = users.id WHERE users.user = ? GROUP BY likes.type, posts.id ORDER BY posts.tim DESC', req.params.user, function(err, results, fields) {
+    //     var user_info = {
+    //         user: req.session.user,
+    //         username: req.session.username,
+    //         avatar: req.session.avatar,
+    //         id: req.session.ID,
+    //         userP: results
+    //     }
+    //     res.render("pages/user", user_info);
+    // });
+
+    connection.query('SELECT * FROM users WHERE users.id = ?' , req.params.user_id , function(err, results1, fields) {
+               connection.query('SELECT * FROM posts WHERE user_id = ? ORDER BY posts.tim DESC' , req.params.user_id, function(err, results2, fields) {
+                    var info = {
+                        log_user: req.session.user,
+                        user_info: results1[0],
+                        posts: results2
+                    }
+                    res.render("pages/user" , info);
+        });
+    });
+});
+
+//change avatar
+app.post('/newavatar' , function(req,res) {
+    connection.query('UPDATE users SET ? WHERE ?',[ 
+        {
+            avatar: req.body.avatar
+        },
+        {
+            id: req.body.user_id
+        }] , function(err, results, fields) {
+        res.redirect('/userpage/' + req.body.user_id);
     });
 });
 
