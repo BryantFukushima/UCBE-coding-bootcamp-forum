@@ -3,9 +3,27 @@ $bg-color: #D8D8D8
 $content-bg-color: #F1F1F1
 $content-border-color: #979797
 $primary-color: #4AB0C6
+$primary-font: 'Roboto', sans-serif
+$button-font-color: #fff
+
+%clearfix
+    content: ""
+    display: table
+    clear: both
+
+%ind-posts
+    background: $content-bg-color
+    border: $content-border-color 2px solid 
+
+html 
+    font-size: 10px
+    font-family: $primary-font
 
 body
-	background: $bg-color
+    background: $bg-color
+
+//_reset.sass
+@import _reset
 
 //_signup.sass
 @import _signup
@@ -15,3 +33,12 @@ body
 
 //_user-profile.sass
 @import _user-profile
+
+//_landing.sass
+@import _landing
+
+//_newpost.sass
+@import _newpost
+
+//_posts.sass
+@import _posts

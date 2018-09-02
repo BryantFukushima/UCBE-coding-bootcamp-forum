@@ -10,6 +10,7 @@
 		<div class="avatar"></div>
 		<h1><%= user %></h1>
 		<h2><%= username %></h2>
+		<h2><%= id %></h2>
 		<h2>
 			<% if (avatar = 1) { %>
 				<p>one</p>
@@ -19,5 +20,15 @@
 		</h2>
 	</div>
 
+	<div class="user-post">
+		<% for (var i in userP) { %>
+        <div>
+            <p><%= userP[i].title %></p>
+            <p><%= userP[i].category %></p>
+            <p><%= userP[i].post %></p>
+            <p><%= userP[i].postlikes %></p>
+        </div>
+    <% } %>
+	</div>
 </body>
 </html>

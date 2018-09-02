@@ -2,35 +2,34 @@
 <html>
 
 <head>
-    <title></title>
-    <style type="text/css">
-        form {
-        width: 50%;
-        margin: auto;
-    }
-
-    input, textarea {
-        width: 100%;
-        display: block;
-        margin: auto;
-    }
-    </style>
+    <title>UCBE Forum</title>
+    <!-- stylesheet -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
 
 <body>
     <header>
-        
     </header>
+    <div class="login-err-msg">
+        <% if(loginErrPost) { %>
+            <%= loginErrPost %>
+        <% } %>
+    </div>
     <form method="POST" action="/createpost">
         <select name="category">
-            <option value="html&css">HTML & CSS</option>
-            <option value="javascript">Javascript</option>
-            <option value="node">Node.js</option>
-            <option value="mysql">Mysql</option>
+            <option value="Html&Css">HTML & CSS</option>
+            <option value="Javascript">Javascript</option>
+            <option value="Node.js">Node.js</option>
+            <option value="Mysql">Mysql</option>
         </select>
         <input type="text" name="title" placeholder="Title">
         <textarea rows="5" name="post" placeholder="Type Something..."></textarea>
-        <button type="submit">Submit</button>
+        <% if(user_id) { %>
+            <button type="submit">Submit</button>
+        <% } else { %>
+            <a href="/login">Sign In</a>
+            <button type="submit" disabled>Submit</button>
+        <% } %>
     </form>
 </body>
 
