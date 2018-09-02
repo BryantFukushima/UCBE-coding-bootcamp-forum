@@ -2,22 +2,55 @@
 <html>
 
 <head>
-    <title></title>
+    <% include ../partials/head %>
 </head>
 
 <body>
     <header>
-        <% ../partials/header %>
     </header>
-    <div id="intro-main">
-        <div id="intro-text">
+    <div class="intro-main">
+        <div class="intro-text-but">
             <h1>UCBE Forum</h1>
             <p>Message</p>
             <a href="/newpost">Start A Post</a>
         </div>
     </div>
-    <div id="topposts">
-        
+    <div class="main-posts">
+        <% for (var i in posts) { %>
+            <div class="posts" onclick="location.href='/posts/<%= posts[i].id %>'">
+                <div class="posts-text">
+                    <div class="text-rowone">
+                        <p>
+                            <%= posts[i].title %>
+                        </p>
+                        <p>
+                            <a href="/userpage/<%= posts[i].username %>">- <%= posts[i].username %>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="text-rowtwo">
+                        <p>
+                            Topic:
+                            <%= posts[i].category %>
+                        </p>
+                        <% if (comments[i].num_comments > 1) { %>
+                            <p>
+                                <%= comments[i].num_comments %> Comments
+                            </p>
+                        <% } else {%>
+                            <p>
+                                <%= comments[i].num_comments %> Comment
+                            </p>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="posts-likes">
+                    <p>
+                        <%= posts[i].num_likes %>
+                    </p>
+                </div>
+            </div>
+            <% } %>
     </div>
 </body>
 

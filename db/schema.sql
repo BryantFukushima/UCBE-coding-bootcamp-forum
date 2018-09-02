@@ -36,7 +36,15 @@ CREATE TABLE likes(
     user_id INT NOT NULL,
     type VARCHAR(45) NOT NULL,
     type_id INT NOT NULL,
-    liked BOOLEAN NULL,
+    liked BOOLEAN DEFAULT 0,
     PRIMARY KEY (id)
 );
 
+
+
+-- SELECT posts.id, posts.title, posts.category, posts.tim, users.user, COUNT(comments.comment) AS num_comments, COUNT(likes.liked) AS num_likes FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id LEFT JOIN likes ON posts.id = likes.type_id WHERE likes.type = "post" GROUP BY posts.id;
+
+
+
+
+-- SELECT posts.id, posts.title, posts.category, posts.tim, users.user, comments.comment, likes.liked FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id LEFT JOIN likes ON posts.id = likes.type_id WHERE likes.type = "post";
