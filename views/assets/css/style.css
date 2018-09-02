@@ -1,7 +1,26 @@
-.main-posts .posts:after {
+.create-com-sec:after, .new-post-form:after, .main-posts .posts:after, .user-post .posts:after {
   content: "";
   display: table;
   clear: both;
+}
+
+.comments, .create-com-sec, .post-sec, .new-post-form, .main-posts .posts, .user-post .posts {
+  background: #F1F1F1;
+  border: #979797 0.2rem solid;
+  border-radius: 1rem;
+  margin: 3rem;
+  padding: 0.5rem 1.5rem 3rem;
+}
+
+.create-com-sec form button, .new-post-form form button {
+  float: right;
+  background: #4AB0C6;
+  border: 1px solid #979797;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
 html {
@@ -28,9 +47,60 @@ body, html {
 }
 
 .avatar {
-  height: 100px;
-  width: 100px;
-  background-color: #FFFFFF;
+  width: 10rem;
+  height: 10rem;
+  background: #fff;
+}
+
+.user-post .posts {
+  cursor: pointer;
+}
+.user-post .posts [class^=post] {
+  display: block;
+}
+.user-post .posts p {
+  display: inline-block;
+}
+.user-post .posts .posts-text {
+  float: left;
+}
+.user-post .posts .posts-text .text-rowone p:first-child {
+  font-size: 2.4rem;
+  text-decoration: underline;
+  margin: 0;
+  margin-right: 1rem;
+}
+.user-post .posts .posts-text .text-rowone p a {
+  text-decoration: none;
+  color: #4AB0C6;
+  font-size: 1.4rem;
+}
+.user-post .posts .posts-text .text-rowone p a:hover {
+  color: #297281;
+}
+.user-post .posts .posts-text .text-rowtwo p {
+  margin: 0;
+  font-size: 1.4rem;
+}
+.user-post .posts .posts-text .text-rowtwo p:last-child {
+  margin-left: 2rem;
+}
+.user-post .posts .posts-likes {
+  float: right;
+  margin-top: 2.4rem;
+}
+.user-post .posts .posts-likes .star {
+  float: right;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.1rem 1rem 0;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background: #ffbf00;
+}
+.user-post .posts .posts-likes p {
+  float: right;
+  font-size: 2rem;
+  margin: 0;
 }
 
 .intro-main {
@@ -60,11 +130,6 @@ body, html {
 }
 
 .main-posts .posts {
-  background: #F1F1F1;
-  border: #979797 0.2rem solid;
-  border-radius: 1rem;
-  margin: 3rem;
-  padding: 0.5rem 1.5rem 3rem;
   cursor: pointer;
 }
 .main-posts .posts [class^=post] {
@@ -81,9 +146,6 @@ body, html {
   text-decoration: underline;
   margin: 0;
   margin-right: 1rem;
-}
-.main-posts .posts .posts-text .text-rowone p:nth-child(2) {
-  display: inline-block;
 }
 .main-posts .posts .posts-text .text-rowone p a {
   text-decoration: none;
@@ -102,11 +164,56 @@ body, html {
 }
 .main-posts .posts .posts-likes {
   float: right;
+  margin-top: 2.4rem;
+}
+.main-posts .posts .posts-likes .star {
+  float: right;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.1rem 1rem 0;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background: #ffbf00;
 }
 .main-posts .posts .posts-likes p {
+  float: right;
   font-size: 2rem;
   margin: 0;
-  margin-top: 2.4rem;
+}
+
+.new-post-form form {
+  width: 100%;
+  margin: auto;
+}
+.new-post-form form .login-err-msg {
+  fload: left;
+  display: inline-block;
+  font-size: 1.6rem;
+}
+.new-post-form .row {
+  display: block;
+}
+.new-post-form .row input {
+  width: 99.6%;
+  margin: 2rem 0;
+  height: 2rem;
+  font-size: 1.6rem;
+}
+.new-post-form .row input:focus {
+  outline: 0;
+}
+.new-post-form .row textarea {
+  width: 99.6%;
+  font-size: 1.6rem;
+}
+.new-post-form .row textarea:focus {
+  outline: 0;
+}
+
+.create-com-sec form {
+  width: 100%;
+}
+.create-com-sec form textarea {
+  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */

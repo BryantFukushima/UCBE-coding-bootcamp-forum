@@ -43,17 +43,18 @@ var connection = mysql.createConnection({
 
 //Root
 app.get("/", function(req, res) {
-    // sql to select and order posts based on # of likes
-    connection.query('SELECT posts.id, posts.title, posts.category, posts.tim, COUNT(likes.liked) AS num_likes, users.username FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id WHERE likes.type = "post" OR posts.id > 0 GROUP BY posts.id ORDER BY posts.tim DESC;', function(err, results1, fields) {
+    // sql to select and order posts based on time posted
+    connection.query('SELECT posts.id, posts.title, posts.category, posts.tim, COUNT(likes.liked) AS num_likes, users.username FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id WHERE likes.type = "post" OR likes.type IS NULL GROUP BY posts.id ORDER BY posts.tim DESC', function(err, results1, fields) {
         likesData = results1;
+        //sql to select and display number of comments 
         connection.query('SELECT COUNT(comments.comment) AS num_comments FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id GROUP BY posts.id ORDER BY posts.tim DESC', function(err, results2, fields) {
             commentData = results2;
-            var topHits = {
-            posts: likesData,
-            comments: commentData
-        }
-        res.render('pages/', topHits);
-        // res.json(topHits);
+            var latestPost = {
+                posts: likesData,
+                comments: commentData
+            }
+            res.render('pages/', latestPost);
+            // res.json(latestPost);
         });
     });
 
@@ -63,7 +64,7 @@ app.get("/", function(req, res) {
 app.get('/post/:id', function(req, res) {
     var postId = req.params.id;
     //selecting all from posts and comments db table
-    connection.query('SELECT * FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = ?', postId, function(err, results, fields) {
+    connection.query('SELECT posts.id, posts.title, posts.category, posts.tim, COUNT(likes.liked) AS num_likes, users.username, comments.comment FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = ? AND (likes.type = "post" OR likes.type IS NULL) GROUP BY posts.id, comments.comment', postId, function(err, results, fields) {
         var postInfo = {
             user: req.session.ID,
             post_id: postId,
@@ -73,8 +74,8 @@ app.get('/post/:id', function(req, res) {
             comments: results,
             loginErr: req.flash()
         }
-        res.render('pages/post', postInfo);
-        // res.json(req.session.username);
+        // res.render('pages/post', postInfo);
+        res.json(postInfo);
     });
 });
 
@@ -217,7 +218,7 @@ function login(req, res) {
                     req.session.user = results[0].user;
                     req.session.avatar = results[0].avatar;
                     req.session.ID = results[0].id;
-                    res.redirect("/userpage/" + req.session.user);
+                    res.redirect("/userpage/" + req.session.username);
                 } else {
 
                     //incorrect password
@@ -232,15 +233,22 @@ function login(req, res) {
 //User Profile Page
 app.get('/userpage/:user', function(req, res) {
     //sql to select users posts ordering by time posted
-    connection.query('SELECT likes.type, COUNT(likes.type_id) AS postlikes, posts.*, users.id, users.user FROM likes LEFT JOIN posts ON likes.type_id = posts.id LEFT JOIN users ON posts.user_id = users.id WHERE users.user = ? GROUP BY likes.type, posts.id ORDER BY posts.tim DESC', req.params.user, function(err, results, fields) {
-        var user_info = {
-            user: req.session.user,
-            username: req.session.username,
-            avatar: req.session.avatar,
-            id: req.session.ID,
-            userP: results
-        }
-        res.render("pages/user", user_info);
+    connection.query('SELECT posts.id, posts.title, posts.category, posts.tim, COUNT(likes.liked) AS num_likes, users.username FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id WHERE users.username = ? AND (likes.type = "post" OR likes.type IS NULL) GROUP BY posts.id ORDER BY posts.tim DESC;', req.params.user, function(err, results1, fields) {
+        userP = results1;
+        //sql to select and display number of comments 
+        connection.query('SELECT COUNT(comments.comment) AS num_comments FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC', req.params.user, function(err, results2, fields) {
+            userC = results2;
+            var user_info = {
+                user: req.session.user,
+                username: req.session.username,
+                avatar: req.session.avatar,
+                id: req.session.ID,
+                userP: userP,
+                comments: userC
+            }
+            res.render("pages/user", user_info);
+            // res.json(user_info);
+        });
     });
 });
 

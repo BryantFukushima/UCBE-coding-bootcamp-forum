@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> Welcome <%= user %></title>
-	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+	<!-- head.ejs -->
+    <% include ../partials/head %>
 </head>
 <body>
 
@@ -22,12 +22,40 @@
 
 	<div class="user-post">
 		<% for (var i in userP) { %>
-        <div>
-            <p><%= userP[i].title %></p>
-            <p><%= userP[i].category %></p>
-            <p><%= userP[i].post %></p>
-            <p><%= userP[i].postlikes %></p>
-        </div>
+        <div class="posts" onclick="location.href='/post/<%= userP[i].id %>'">
+                <div class="posts-text">
+                    <div class="text-rowone">
+                        <p>
+                            <%= userP[i].title %>
+                        </p>
+                        <p>
+                            <a href="/userpage/<%= userP[i].username %>">- <%= userP[i].username %>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="text-rowtwo">
+                        <p>
+                            Topic:
+                            <%= userP[i].category %>
+                        </p>
+                        <% if (comments[i].num_comments > 1) { %>
+                            <p>
+                                <%= comments[i].num_comments %> Comments
+                            </p>
+                        <% } else {%>
+                            <p>
+                                <%= comments[i].num_comments %> Comment
+                            </p>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="posts-likes">
+                    <p>
+                        <%= userP[i].num_likes %>
+                    </p>
+                    <div class="star"></div>
+                </div>
+            </div>
     <% } %>
 	</div>
 </body>

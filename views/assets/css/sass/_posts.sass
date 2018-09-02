@@ -1,0 +1,21 @@
+//_posts.sass
+
+.post-sec
+    @extend %posts-bg
+
+.create-com-sec
+    @extend %posts-bg
+    &:after
+        @extend %clearfix
+
+    form
+        width: 100%
+
+        textarea
+            width: 100%
+
+        button
+            @extend %primary-button
+
+.comments
+    @extend %posts-bg
