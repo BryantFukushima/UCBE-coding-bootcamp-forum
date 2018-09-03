@@ -243,7 +243,7 @@ app.get('/userpage/:user_id', function(req, res) {
     // });
 
     connection.query('SELECT * FROM users WHERE users.id = ?' , req.params.user_id , function(err, results1, fields) {
-               connection.query('SELECT SUM((liked=1)-(liked=0)) AS total, posts.* FROM likes RIGHT JOIN posts ON posts.id = likes.type_id AND likes.type = "post" WHERE posts.user_id = 2 GROUP BY posts.id ORDER BY posts.tim DESC' , req.params.user_id, function(err, results2, fields) {
+               connection.query('SELECT SUM((liked=1)-(liked=0)) AS total, posts.* FROM likes RIGHT JOIN posts ON posts.id = likes.type_id AND likes.type = "post" WHERE posts.user_id = ? GROUP BY posts.id ORDER BY posts.tim DESC' , req.params.user_id, function(err, results2, fields) {
                     var info = {
                         log_user: req.session.user,
                         user_info: results1[0],
