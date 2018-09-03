@@ -4,10 +4,13 @@
     height: 500px
     background: #000
     width: 100%
+    position: relative
 
     .intro-text-but
         display: inline-block
-        margin: 8rem
+        position: absolute
+        top: 20%
+        left: 10%
 
         h1
             font-size: 6rem
@@ -29,6 +32,9 @@
     // ind-posts mixin
     @include ind-posts
 
+    .posts
+        cursor: pointer
+        
 
 
         

@@ -8,10 +8,12 @@
 
 <body>
     <header>
+        <% include ../partials/header %>
     </header>
     <div class="new-post-form">
         <form method="POST" action="/createpost">
             <div class="row">
+                <span>Topic:</span>
                 <select name="category">
                     <option value="Html&Css">HTML & CSS</option>
                     <option value="Javascript">Javascript</option>
@@ -26,17 +28,17 @@
                 <textarea rows="10" name="post" placeholder="Type Something..."></textarea>
             </div>
             <% if(user_id) { %>
-            <button type="submit">Submit</button>
-            <% } else { %>
-            <div class="login-err-msg">
-            <% if(loginErrPost) { %>
-            <%= loginErrPost %>
-            <% } %>
-                <a href="/login">Sign In</a>
-            </div>
-            <button type="submit" disabled>Submit
-            </button>
-            <% } %>
+                <div class="login-err-msg">
+                    <%= postErr.postErr %>
+                </div>
+                <button type="submit">Submit</button>
+                <% } else { %>
+                    <div class="signup-login">
+                        <p>Like to leave a comment? Log In or Sign Up</p>
+                        <a href="/login">Log In</a>
+                        <a href="/signup">Sign Up</a>
+                    </div>
+                    <% } %>
         </form>
     </div>
 </body>

@@ -1,0 +1,22 @@
+<nav>
+    <h1><a href="/">UCBE Coding Bootcamp Forum</a></h1>
+    <div class="stuff">
+        <div class="search-bar">
+            <div class="mag-glass"></div>
+            <form>
+            <input type="text" name="search" placeholder="Search">
+            <button type="submit" hidden></button>
+            </form>
+        </div>
+        <div class="user-profile">
+        <% if (user) { %>
+            <!-- avatar goes here -->
+            <a href="/userpage/<%= username %>"><%= user %></a>
+        <% } else { %>
+            <a href="/login">Log In</a>
+        <% } %>
+        </div>
+        <button class="new-post" onclick="location.href='/newpost'">+
+        </button>
+    </div>
+</nav>

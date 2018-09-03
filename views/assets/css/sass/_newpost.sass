@@ -14,63 +14,44 @@
             display: inline-block
             font-size: 1.6rem
 
+        .row 
+            display: block
+
+            span
+                font-size: $info-font-size
+                margin-right: 1rem
+
+            select
+                font-size: $info-font-size
+
+            input
+                width: 99.6%
+                margin: 2rem 0
+                height: 2rem
+                font-size: $info-font-size
+
+                &:focus
+                    outline: 0
+
+            textarea
+                width: 99.6%
+                font-size: $info-font-size
+
+                &:focus
+                    outline: 0
+
         button
             @extend %primary-button
 
-    .row 
-        display: block
+        .signup-login
+            p
+                float: left
+                font-size: $info-font-size
+            a
+                @extend %primary-button
+                text-decoration: none
 
-        input
-            width: 99.6%
-            margin: 2rem 0
-            height: 2rem
-            font-size: 1.6rem
+                &:last-child
+                    background: #fff
+                    color: $primary-color
 
-            &:focus
-                outline: 0
-
-        textarea
-            width: 99.6%
-            font-size: 1.6rem
-
-            &:focus
-                outline: 0
-
-
-
-
-
-
-// /* Rectangle: */
-// background: #F1F1F1;
-// border-radius: 25px;
-// /* Rectangle 3: */
-// background: #FFFFFF;
-// border: 1px solid #979797;
-// /* Rectangle 3: */
-// background: #FFFFFF;
-// border: 1px solid #979797;
-// /* Rectangle 3: */
-// background: #FFFFFF;
-// border: 1px solid #979797;
-// /* Type something…: */
-// font-family: AvenirNext-Regular;
-// font-size: 20px;
-// color: rgba(0,0,0,0.75);
-// Commenting as Guest:
-// font-family: AvenirNext-Regular;
-// font-size: 20px;
-// color: rgba(0,0,0,0.45);
-// text-align: left;
-// /* submit comment button: */
-// ;
-// /* COMMENT: */
-// font-family: AvenirNext-Regular;
-// font-size: 20px;
-// color: rgba(255,255,255,0.45);
-// text-align: left;
-// /* Title: */
-// font-family: AvenirNext-Regular;
-// font-size: 20px;
-// color: rgba(0,0,0,0.75);
-// text-align: left;
