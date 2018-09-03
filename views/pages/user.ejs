@@ -6,19 +6,38 @@
         <%= user_info.user %>
     </title>
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <style type="text/css">
+    	.red {
+    		background-color: red;
+    	}
+    	.blue {
+    		background-color: blue;
+    	}
+    	.green {
+    		background-color: green;
+    	}
+    </style>
 </head>
 
 <body>
     <div class="user-page">
-        <div class="avatar">
-            <h2>
-				<%= user_info.avatar %>
-					
-			</h2>
-        </div>
-        <% if (log_user) { %>
+        <% if(user_info.avatar == 1) { %>
+        	<div class="avatar red">
+
+    		</div>
+        <% } else if (user_info.avatar == 2) { %>
+	        <div class="avatar blue">
+
+    		</div>
+        <% } else if (user_info.avatar == 3) { %>
+	        <div class="avatar green">
+
+    		</div>
+        <% } %>
+        <% if (log_user == user_info.id) { %>
         <form method="POST" action="/newavatar">
         	<input type="hidden" name="user_id" value="<%= user_info.id %>">
+        	<input type="radio" name="avatar" value="1"> 1 <br>
         	<input type="radio" name="avatar" value="2"> 2 <br>
         	<input type="radio" name="avatar" value="3"> 3 <br>
         	<button type="submit">submit</button>
@@ -32,24 +51,38 @@
         <% for (var i in posts) { %>
             <div>
                 <p>
+                	<strong>post title</strong>
                     <%= posts[i].title %>
                 </p>
                 <p>
+                	<strong>post cat</strong>
                     <%= posts[i].category %>
                 </p>
                 <p>
+                	<strong>post post</strong>
                     <%= posts[i].post %>
                 </p>
                 <p>
-                	<% if(posts[i].total) { %>
-                    	<%= posts[i].total %>
+                	<strong>post likes total</strong>
+                	<% if(posts[i].likes_total) { %>
+                    	<%= posts[i].likes_total %>
+                	<% } else { %>
+                		0
+                	<% } %>
+                </p>
+                 <p>
+                	<strong>post comments total</strong>
+                	<% if(posts[i].comment_total) { %>
+                    	<%= posts[i].comment_total %>
                 	<% } else { %>
                 		0
                 	<% } %>
                 </p>
             </div>
-            <% } %>
+            <br>
+        <% } %>
     </div>
+
     
 </body>
 
