@@ -41,7 +41,11 @@
                     <%= posts[i].post %>
                 </p>
                 <p>
-                    <%= posts[i].postlikes %>
+                	<% if(posts[i].total) { %>
+                    	<%= posts[i].total %>
+                	<% } else { %>
+                		0
+                	<% } %>
                 </p>
             </div>
             <% } %>
