@@ -2,88 +2,114 @@
 <html>
 
 <head>
-    <title> Welcome
-        <%= user_info.user %>
-    </title>
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-    <style type="text/css">
-    	.red {
-    		background-color: red;
-    	}
-    	.blue {
-    		background-color: blue;
-    	}
-    	.green {
-    		background-color: green;
-    	}
-    </style>
+    <% include ../partials/head %>
 </head>
 
 <body>
     <div class="user-page">
-        <% if(user_info.avatar == 1) { %>
-        	<div class="avatar red">
+		<div class="user-info_avatar">
+	        <% if(user[0].avatar == 1) { %>
+	        	<div class="avatar red">
 
-    		</div>
-        <% } else if (user_info.avatar == 2) { %>
-	        <div class="avatar blue">
+	    		</div>
+	        <% } else if (user[0].avatar == 2) { %>
+		        <div class="avatar blue">
 
-    		</div>
-        <% } else if (user_info.avatar == 3) { %>
-	        <div class="avatar green">
+	    		</div>
+	        <% } else if (user[0].avatar == 3) { %>
+		        <div class="avatar green">
 
-    		</div>
-        <% } %>
-        <% if (log_user == user_info.id) { %>
-        <form method="POST" action="/newavatar">
-        	<input type="hidden" name="user_id" value="<%= user_info.id %>">
-        	<input type="radio" name="avatar" value="1"> 1 <br>
-        	<input type="radio" name="avatar" value="2"> 2 <br>
-        	<input type="radio" name="avatar" value="3"> 3 <br>
-        	<button type="submit">submit</button>
-        </form>
-        <% } %>
-        <h1><%= user_info.user %></h1>
-        <h2><%= user_info.username %></h2>
-        <h2><%= user_info.id %></h2>
+	    		</div>
+	        <% } %>
+	        <% if (log_user == user_comments[0].id) { %>
+		        <div onclick="avatarChange()">Change Avatar</div>
+		        <form method="POST" action="/newavatar">
+		        	<input type="hidden" name="username" value="<%= user[0].username %>">
+		        	<input type="radio" name="avatar" value="1"> 1 <br>
+		        	<input type="radio" name="avatar" value="2"> 2 <br>
+		        	<input type="radio" name="avatar" value="3"> 3 <br>
+		        	<button type="submit">submit</button>
+		        </form>
+	        <% } %>
+        </div>
+        <div class="user-info_main">
+	        <h1><%= user[0].user %></h1>
+	        <h2><%= user[0].username %></h2>
+	        <h3>
+	        	<% var total = 0; %>
+	        	<%for(i in user) { %>
+	        		<% if(user[i].total_posts_likes == null) { %>
+	        			<% total = total + 0; %>
+	        		<% } else { %>
+		        		<% total = total + user[i].total_posts_likes; %>
+	        		<% } %>
+	        	<% } %>
+	        	<% total = total + all_comments.total_comment_likes %>
+	        	Merit: <%= total %>
+	        		
+        	</h3>
+        </div>
     </div>
-    <div class="user-post">
-        <% for (var i in posts) { %>
-            <div>
-                <p>
-                	<strong>post title</strong>
-                    <%= posts[i].title %>
-                </p>
-                <p>
-                	<strong>post cat</strong>
-                    <%= posts[i].category %>
-                </p>
-                <p>
-                	<strong>post post</strong>
-                    <%= posts[i].post %>
-                </p>
-                <p>
-                	<strong>post likes total</strong>
-                	<% if(posts[i].likes_total) { %>
-                    	<%= posts[i].likes_total %>
-                	<% } else { %>
-                		0
-                	<% } %>
-                </p>
-                 <p>
-                	<strong>post comments total</strong>
-                	<% if(posts[i].comment_total) { %>
-                    	<%= posts[i].comment_total %>
-                	<% } else { %>
-                		0
-                	<% } %>
-                </p>
-            </div>
-            <br>
-        <% } %>
+    <div class="main-posts">
+    	<h2><%= user[0].user %>'s Posts</h2>
+    	<% if(user[0].post != null) { %>
+	        <% for (var i in user) { %>
+	            <div class="posts" onclick="location.href='/post/<%= user[i].id %>'">
+	                <div class="posts-text">
+	                    <div class="text-rowone">
+	                        <p>
+	                            <%= user[i].title %>
+	                        </p>
+	                        <p>
+	                            <a href="/userpage/<%= user[i].username %>">- <%= user[i].username %>
+	                            </a>
+	                        </p>
+	                    </div>
+	                    <div class="text-rowtwo">
+	                        <p>
+	                            Topic:
+	                            <%= user[i].category %>
+	                        </p>
+	                        <p>
+		                    	<% if(user_comments[i].total_comments > 0) { %>
+		                    		comments: <%= user_comments[i].total_comments %>
+		                    	<% } else { %>
+		                    		comments: 0
+		                    	<% } %>
+		                    </p>
+	                    </div>
+	                </div>
+	                <div class="posts-likes">
+	                    <p>
+	                    	<% if(user[i].total_posts_likes > 0) { %>
+		                        <%= user[i].total_posts_likes %>
+		                    <% } else { %>
+		                    	0
+		                    <% } %>   
+	                    </p>
+	                </div>
+	            </div>
+	            <% } %>
+            <% } else { %>
+            	<p style="text-align: center">No Posts</p>
+            <% } %>
+
     </div>
 
-    
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+	function avatarChange() {
+    if ($('form').css("display") == "none") {
+        $('form').css("display" , "block");
+    } else {
+        $('form').css("display" , "none");
+    }
+}
+</script>
 </body>
 
 </html>

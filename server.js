@@ -85,7 +85,8 @@ app.post('/createcomment', function(req, res) {
     if (req.session.username) {
         var commentData = {
             post_id: comPId,
-            comment: comment
+            comment: comment,
+            user_id: req.session.ID
         };
         connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
             res.redirect('/post/' + comPId);
@@ -216,7 +217,7 @@ function login(req, res) {
                     req.session.user = results[0].user;
                     req.session.avatar = results[0].avatar;
                     req.session.ID = results[0].id;
-                    res.redirect("/userpage/" + req.session.ID);
+                    res.redirect("/userpage/" + req.session.username);
                 } else {
 
                     //incorrect password
@@ -229,28 +230,20 @@ function login(req, res) {
 }
 
 //User Profile Page
-app.get('/userpage/:user_id', function(req, res) {
-    //sql to select users posts ordering by time posted
-    // connection.query('SELECT likes.type, COUNT(likes.type_id) AS postlikes, posts.*, users.id, users.user FROM likes LEFT JOIN posts ON likes.type_id = posts.id LEFT JOIN users ON posts.user_id = users.id WHERE users.user = ? GROUP BY likes.type, posts.id ORDER BY posts.tim DESC', req.params.user, function(err, results, fields) {
-    //     var user_info = {
-    //         user: req.session.user,
-    //         username: req.session.username,
-    //         avatar: req.session.avatar,
-    //         id: req.session.ID,
-    //         userP: results
-    //     }
-    //     res.render("pages/user", user_info);
-    // });
-
-    connection.query('SELECT * FROM users WHERE users.id = ?' , req.params.user_id , function(err, results1, fields) {
-               connection.query('SELECT SUM((liked=1)-(liked=0)) AS likes_total, posts.*, COUNT(comments.post_id) as comment_total FROM likes RIGHT JOIN posts ON posts.id = likes.type_id AND likes.type = "post" LEFT JOIN comments ON comments.post_id = posts.id  WHERE posts.user_id = ? GROUP BY posts.id ORDER BY posts.tim DESC' , req.params.user_id, function(err, results2, fields) {
+app.get('/userpage/:username', function(req, res) {
+    connection.query('SELECT users.*, posts.*, SUM((liked=1)-(liked=0)) AS total_posts_likes FROM users LEFT JOIN posts ON posts.user_id = users.id LEFT JOIN likes ON likes.type = "post" AND likes.type_id = posts.id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC', req.params.username, function(err,results1,fields) {
+            connection.query('SELECT users.*, COUNT(comments.post_id) AS total_comments FROM users LEFT JOIN posts ON posts.user_id = users.id LEFT JOIN comments ON comments.post_id = posts.id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC' , req.params.username , function(err,results2,fields) {
+                var userID = results2[0].id;
+                connection.query('SELECT SUM((liked=1)-(liked=0)) AS total_comment_likes FROM comments LEFT JOIN likes ON likes.type="comment" AND likes.type_id = comments.id WHERE comments.user_id = ?' , userID , function(err, results3,fields) {
                     var info = {
                         log_user: req.session.ID,
-                        user_info: results1[0],
-                        posts: results2
+                        user: results1,
+                        user_comments: results2,
+                        all_comments: results3[0]
                     }
                     res.render('pages/user' , info);
-        });
+                });
+            });
     });
 });
 
@@ -261,9 +254,9 @@ app.post('/newavatar' , function(req,res) {
             avatar: req.body.avatar
         },
         {
-            id: req.body.user_id
+            username: req.body.username
         }] , function(err, results, fields) {
-        res.redirect('/userpage/' + req.body.user_id);
+        res.redirect('/userpage/' + req.body.username);
     });
 });
 

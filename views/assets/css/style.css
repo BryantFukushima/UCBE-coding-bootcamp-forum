@@ -1,4 +1,4 @@
-.main-posts .posts:after {
+.main-posts .posts:after, .posts:after, .user-page:after {
   content: "";
   display: table;
   clear: both;
@@ -27,12 +27,61 @@ body, html {
   text-align: center;
 }
 
+.user-page {
+  background: #F1F1F1;
+  border: #979797 0.2rem solid;
+  border-radius: 1rem;
+  margin: 3rem;
+  padding: 1.5rem 3rem;
+  cursor: pointer;
+}
+.user-info_avatar {
+  float: left;
+}
+.user-info_avatar form {
+  display: none;
+}
+
+.user-info_main {
+  float: left;
+  margin-left: 3rem;
+  line-height: 10px;
+}
+.user-info_main h1 {
+  font-size: 30px;
+  font-weight: 900;
+}
+
 .avatar {
   height: 100px;
   width: 100px;
   background-color: #FFFFFF;
 }
 
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: green;
+}
+
+.main-posts h2 {
+  text-align: center;
+}
+
+.posts {
+  background: #F1F1F1;
+  border: #979797 0.2rem solid;
+  border-radius: 1rem;
+  margin: 3rem;
+  padding: 0.5rem 1.5rem 3rem;
+  cursor: pointer;
+}
 .intro-main {
   height: 500px;
   background: #000;

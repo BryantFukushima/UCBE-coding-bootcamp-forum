@@ -1,6 +1,60 @@
 // _user-profile.sass
 
+.user-page
+     background: $content-bg-color
+     border: $content-border-color .2rem solid
+     border-radius: 1rem
+     margin: 3rem
+     padding: 1.5rem 3rem
+     cursor: pointer
+
+     &:after
+        @extend %clearfix
+
+
+.user-info_avatar
+     float: left
+
+     form
+          display: none
+
+.user-info_main
+     float: left
+     margin-left: 3rem
+     line-height: 10px
+
+     h1
+          font-size: 30px
+          font-weight: 900
+
 .avatar
-	height: 100px
-	width: 100px
-	background-color: #FFFFFF
+     height: 100px
+     width: 100px
+     background-color: #FFFFFF
+
+.red 
+     background-color: red
+     
+.blue 
+     background-color: blue
+     
+.green 
+     background-color: green
+
+.main-posts
+     h2
+        text-align: center
+
+.posts
+    background: $content-bg-color
+    border: $content-border-color .2rem solid
+    border-radius: 1rem
+    margin: 3rem
+    padding: .5rem 1.5rem 3rem
+    cursor: pointer
+
+    &:after
+        @extend %clearfix
+
+
+     
