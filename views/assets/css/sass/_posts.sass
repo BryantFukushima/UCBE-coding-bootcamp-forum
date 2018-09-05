@@ -1,0 +1,112 @@
+//_posts.sass
+
+// ind-posts mixin
+@include ind-posts
+
+// post
+.post-post
+    p
+        font-size: $info-font-size
+
+.posts-likes
+    float: right
+
+    .star
+        @extend %main-star
+        margin-top: 1rem
+
+    p
+        float: right
+        font-size: 2rem
+        transform: translate(0, 15%)
+        margin-top: 1rem
+
+    .post-lik-disl
+        float: right
+        margin: 1.8rem 1.2rem
+
+        [disabled]
+            @extend %disabled-arrow
+
+        .uparrow
+            @extend %uparrow
+            
+        .downarrow
+            @extend %downarrow
+                    
+// creating comment sec styles
+.create-com-sec
+    @extend %posts-bg
+    &:after
+        @extend %clearfix
+
+    form
+        width: 100%
+
+        textarea
+            width: 100%
+            font-size: $info-font-size
+
+        .login-err-msg
+            fload: left
+            display: inline-block
+            font-size: 1.6rem
+
+        button
+            @extend %primary-button
+
+        .signup-login
+            p
+                float: left
+                font-size: $info-font-size
+            a
+                @extend %primary-button
+                text-decoration: none
+
+                &:last-child
+                    background: #fff
+                    color: $primary-color
+
+// comment sec styles
+.comments
+    @extend %posts-bg
+    &:after
+        @extend %clearfix
+
+    .comments-text
+        float: left
+
+        p
+            font-size: $info-font-size
+
+        a
+            color: $primary-color
+            font-size: $info-font-size
+            text-decoration: none
+
+    .comments-like
+        float: right
+        margin-top: 1rem
+
+        .star
+            @extend %main-star
+            margin-top: 1rem
+
+        p
+            float: right
+            font-size: 2rem
+            transform: translate(0, 15%)
+            margin-top: 1rem
+
+        .comm-like-disl
+            float: right
+            margin: 1.8rem 1.2rem
+
+            [disabled]
+                @extend %disabled-arrow
+
+            .uparrow
+                @extend %uparrow
+
+            .downarrow
+                @extend %downarrow
