@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<!-- head.ejs -->
+    <!-- head.ejs -->
     <% include ../partials/head %>
 </head>
+
 <body>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <header>
+        <!-- header.ejs -->
         <% include ../partials/header %>
     </header>
     <div class="user-page">
@@ -23,47 +24,19 @@
             <% } %>
         </h2>
     </div>
+    <!-- user posts -->
     <div class="user-post">
         <% for (var i in userP) { %>
             <div class="posts" onclick="location.href='/post/<%= userP[i].id %>'">
                 <div class="posts-text-all">
                     <div class="post-title-user">
-=======
-=======
->>>>>>> parent of b2ee2e8... changed queries for landing and posts page; finished styling landing, posts, and newposts page; added navbar;
-
-	<div class="user-page">
-		<div class="avatar"></div>
-		<h1><%= user %></h1>
-		<h2><%= username %></h2>
-		<h2><%= id %></h2>
-		<h2>
-			<% if (avatar = 1) { %>
-				<p>one</p>
-			<% } else { %>
-				<p>two</p>
-			<% } %>
-		</h2>
-	</div>
-
-	<div class="user-post">
-		<% for (var i in userP) { %>
-        <div class="posts" onclick="location.href='/post/<%= userP[i].id %>'">
-                <div class="posts-text">
-                    <div class="text-rowone">
-<<<<<<< HEAD
->>>>>>> parent of b2ee2e8... changed queries for landing and posts page; finished styling landing, posts, and newposts page; added navbar;
-=======
->>>>>>> parent of b2ee2e8... changed queries for landing and posts page; finished styling landing, posts, and newposts page; added navbar;
                         <p>
                             <%= userP[i].title %>
                         </p>
-                        <p>
-                            <a href="/userpage/<%= userP[i].username %>">- <%= userP[i].username %>
+                        <a href="/userpage/<%= userP[i].username %>">- <%= userP[i].username %>
                             </a>
-                        </p>
                     </div>
-                    <div class="text-rowtwo">
+                    <div class="post-cat-comm">
                         <p>
                             Topic:
                             <%= userP[i].category %>
@@ -72,11 +45,11 @@
                             <p>
                                 <%= comments[i].num_comments %> Comments
                             </p>
-                        <% } else {%>
-                            <p>
-                                <%= comments[i].num_comments %> Comment
-                            </p>
-                        <% } %>
+                            <% } else {%>
+                                <p>
+                                    <%= comments[i].num_comments %> Comment
+                                </p>
+                                <% } %>
                     </div>
                 </div>
                 <div class="posts-likes">
@@ -86,7 +59,8 @@
                     <div class="star"></div>
                 </div>
             </div>
-    <% } %>
-	</div>
+            <% } %>
+    </div>
 </body>
+
 </html>

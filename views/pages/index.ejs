@@ -8,13 +8,8 @@
 
 <body>
     <header>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of c302141... added comments; organized sass files;
+        <!-- header.ejs -->
         <% include ../partials/header %>
->>>>>>> parent of c302141... added comments; organized sass files;
     </header>
     <!-- jumbotron -->
     <div class="intro-main">
@@ -30,40 +25,42 @@
         <div class="main-posts">
             <% for (var i in posts) { %>
                 <div class="posts" onclick="location.href='/post/<%= posts[i].id %>'">
-                    <div class="posts-text">
-                        <div class="text-rowone">
+                    <div class="posts-text-all">
+                        <div class="post-title-user">
                             <p>
                                 <%= posts[i].title %>
                             </p>
-                            <p>
-                                <a href="/userpage/<%= posts[i].username %>">- <%= posts[i].username %>
+                            <a href="/userpage/<%= posts[i].username %>">- <%= posts[i].username %>
                             </a>
-                            </p>
                         </div>
-                        <div class="text-rowtwo">
+                        <div class="post-cat-comm">
                             <p>
                                 Topic:
                                 <%= posts[i].category %>
                             </p>
-                            <% if (comments[i].num_comments > 1) { %>
+                            <% if (posts[i].total_comm > 1) { %>
                                 <p>
-                                    <%= comments[i].num_comments %> Comments
+                                    <%= posts[i].total_comm %> Comments
                                 </p>
                                 <% } else {%>
                                     <p>
-                                        <%= comments[i].num_comments %> Comment
+                                        <%= posts[i].total_comm %> Comment
                                     </p>
                                     <% } %>
                         </div>
                     </div>
                     <div class="posts-likes">
+                    <% if (posts[i].num_likes) { %>
                         <p>
                             <%= posts[i].num_likes %>
                         </p>
+                    <% } else { %>
+                        <p> 0 </p>
+                    <% } %>
                         <div class="star"></div>
                     </div>
                 </div>
-            <% } %>
+                <% } %>
         </div>
     </main>
 </body>
