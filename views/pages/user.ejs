@@ -8,23 +8,23 @@
 <body>
     <div class="user-page">
 		<div class="user-info_avatar">
-	        <% if(user[0].avatar == 1) { %>
+	        <% if(avatar == 1) { %>
 	        	<div class="avatar red">
 
 	    		</div>
-	        <% } else if (user[0].avatar == 2) { %>
+	        <% } else if (avatar == 2) { %>
 		        <div class="avatar blue">
 
 	    		</div>
-	        <% } else if (user[0].avatar == 3) { %>
+	        <% } else if (avatar == 3) { %>
 		        <div class="avatar green">
 
 	    		</div>
 	        <% } %>
-	        <% if (log_user == user_comments[0].id) { %>
+	        <% if (log_user == user_id) { %>
 		        <div onclick="avatarChange()">Change Avatar</div>
 		        <form method="POST" action="/newavatar">
-		        	<input type="hidden" name="username" value="<%= user[0].username %>">
+		        	<input type="hidden" name="username" value="<%= username %>">
 		        	<input type="radio" name="avatar" value="1"> 1 <br>
 		        	<input type="radio" name="avatar" value="2"> 2 <br>
 		        	<input type="radio" name="avatar" value="3"> 3 <br>
@@ -33,59 +33,53 @@
 	        <% } %>
         </div>
         <div class="user-info_main">
-	        <h1><%= user[0].user %></h1>
-	        <h2><%= user[0].username %></h2>
-	        <h3>
-	        	<% var total = 0; %>
-	        	<%for(i in user) { %>
-	        		<% if(user[i].total_posts_likes == null) { %>
-	        			<% total = total + 0; %>
-	        		<% } else { %>
-		        		<% total = total + user[i].total_posts_likes; %>
-	        		<% } %>
-	        	<% } %>
-	        	<% total = total + all_comments.total_comment_likes %>
-	        	Merit: <%= total %>
+	        <h1><%= user %></h1>
+	        <h2><%= username %></h2>
+	        <!-- <h3>
+	        	merit:
 	        		
-        	</h3>
+        	</h3> -->
         </div>
     </div>
     <div class="main-posts">
-    	<h2><%= user[0].user %>'s Posts</h2>
-    	<% if(user[0].post != null) { %>
-	        <% for (var i in user) { %>
-	            <div class="posts" onclick="location.href='/post/<%= user[i].id %>'">
+    	<h2><%= user %>'s Posts</h2>
+    	<% if(posts[0].post != null) { %>
+	        <% for (var i in posts) { %>
+	            <div class="posts" onclick="location.href='/post/<%= posts[i].id %>'">
 	                <div class="posts-text">
 	                    <div class="text-rowone">
 	                        <p>
-	                            <%= user[i].title %>
+	                            <%= posts[i].title %>
 	                        </p>
 	                        <p>
-	                            <a href="/userpage/<%= user[i].username %>">- <%= user[i].username %>
+	                            <a href="/userpage/<%= username %>">- <%= posts[i].username %>
 	                            </a>
 	                        </p>
 	                    </div>
 	                    <div class="text-rowtwo">
 	                        <p>
 	                            Topic:
-	                            <%= user[i].category %>
+	                            <%= posts[i].category %> 
 	                        </p>
 	                        <p>
-		                    	<% if(user_comments[i].total_comments > 0) { %>
-		                    		comments: <%= user_comments[i].total_comments %>
-		                    	<% } else { %>
-		                    		comments: 0
-		                    	<% } %>
+		                    	Comments: <%= posts[i].total_comments %>
 		                    </p>
+		                    <% if (log_user == user_id) { %>
+		                    	<form method="POST" action="/delete-post">
+		                    		<input type="hidden" name="post_id" value="<%= posts[i].id %>">
+		                    		<input type="hidden" name="username" value="<%= posts[i].username %>">
+		                    		<button type="submit">delete</button>
+		                    	</form>
+		                    <% } %>
 	                    </div>
 	                </div>
 	                <div class="posts-likes">
 	                    <p>
-	                    	<% if(user[i].total_posts_likes > 0) { %>
-		                        <%= user[i].total_posts_likes %>
-		                    <% } else { %>
-		                    	0
-		                    <% } %>   
+	                    	<% if (posts[i].total_posts_likes != null) { %>
+	                    		<%= posts[i].total_posts_likes %>
+                    		<% } else { %>
+                    			0
+                    		<% } %>
 	                    </p>
 	                </div>
 	            </div>

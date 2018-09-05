@@ -29,7 +29,7 @@ CREATE TABLE comments(
     tim TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     comment TEXT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (post_id) REFERENCES posts(id)
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE likes(
@@ -38,6 +38,7 @@ CREATE TABLE likes(
     type VARCHAR(45) NOT NULL,
     type_id INT NOT NULL,
     liked BOOLEAN DEFAULT 0,
+    receiver_id INT NOT NULL,
     PRIMARY KEY (id)
 );
 

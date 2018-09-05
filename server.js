@@ -231,20 +231,17 @@ function login(req, res) {
 
 //User Profile Page
 app.get('/userpage/:username', function(req, res) {
-    connection.query('SELECT users.*, posts.*, SUM((liked=1)-(liked=0)) AS total_posts_likes FROM users LEFT JOIN posts ON posts.user_id = users.id LEFT JOIN likes ON likes.type = "post" AND likes.type_id = posts.id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC', req.params.username, function(err,results1,fields) {
-            connection.query('SELECT users.*, COUNT(comments.post_id) AS total_comments FROM users LEFT JOIN posts ON posts.user_id = users.id LEFT JOIN comments ON comments.post_id = posts.id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC' , req.params.username , function(err,results2,fields) {
-                var userID = results2[0].id;
-                connection.query('SELECT SUM((liked=1)-(liked=0)) AS total_comment_likes FROM comments LEFT JOIN likes ON likes.type="comment" AND likes.type_id = comments.id WHERE comments.user_id = ?' , userID , function(err, results3,fields) {
-                    var info = {
-                        log_user: req.session.ID,
-                        user: results1,
-                        user_comments: results2,
-                        all_comments: results3[0]
-                    }
-                    res.render('pages/user' , info);
-                });
-            });
-    });
+    connection.query('SELECT users.id AS main_id, users.user, users.username, users.avatar,posts.*, SUM((liked=1)-(liked=0)) AS total_posts_likes, sum_comments.total_comments AS total_comments FROM users LEFT JOIN posts ON posts.user_id = users.id LEFT JOIN likes ON likes.type="post" AND likes.type_id = posts.id LEFT JOIN (SELECT posts.*, COUNT(comments.post_id) as total_comments, users.username FROM posts LEFT JOIN comments ON comments.post_id = posts.id LEFT JOIN users ON users.id = posts.user_id WHERE users.username = ? GROUP BY posts.id) AS sum_comments ON sum_comments.id = posts.id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC',[req.params.username,req.params.username], function(err,results,fields) {
+            var info = {
+                log_user: req.session.ID,
+                user_id: results[0].main_id,
+                user: results[0].user,
+                username: results[0].username,
+                avatar: results[0].avatar,
+                posts: results
+            }
+            res.render('pages/user' , info);
+    })
 });
 
 //change avatar
@@ -256,6 +253,17 @@ app.post('/newavatar' , function(req,res) {
         {
             username: req.body.username
         }] , function(err, results, fields) {
+        res.redirect('/userpage/' + req.body.username);
+    });
+});
+
+//delete post
+app.post('/delete-post' , function(req,res) {
+    connection.query('DELETE FROM posts WHERE ?', 
+    {
+        id: req.body.post_id        
+    }, 
+    function(err, results, fields) {
         res.redirect('/userpage/' + req.body.username);
     });
 });
