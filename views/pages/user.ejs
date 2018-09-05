@@ -8,6 +8,7 @@
 
 <body>
     <header>
+        <!-- header.ejs -->
         <% include ../partials/header %>
     </header>
     <div class="user-page">
@@ -23,6 +24,7 @@
             <% } %>
         </h2>
     </div>
+    <!-- user posts -->
     <div class="user-post">
         <% for (var i in userP) { %>
             <div class="posts" onclick="location.href='/post/<%= userP[i].id %>'">

@@ -1,4 +1,6 @@
 //base.css
+
+// variables
 $bg-color: #D8D8D8
 $content-bg-color: #F1F1F1
 $content-border-color: #979797
@@ -60,7 +62,6 @@ $info-font-size: 1.6rem
     @extend %main-arrow
     clip-path: polygon(50% 100%, 0 0, 100% 0)
 
-
 %disabled-arrow
     background: lighten($primary-color, 20)
     border: none
@@ -68,6 +69,7 @@ $info-font-size: 1.6rem
     height: 1.5rem
     cursor: default
     
+// main post style mixin
 @mixin ind-posts
     .posts
         // individual posts background
@@ -109,38 +111,6 @@ $info-font-size: 1.6rem
                     &:last-child
                         margin-left: 2rem
 
-            // post
-            .post-post
-                p
-                    font-size: $info-font-size
-
-        .posts-likes
-            float: right
-
-            .star
-                @extend %main-star
-                margin-top: 1rem
-
-            p
-                float: right
-                font-size: 2rem
-                transform: translate(0, 15%)
-                margin-top: 1rem
-
-            .post-lik-disl
-                float: right
-                margin: .7rem 1.2rem
-
-                [disabled]
-                    @extend %disabled-arrow
-
-                .uparrow
-                    @extend %uparrow
-                    
-                .downarrow
-                    @extend %downarrow
-                    
-
 html 
     font-size: 10px
     font-family: $primary-font
@@ -171,3 +141,5 @@ body
 
 //_posts.sass
 @import _posts
+
+

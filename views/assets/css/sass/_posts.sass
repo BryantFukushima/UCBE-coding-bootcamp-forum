@@ -3,6 +3,38 @@
 // ind-posts mixin
 @include ind-posts
 
+// post
+.post-post
+    p
+        font-size: $info-font-size
+
+.posts-likes
+    float: right
+
+    .star
+        @extend %main-star
+        margin-top: 1rem
+
+    p
+        float: right
+        font-size: 2rem
+        transform: translate(0, 15%)
+        margin-top: 1rem
+
+    .post-lik-disl
+        float: right
+        margin: 1.8rem 1.2rem
+
+        [disabled]
+            @extend %disabled-arrow
+
+        .uparrow
+            @extend %uparrow
+            
+        .downarrow
+            @extend %downarrow
+                    
+// creating comment sec styles
 .create-com-sec
     @extend %posts-bg
     &:after
@@ -35,6 +67,7 @@
                     background: #fff
                     color: $primary-color
 
+// comment sec styles
 .comments
     @extend %posts-bg
     &:after
@@ -67,7 +100,7 @@
 
         .comm-like-disl
             float: right
-            margin: .7rem 1.2rem
+            margin: 1.8rem 1.2rem
 
             [disabled]
                 @extend %disabled-arrow
@@ -77,5 +110,3 @@
 
             .downarrow
                 @extend %downarrow
-
-.text-post

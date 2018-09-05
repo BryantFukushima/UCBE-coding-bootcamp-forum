@@ -24,7 +24,7 @@
   margin: 2rem 0 2rem 2rem;
 }
 
-.comments .comments-like .star, .posts .posts-likes .star, .main-posts .posts .posts-likes .star, .user-post .posts .posts-likes .star {
+.comments .comments-like .star, .posts-likes .star {
   float: right;
   width: 3rem;
   height: 3rem;
@@ -33,7 +33,7 @@
   background: #ffbf00;
 }
 
-.comments .comments-like .comm-like-disl .downarrow, .posts .posts-likes .post-lik-disl .downarrow, .main-posts .posts .posts-likes .post-lik-disl .downarrow, .user-post .posts .posts-likes .post-lik-disl .downarrow, .comments .comments-like .comm-like-disl .uparrow, .posts .posts-likes .post-lik-disl .uparrow, .main-posts .posts .posts-likes .post-lik-disl .uparrow, .user-post .posts .posts-likes .post-lik-disl .uparrow {
+.comments .comments-like .comm-like-disl .downarrow, .posts-likes .post-lik-disl .downarrow, .comments .comments-like .comm-like-disl .uparrow, .posts-likes .post-lik-disl .uparrow {
   background: #4AB0C6;
   border: none;
   width: 1.5rem;
@@ -41,16 +41,16 @@
   cursor: pointer;
 }
 
-.comments .comments-like .comm-like-disl .uparrow, .posts .posts-likes .post-lik-disl .uparrow, .main-posts .posts .posts-likes .post-lik-disl .uparrow, .user-post .posts .posts-likes .post-lik-disl .uparrow {
+.comments .comments-like .comm-like-disl .uparrow, .posts-likes .post-lik-disl .uparrow {
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   margin-bottom: 1rem;
 }
 
-.comments .comments-like .comm-like-disl .downarrow, .posts .posts-likes .post-lik-disl .downarrow, .main-posts .posts .posts-likes .post-lik-disl .downarrow, .user-post .posts .posts-likes .post-lik-disl .downarrow {
+.comments .comments-like .comm-like-disl .downarrow, .posts-likes .post-lik-disl .downarrow {
   clip-path: polygon(50% 100%, 0 0, 100% 0);
 }
 
-.comments .comments-like .comm-like-disl [disabled], .posts .posts-likes .post-lik-disl [disabled], .main-posts .posts .posts-likes .post-lik-disl [disabled], .user-post .posts .posts-likes .post-lik-disl [disabled] {
+.comments .comments-like .comm-like-disl [disabled], .posts-likes .post-lik-disl [disabled] {
   background: #98d2de;
   border: none;
   width: 1.5rem;
@@ -74,15 +74,13 @@ body, html {
 }
 
 nav {
-  height: 5rem;
   width: 100%;
   background: #fff;
   box-shadow: 0 0.5rem 1rem #222;
-  position: relative;
 }
 nav h1 {
   float: left;
-  margin-left: 3%;
+  margin-left: 4rem;
 }
 nav h1 a {
   text-decoration: none;
@@ -90,16 +88,22 @@ nav h1 a {
   color: #313131;
 }
 nav .stuff {
-  right: 3%;
-  top: 25%;
-  position: absolute;
+  float: right;
+  margin: 1.3rem 4rem 0;
 }
 nav .stuff div {
-  float: left;
   margin-right: 2rem;
+}
+nav .stuff div.search-bar {
+  width: 40vw;
+  float: left;
 }
 nav .stuff div.search-bar input {
   font-size: 1.6rem;
+  width: 100%;
+}
+nav .stuff div.user-profile {
+  float: left;
 }
 nav .stuff div.user-profile a {
   text-decoration: none;
@@ -117,6 +121,7 @@ nav .stuff .new-post {
   padding: 0;
   line-height: 0;
   transform: translate(0, -15%);
+  float: left;
 }
 
 .signup-container {
@@ -162,25 +167,6 @@ nav .stuff .new-post {
 }
 .user-post .posts .posts-text-all .post-cat-comm p:last-child {
   margin-left: 2rem;
-}
-.user-post .posts .posts-text-all .post-post p {
-  font-size: 1.6rem;
-}
-.user-post .posts .posts-likes {
-  float: right;
-}
-.user-post .posts .posts-likes .star {
-  margin-top: 1rem;
-}
-.user-post .posts .posts-likes p {
-  float: right;
-  font-size: 2rem;
-  transform: translate(0, 15%);
-  margin-top: 1rem;
-}
-.user-post .posts .posts-likes .post-lik-disl {
-  float: right;
-  margin: 0.7rem 1.2rem;
 }
 .user-post .posts {
   cursor: pointer;
@@ -244,25 +230,6 @@ nav .stuff .new-post {
 }
 .main-posts .posts .posts-text-all .post-cat-comm p:last-child {
   margin-left: 2rem;
-}
-.main-posts .posts .posts-text-all .post-post p {
-  font-size: 1.6rem;
-}
-.main-posts .posts .posts-likes {
-  float: right;
-}
-.main-posts .posts .posts-likes .star {
-  margin-top: 1rem;
-}
-.main-posts .posts .posts-likes p {
-  float: right;
-  font-size: 2rem;
-  transform: translate(0, 15%);
-  margin-top: 1rem;
-}
-.main-posts .posts .posts-likes .post-lik-disl {
-  float: right;
-  margin: 0.7rem 1.2rem;
 }
 .main-posts .posts {
   cursor: pointer;
@@ -345,24 +312,26 @@ nav .stuff .new-post {
 .posts .posts-text-all .post-cat-comm p:last-child {
   margin-left: 2rem;
 }
-.posts .posts-text-all .post-post p {
+
+.post-post p {
   font-size: 1.6rem;
 }
-.posts .posts-likes {
+
+.posts-likes {
   float: right;
 }
-.posts .posts-likes .star {
+.posts-likes .star {
   margin-top: 1rem;
 }
-.posts .posts-likes p {
+.posts-likes p {
   float: right;
   font-size: 2rem;
   transform: translate(0, 15%);
   margin-top: 1rem;
 }
-.posts .posts-likes .post-lik-disl {
+.posts-likes .post-lik-disl {
   float: right;
-  margin: 0.7rem 1.2rem;
+  margin: 1.8rem 1.2rem;
 }
 .create-com-sec form {
   width: 100%;
@@ -414,7 +383,7 @@ nav .stuff .new-post {
 }
 .comments .comments-like .comm-like-disl {
   float: right;
-  margin: 0.7rem 1.2rem;
+  margin: 1.8rem 1.2rem;
 }
 
 /*# sourceMappingURL=style.css.map */
