@@ -1,4 +1,4 @@
-.main-posts .posts:after, .posts:after, .user-page:after {
+.main-posts .posts:after, .user-page:after {
   content: "";
   display: table;
   clear: both;
@@ -23,8 +23,35 @@ body, html {
   color: blue;
 }
 
-.login-container {
+.login-main {
+  background: #F1F1F1;
+  border: #979797 0.2rem solid;
+  border-radius: 1rem;
+  margin: 25%;
+  padding: 5rem;
+}
+.login-main h1 {
+  margin-bottom: 2.5rem;
   text-align: center;
+}
+.login-main form {
+  text-align: center;
+}
+.login-main form input {
+  margin: 5px;
+  height: 20px;
+  width: 75%;
+}
+.login-main form button {
+  background-color: #4AB0C6;
+  border: #4AB0C6 0.2rem solid;
+  border-radius: 7rem;
+  margin-top: 2.5rem;
+  padding: 5px 20px;
+  color: #fff;
+}
+.login-main form button:hover {
+  cursor: pointer;
 }
 
 .user-page {
@@ -58,6 +85,12 @@ body, html {
   background-color: #FFFFFF;
 }
 
+.mini-avatar {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+}
+
 .red {
   background-color: red;
 }
@@ -74,14 +107,10 @@ body, html {
   text-align: center;
 }
 
-.posts {
-  background: #F1F1F1;
-  border: #979797 0.2rem solid;
-  border-radius: 1rem;
-  margin: 3rem;
-  padding: 0.5rem 1.5rem 3rem;
-  cursor: pointer;
+.delete-post {
+  display: inline;
 }
+
 .intro-main {
   height: 500px;
   background: #000;
@@ -113,8 +142,9 @@ body, html {
   border: #979797 0.2rem solid;
   border-radius: 1rem;
   margin: 3rem;
-  padding: 0.5rem 1.5rem 3rem;
+  padding: 1.5rem 3rem;
   cursor: pointer;
+  position: relative;
 }
 .main-posts .posts [class^=post] {
   display: block;
@@ -124,6 +154,9 @@ body, html {
 }
 .main-posts .posts .posts-text {
   float: left;
+}
+.main-posts .posts .posts-text .text-rowone {
+  margin-bottom: 1rem;
 }
 .main-posts .posts .posts-text .text-rowone p:first-child {
   font-size: 2.4rem;
@@ -143,11 +176,8 @@ body, html {
   color: #297281;
 }
 .main-posts .posts .posts-text .text-rowtwo p {
-  margin: 0;
+  margin: 0 10px 0 0;
   font-size: 1.4rem;
-}
-.main-posts .posts .posts-text .text-rowtwo p:last-child {
-  margin-left: 2rem;
 }
 .main-posts .posts .posts-likes {
   float: right;
@@ -155,7 +185,10 @@ body, html {
 .main-posts .posts .posts-likes p {
   font-size: 2rem;
   margin: 0;
-  margin-top: 2.4rem;
+  position: absolute;
+  right: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /*# sourceMappingURL=style.css.map */

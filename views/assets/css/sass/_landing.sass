@@ -33,8 +33,9 @@
         border: $content-border-color .2rem solid
         border-radius: 1rem
         margin: 3rem
-        padding: .5rem 1.5rem 3rem
+        padding: 1.5rem 3rem
         cursor: pointer
+        position: relative
 
 
         &:after
@@ -50,7 +51,7 @@
             float: left
 
             .text-rowone
-
+                margin-bottom: 1rem
                 p
                     &:first-child
                         font-size: 2.4rem
@@ -71,11 +72,8 @@
             .text-rowtwo
 
                 p
-                    margin: 0
+                    margin: 0 10px 0 0
                     font-size: 1.4rem
-                    
-                    &:last-child
-                        margin-left: 2rem
 
         .posts-likes
             float: right
@@ -83,7 +81,12 @@
             p
                 font-size: 2rem
                 margin: 0
-                margin-top: 2.4rem
+                position: absolute
+                right: 3rem
+                top: 50%
+                transform: translateY(-50%)
+
+                
 
 
 

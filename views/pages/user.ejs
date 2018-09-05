@@ -52,6 +52,21 @@
 	                            <%= posts[i].title %>
 	                        </p>
 	                        <p>
+	                        <% if(avatar == 1) { %>
+					        	<div class="mini-avatar red">
+
+					    		</div>
+					        <% } else if (avatar == 2) { %>
+						        <div class="mini-avatar blue">
+
+					    		</div>
+					        <% } else if (avatar == 3) { %>
+						        <div class="mini-avatar green">
+
+					    		</div>
+					        <% } %>
+					        </p>
+	                        <p>
 	                            <a href="/userpage/<%= username %>">- <%= posts[i].username %>
 	                            </a>
 	                        </p>
@@ -65,10 +80,10 @@
 		                    	Comments: <%= posts[i].total_comments %>
 		                    </p>
 		                    <% if (log_user == user_id) { %>
-		                    	<form method="POST" action="/delete-post">
+		                    	<form class="delete-post" method="POST" action="/delete-post">
 		                    		<input type="hidden" name="post_id" value="<%= posts[i].id %>">
 		                    		<input type="hidden" name="username" value="<%= posts[i].username %>">
-		                    		<button type="submit">delete</button>
+		                    		<p onclick="javascript:this.parentNode.submit()">Delete</p>
 		                    	</form>
 		                    <% } %>
 	                    </div>
