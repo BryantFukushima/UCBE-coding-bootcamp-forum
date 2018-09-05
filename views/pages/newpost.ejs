@@ -8,15 +8,21 @@
 
 <body>
     <header>
+<<<<<<< HEAD
         <!-- header.ejs -->
         <% include ../partials/header %>
+=======
+>>>>>>> parent of b2ee2e8... changed queries for landing and posts page; finished styling landing, posts, and newposts page; added navbar;
     </header>
     <!-- new post form -->
     <div class="new-post-form">
         <form method="POST" action="/createpost">
             <div class="row">
+<<<<<<< HEAD
                 <span>Topic:</span>
                 <!-- topic -->
+=======
+>>>>>>> parent of b2ee2e8... changed queries for landing and posts page; finished styling landing, posts, and newposts page; added navbar;
                 <select name="category">
                     <option value="UCBE Class">UCBE Class</option>
                     <option value="Html&Css">HTML & CSS</option>
@@ -36,6 +42,7 @@
             </div>
             <!-- if logged in shows submit button -->
             <% if(user_id) { %>
+<<<<<<< HEAD
             <!-- login err message -->
                 <div class="login-err-msg">
                     <%= postErr.postErr %>
@@ -49,6 +56,19 @@
                         <a href="/signup">Sign Up</a>
                     </div>
                     <% } %>
+=======
+            <button type="submit">Submit</button>
+            <% } else { %>
+            <div class="login-err-msg">
+            <% if(loginErrPost) { %>
+            <%= loginErrPost %>
+            <% } %>
+                <a href="/login">Sign In</a>
+            </div>
+            <button type="submit" disabled>Submit
+            </button>
+            <% } %>
+>>>>>>> parent of b2ee2e8... changed queries for landing and posts page; finished styling landing, posts, and newposts page; added navbar;
         </form>
     </div>
 </body>

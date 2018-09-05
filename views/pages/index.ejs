@@ -8,8 +8,6 @@
 
 <body>
     <header>
-        <!-- header.ejs -->
-        <% include ../partials/header %>
     </header>
     <!-- jumbotron -->
     <div class="intro-main">
@@ -25,42 +23,40 @@
         <div class="main-posts">
             <% for (var i in posts) { %>
                 <div class="posts" onclick="location.href='/post/<%= posts[i].id %>'">
-                    <div class="posts-text-all">
-                        <div class="post-title-user">
+                    <div class="posts-text">
+                        <div class="text-rowone">
                             <p>
                                 <%= posts[i].title %>
                             </p>
-                            <a href="/userpage/<%= posts[i].username %>">- <%= posts[i].username %>
+                            <p>
+                                <a href="/userpage/<%= posts[i].username %>">- <%= posts[i].username %>
                             </a>
+                            </p>
                         </div>
-                        <div class="post-cat-comm">
+                        <div class="text-rowtwo">
                             <p>
                                 Topic:
                                 <%= posts[i].category %>
                             </p>
-                            <% if (posts[i].total_comm > 1) { %>
+                            <% if (comments[i].num_comments > 1) { %>
                                 <p>
-                                    <%= posts[i].total_comm %> Comments
+                                    <%= comments[i].num_comments %> Comments
                                 </p>
                                 <% } else {%>
                                     <p>
-                                        <%= posts[i].total_comm %> Comment
+                                        <%= comments[i].num_comments %> Comment
                                     </p>
                                     <% } %>
                         </div>
                     </div>
                     <div class="posts-likes">
-                    <% if (posts[i].num_likes) { %>
                         <p>
                             <%= posts[i].num_likes %>
                         </p>
-                    <% } else { %>
-                        <p> 0 </p>
-                    <% } %>
                         <div class="star"></div>
                     </div>
                 </div>
-                <% } %>
+            <% } %>
         </div>
     </main>
 </body>
