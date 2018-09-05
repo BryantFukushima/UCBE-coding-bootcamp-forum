@@ -168,13 +168,6 @@ app.post('/likes', function(req, res) {
     });
 });
 
-<<<<<<< HEAD
-//Root
-app.get("/", function(req, res) {
-    res.send("hi");
-})
-
-=======
 // //Search Bar (work in progress)
 // app.post('/search', function(req, rest) {
 //     var input = req.body.input;
@@ -183,12 +176,11 @@ app.get("/", function(req, res) {
 // });
 
 //Signup route
->>>>>>> style-posts-comments-ky
 app.get("/signup", function(req, res) {
     res.render('pages/signup', { err: req.flash() });
 });
 
-//Signup
+//Signup field
 app.post("/signing-in", function(req, res) {
 
     //missing field

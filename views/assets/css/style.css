@@ -168,9 +168,6 @@ nav .stuff .new-post {
 .user-post .posts .posts-text-all .post-cat-comm p:last-child {
   margin-left: 2rem;
 }
-.user-post .posts {
-  cursor: pointer;
-}
 
 .intro-main {
   height: 500px;
