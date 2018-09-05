@@ -1,10 +1,13 @@
 //base.css
+
+// variables
 $bg-color: #D8D8D8
 $content-bg-color: #F1F1F1
 $content-border-color: #979797
 $primary-color: #4AB0C6
 $primary-font: 'Roboto', sans-serif
 $button-font-color: #fff
+$info-font-size: 1.6rem
 
 // clearing floats
 %clearfix
@@ -19,20 +22,18 @@ $button-font-color: #fff
     border: $content-border-color .2rem solid
     border-radius: 1rem
     margin: 3rem
-    padding: .5rem 1.5rem 3rem
+    padding: 4rem 3rem
 
 //post and comment button
 %primary-button
     float: right
     background: $primary-color
     border: 1px solid $content-border-color
-    border-radius: 25px
+    border-radius: 1rem
     color: $button-font-color
     font-size: 2rem
     padding: .5rem 1rem
     cursor: pointer
-<<<<<<< HEAD
-=======
     margin: 2rem 0 2rem 2rem
 
 // star
@@ -61,20 +62,18 @@ $button-font-color: #fff
     @extend %main-arrow
     clip-path: polygon(50% 100%, 0 0, 100% 0)
 
-
 %disabled-arrow
     background: lighten($primary-color, 20)
     border: none
     width: 1.5rem
     height: 1.5rem
     cursor: default
->>>>>>> parent of c302141... added comments; organized sass files;
     
+// main post style mixin
 @mixin ind-posts
     .posts
         // individual posts background
         @extend %posts-bg
-        cursor: pointer
         &:after
             //clearfix mixin
             @extend %clearfix
@@ -85,81 +84,32 @@ $button-font-color: #fff
         p
             display: inline-block
         //setting text to left
-        .posts-text
+        .posts-text-all
             float: left
             // title and username
-            .text-rowone
+            .post-title-user
+                // title styles
                 p
-                    // title styles
-                    &:first-child
-                        font-size: 2.4rem
-                        text-decoration: underline
-                        margin: 0
-                        margin-right: 1rem
-                    // username styles
-                    a
-                        text-decoration: none
-                        color: $primary-color
-                        font-size: 1.4rem
-                        // hover color
-                        &:hover
-                            color: darken($primary-color, 20)
+                    font-size: 2.4rem
+                    text-decoration: underline
+                    margin: 0
+                    margin-right: 1rem
+                // username styles
+                a
+                    text-decoration: none
+                    color: $primary-color
+                    font-size: $info-font-size
+                    // hover color
+                    &:hover
+                        color: darken($primary-color, 20)
             // category and comments
-            .text-rowtwo
+            .post-cat-comm
                 p
                     margin: 0
-                    font-size: 1.4rem
+                    font-size: $info-font-size
                     
                     &:last-child
                         margin-left: 2rem
-        .posts-likes
-            float: right
-            margin-top: 2.4rem
-
-            .star
-                float: right
-                width: 2rem
-                height: 2rem
-                margin: .1rem 1rem 0
-                clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)
-                background: #ffbf00
-
-            p
-                float: right
-                font-size: 2rem
-                margin: 0
-
-            // post
-            .post-post
-                p
-                    font-size: $info-font-size
-
-        .posts-likes
-            float: right
-
-            .star
-                @extend %main-star
-                margin-top: 1rem
-
-            p
-                float: right
-                font-size: 2rem
-                transform: translate(0, 15%)
-                margin-top: 1rem
-
-            .post-lik-disl
-                float: right
-                margin: .7rem 1.2rem
-
-                [disabled]
-                    @extend %disabled-arrow
-
-                .uparrow
-                    @extend %uparrow
-                    
-                .downarrow
-                    @extend %downarrow
-                    
 
 html 
     font-size: 10px
@@ -170,6 +120,9 @@ body
 
 //_reset.sass
 @import _reset
+
+//_navbar.sass
+@import _navbar
 
 //_signup.sass
 @import _signup
@@ -188,3 +141,4 @@ body
 
 //_posts.sass
 @import _posts
+

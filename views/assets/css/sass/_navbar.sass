@@ -1,38 +1,38 @@
 // _navbar.sass
 
+// navbar styles
 nav
-    height: 5rem
     width: 100%
     background: #fff
     box-shadow: 0 .5rem 1rem #222
-    position: relative
 
     &:after
         @extend %clearfix
 
     h1
         float: left
-        margin-left: 3%
-
+        margin-left: 4rem
         a
             text-decoration: none
             font-size: 2.4rem
             color: darken($content-border-color, 40)
 
     .stuff
-        right: 3%
-        top: 25%
-        position: absolute
+        float: right
+        margin: 1.3rem 4rem 0
 
         div
-            float: left
             margin-right: 2rem
 
             &.search-bar
+                width: 40vw
+                float: left
                 input
                     font-size: $info-font-size
+                    width: 100%
 
             &.user-profile
+                float: left
                 a
                     text-decoration: none
                     font-size: 2rem
@@ -49,3 +49,4 @@ nav
             padding: 0
             line-height: 0
             transform: translate(0, -15%)
+            float: left
