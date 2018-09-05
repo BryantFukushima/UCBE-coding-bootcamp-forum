@@ -135,9 +135,15 @@ app.post('/createpost', function(req, res) {
             res.redirect('/newpost');
         } else {
             connection.query('SELECT * FROM posts WHERE id = (SELECT MAX(id) FROM posts)', function(err, response) {
+<<<<<<< HEAD
 
                 res.redirect('/post/' + response[0].id);
 
+=======
+
+                res.redirect('/post/' + response[0].id);
+
+>>>>>>> parent of b2ee2e8... changed queries for landing and posts page; finished styling landing, posts, and newposts page; added navbar;
             });
         }
     });
