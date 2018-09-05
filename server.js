@@ -64,6 +64,7 @@ app.get("/", function(req, res) {
 app.get('/post/:id', function(req, res) {
     var postId = req.params.id;
     //selecting all from posts and comments db table
+<<<<<<< HEAD
     connection.query('SELECT posts.id, posts.title, posts.category, posts.tim, COUNT(likes.liked) AS num_likes, users.username, comments.comment FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = ? AND (likes.type = "post" OR likes.type IS NULL) GROUP BY posts.id, comments.comment', postId, function(err, results, fields) {
         var postInfo = {
             user: req.session.ID,
@@ -76,6 +77,20 @@ app.get('/post/:id', function(req, res) {
         }
         // res.render('pages/post', postInfo);
         res.json(postInfo);
+=======
+    connection.query('SELECT posts.*, users.username, SUM((liked=1)-(liked=0)) AS total_likes FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN likes ON posts.id = likes.type_id AND likes.type = "post" WHERE posts.id = ?', postId, function(err, postsResults, fields) {
+        connection.query('SELECT comments.*, users.username, SUM((liked=1)-(liked=0)) AS total_likes FROM comments LEFT JOIN users ON comments.user_id = users.id LEFT JOIN likes ON comments.id = likes.type_id AND likes.type = "comment" LEFT JOIN posts ON comments.post_id = posts.id WHERE posts.id = ? GROUP BY comments.id ORDER BY comments.tim DESC', postId, function(err, commResults, fields) {
+            var postInfo = {
+                user: req.session.user,
+                username: req.session.username,
+                posts: postsResults,
+                comments: commResults,
+                loginErr: req.flash()
+            };
+            res.render('pages/post', postInfo);
+            // res.json(postInfo);
+        });
+>>>>>>> parent of c302141... added comments; organized sass files;
     });
 });
 
@@ -83,23 +98,34 @@ app.get('/post/:id', function(req, res) {
 app.post('/createcomment', function(req, res) {
     var comPId = req.body.post_id;
     var comment = req.body.comment;
-    // if logged in
     if (req.session.username) {
         var commentData = {
             post_id: comPId,
             comment: comment
         };
+<<<<<<< HEAD
         connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
             res.redirect('/post/' + comPId);
         });
+=======
+        if (comment.length > 0) {
+            connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
+                res.redirect('/post/' + comPId);
+            });
+        } else {
+            req.flash("commErr", "Don't forget to write your comment");
+            res.redirect('/post/' + comPId);
+        }
+>>>>>>> parent of c302141... added comments; organized sass files;
     } else {
         req.flash("errLogin", "Please log in.");
         res.redirect('/post/' + comPId);
     }
 });
 
-//Create New Post Page
+//Create Post Page route
 app.get('/newpost', function(req, res) {
+<<<<<<< HEAD
     var userLogin;
     if (req.session.username) {
         userLogin = {
@@ -115,9 +141,19 @@ app.get('/newpost', function(req, res) {
         res.render('pages/newpost', userLogin);
     }
 
+=======
+    var userLogin = {
+            loginErrPost: "",
+            postErr: req.flash(),
+            user_id: req.session.ID,
+            user: req.session.user,
+            username: req.session.username
+        }
+        res.render('pages/newpost', userLogin);
+>>>>>>> parent of c302141... added comments; organized sass files;
 });
 
-//Create New Post Form Route
+//Create Post Form
 app.post('/createpost', function(req, res) {
     var title = req.body.title;
     var category = req.body.category;
@@ -128,6 +164,7 @@ app.post('/createpost', function(req, res) {
         category: category,
         post: post
     };
+<<<<<<< HEAD
     //Insert a new post into posts db table
     connection.query('INSERT INTO posts SET ?', postData, function(err, response) {
         if (err) {
@@ -147,6 +184,26 @@ app.post('/createpost', function(req, res) {
             });
         }
     });
+=======
+    if (title.length > 0 && post.length > 0) {
+        //Insert a new post into posts db table
+        connection.query('INSERT INTO posts SET ?', postData, function(err, response) {
+            if (err) {
+                req.flash("errLogin", "Please log in.");
+                res.redirect('/newpost');
+            } else {
+                connection.query('SELECT * FROM posts WHERE id = (SELECT MAX(id) FROM posts)', function(err, response) {
+
+                    res.redirect('/post/' + response[0].id);
+                });
+            }
+        });
+    } else {
+        req.flash("postErr", "Please enter all fields");
+        res.redirect('/newpost')
+    }
+
+>>>>>>> parent of c302141... added comments; organized sass files;
 });
 
 //Inserting likes
@@ -167,13 +224,6 @@ app.post('/likes', function(req, res) {
         }
     });
 });
-
-// //Search Bar (work in progress)
-// app.post('/search', function(req, rest) {
-//     var input = req.body.input;
-//     var inputSplit = input.split(' ');
-//     console.log(inputSplit);
-// });
 
 //Signup route
 app.get("/signup", function(req, res) {

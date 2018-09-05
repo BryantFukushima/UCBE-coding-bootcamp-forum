@@ -1,10 +1,16 @@
 //_posts.sass
 
+<<<<<<< HEAD
 .post-sec
     @extend %posts-bg
 
                     
 // creating comment sec styles
+=======
+// ind-posts mixin
+@include ind-posts
+
+>>>>>>> parent of c302141... added comments; organized sass files;
 .create-com-sec
     @extend %posts-bg
     &:after
@@ -19,6 +25,44 @@
         button
             @extend %primary-button
 
+<<<<<<< HEAD
+=======
+        .signup-login
+            p
+                float: left
+                font-size: $info-font-size
+            a
+                @extend %primary-button
+                text-decoration: none
+
+                &:last-child
+                    background: #fff
+                    color: $primary-color
+
+>>>>>>> parent of c302141... added comments; organized sass files;
 .comments
 
+<<<<<<< HEAD
     @extend %posts-bg
+=======
+        p
+            float: right
+            font-size: 2rem
+            transform: translate(0, 15%)
+            margin-top: 1rem
+
+        .comm-like-disl
+            float: right
+            margin: .7rem 1.2rem
+
+            [disabled]
+                @extend %disabled-arrow
+
+            .uparrow
+                @extend %uparrow
+
+            .downarrow
+                @extend %downarrow
+
+.text-post
+>>>>>>> parent of c302141... added comments; organized sass files;

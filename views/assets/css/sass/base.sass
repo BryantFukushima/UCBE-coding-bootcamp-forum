@@ -1,6 +1,4 @@
 //base.css
-
-// variables
 $bg-color: #D8D8D8
 $content-bg-color: #F1F1F1
 $content-border-color: #979797
@@ -33,8 +31,45 @@ $button-font-color: #fff
     font-size: 2rem
     padding: .5rem 1rem
     cursor: pointer
+<<<<<<< HEAD
+=======
+    margin: 2rem 0 2rem 2rem
+
+// star
+%main-star
+    float: right
+    width: 3rem
+    height: 3rem
+    margin: .1rem 1rem 0
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)
+    background: #ffbf00
+
+// arrow
+%main-arrow
+    background: $primary-color
+    border: none
+    width: 1.5rem
+    height: 1.5rem
+    cursor: pointer
+
+%uparrow
+    @extend %main-arrow
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%)
+    margin-bottom: 1rem
+
+%downarrow
+    @extend %main-arrow
+    clip-path: polygon(50% 100%, 0 0, 100% 0)
+
+
+%disabled-arrow
+    background: lighten($primary-color, 20)
+    border: none
+    width: 1.5rem
+    height: 1.5rem
+    cursor: default
+>>>>>>> parent of c302141... added comments; organized sass files;
     
-// main post style mixin
 @mixin ind-posts
     .posts
         // individual posts background
@@ -94,6 +129,38 @@ $button-font-color: #fff
                 font-size: 2rem
                 margin: 0
 
+            // post
+            .post-post
+                p
+                    font-size: $info-font-size
+
+        .posts-likes
+            float: right
+
+            .star
+                @extend %main-star
+                margin-top: 1rem
+
+            p
+                float: right
+                font-size: 2rem
+                transform: translate(0, 15%)
+                margin-top: 1rem
+
+            .post-lik-disl
+                float: right
+                margin: .7rem 1.2rem
+
+                [disabled]
+                    @extend %disabled-arrow
+
+                .uparrow
+                    @extend %uparrow
+                    
+                .downarrow
+                    @extend %downarrow
+                    
+
 html 
     font-size: 10px
     font-family: $primary-font
@@ -121,5 +188,3 @@ body
 
 //_posts.sass
 @import _posts
-
-

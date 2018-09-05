@@ -7,10 +7,14 @@
 </head>
 
 <body>
+    <header>
+        <% include ../partials/header %>
+    </header>
     <!-- message to login -->
     <div class="login-err-msg">
         <%= loginErr.errLogin %>
     </div>
+<<<<<<< HEAD
     <div class="post-sec">
         <div class="post-text">
             <p>
@@ -55,17 +59,89 @@
             <input type="hidden" name="post_id" value="<%= post_id %>">
             <textarea rows="5" name="comment" placeholder="Type Something..."></textarea>
             <% if(user) { %>
+=======
+    <div class="posts">
+        <div class="posts-text-all">
+            <div class="post-title-user">
+                <p>
+                    <%= posts[0].title %>
+                </p>
+                <a href="/userpage/<%= posts[0].username %>">- <%= posts[0].username %>
+                </a>
+            </div>
+            <div class="post-cat-comm">
+                <p>
+                    Topic:
+                    <%= posts[0].category %>
+                </p>
+                <p>
+                    <%= posts[0].tim %>
+                </p>
+            </div>
+            <div class="post-post">
+                <p>
+                    <%= posts[0].post %>
+                </p>
+            </div>
+        </div>
+        <div class="posts-likes">
+            <div class="post-lik-disl">
+                <!-- like button for posts -->
+                <form method="POST" action="/likes">
+                    <input type="hidden" name="post_id" value="<%= posts[0].id %>">
+                    <input type="hidden" name="type_id" value="<%= posts[0].id %>">
+                    <input type="hidden" name="type" value="post">
+                    <input type="hidden" name="like" value="1">
+                    <% if(user) { %>
+                        <button class="uparrow" type="submit"></button>
+                        <% } else { %>
+                            <button class="uparrow" type="submit" disabled></button>
+                            <% } %>
+                </form>
+                <!-- dislike button for comments -->
+                <form method="POST" action="/likes">
+                    <input type="hidden" name="post_id" value="<%= posts[0].id %>">
+                    <input type="hidden" name="type_id" value="<%= posts[0].id %>">
+                    <input type="hidden" name="type" value="post">
+                    <input type="hidden" name="like" value="0">
+                    <% if(user) { %>
+                        <button class="downarrow" type="submit"></button>
+                        <% } else { %>
+                            <button class="downarrow" type="submit" disabled></button>
+                            <% } %>
+                </form>
+            </div>
+            <% if (posts[0].total_likes) { %>
+                <p>
+                    <%= posts[0].total_likes %>
+                </p>
+                <% } else { %>
+                    <p> 0 </p>
+                    <% } %>
+                        <div class="star"></div>
+        </div>
+    </div>
+    </div>
+    <div class="create-com-sec">
+        <form method="POST" action="/createcomment">
+            <input type="hidden" name="post_id" value="<%= posts[0].id %>">
+            <textarea rows="10" name="comment" placeholder="Type Something..."></textarea>
+            <% if(user) { %>
+                <div class="login-err-msg">
+                    <%= loginErr.commErr %>
+                </div>
+>>>>>>> parent of c302141... added comments; organized sass files;
                 <button type="submit">Submit</button>
                 <% } else { %>
                     <button type="submit" disabled>Submit</button>
                     <% } %>
         </form>
     </div>
-    <!-- comment sec for post -->
     <div class="comment-sec">
         <% for (var i in comments) { %>
             <% if (comments[0].comment != null) { %>
                 <div class="comments">
+<<<<<<< HEAD
                     <p>
                         <%= comments[i].comment %>
                     </p>
@@ -89,14 +165,64 @@
                         <input type="hidden" name="like" value="0">
                         <% if(user) { %>
                             <button type="submit">Dislike</button>
+=======
+                    <div class="comments-text">
+                        <p>
+                            <%= comments[i].tim %>
+                        </p>
+                        <p>
+                            <%= comments[i].comment %>
+                        </p>
+                        <a href="/userpage/<%= comments[i].username %>">
+                        - <%= comments[i].username %>
+                    </a>
+                    </div>
+                    <div class="comments-like">
+                        <div class="comm-like-disl">
+                            <!-- like button for comments -->
+                            <form method="POST" action="/likes">
+                                <input type="hidden" name="post_id" value="<%= posts[0].id %>">
+                                <input type="hidden" name="type_id" value="<%= comments[i].id %>">
+                                <input type="hidden" name="type" value="comment">
+                                <input type="hidden" name="like" value="1">
+                                <% if(user) { %>
+                                    <button class="uparrow" type="submit"></button>
+                                    <% } else { %>
+                                        <button class="uparrow" type="submit" disabled></button>
+                                        <% } %>
+                            </form>
+                            <!-- dislike button for comments -->
+                            <form method="POST" action="/likes">
+                                <input type="hidden" name="post_id" value="<%= posts[0].id %>">
+                                <input type="hidden" name="type_id" value="<%= comments[i].id %>">
+                                <input type="hidden" name="type" value="comment">
+                                <input type="hidden" name="like" value="0">
+                                <% if(user) { %>
+                                    <button class="downarrow" type="submit"></button>
+                                    <% } else { %>
+                                        <button class="downarrow" type="submit" disabled></button>
+                                        <% } %>
+                            </form>
+                        </div>
+                        <% if (comments[i].total_likes) { %>
+                            <p>
+                                <%= comments[i].total_likes %>
+                            </p>
+>>>>>>> parent of c302141... added comments; organized sass files;
                             <% } else { %>
                                 <button type="submit" disabled>Dislike</button>
                                 <% } %>
+<<<<<<< HEAD
                     </form>
+=======
+                                    <div class="star"></div>
+                    </div>
+>>>>>>> parent of c302141... added comments; organized sass files;
                 </div>
                 <% } %>
                     <% } %>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </body>
 
 </html>
