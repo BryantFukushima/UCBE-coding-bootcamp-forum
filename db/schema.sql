@@ -29,7 +29,8 @@ CREATE TABLE comments(
     tim TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     comment TEXT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE likes(
@@ -38,15 +39,5 @@ CREATE TABLE likes(
     type VARCHAR(45) NOT NULL,
     type_id INT NOT NULL,
     liked BOOLEAN DEFAULT 0,
-    receiver_id INT NOT NULL,
     PRIMARY KEY (id)
 );
-
-
-
--- SELECT posts.id, posts.title, posts.category, posts.tim, users.user, COUNT(comments.comment) AS num_comments, COUNT(likes.liked) AS num_likes FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id LEFT JOIN likes ON posts.id = likes.type_id WHERE likes.type = "post" GROUP BY posts.id;
-
-
-
-
--- SELECT posts.id, posts.title, posts.category, posts.tim, users.user, comments.comment, likes.liked FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id LEFT JOIN likes ON posts.id = likes.type_id WHERE likes.type = "post";

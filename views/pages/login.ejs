@@ -2,13 +2,17 @@
 <html>
 
 <head>
-    <title>UCBE Forum</title>
-    <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <!-- head.ejs -->
+    <% include ../partials/head %>
 </head>
 
-
 <body>
+
+    <header>
+        <!-- header.ejs -->
+        <% include ../partials/header %>
+    </header>
+    
     <div class="login-main">
         <h1>Login To UCBE Coding Bootcamp Forum</h1>
         <form method="POST" action="/logging-in">

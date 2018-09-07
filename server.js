@@ -37,44 +37,41 @@ var connection = mysql.createConnection({
     database: "ucbe_forum_db"
 });
 
-// SELECT posts.*, COUNT(comments.post_id) AS numb_comments, users.user FROM posts LEFT JOIN comments ON posts.id = comments.post_id LEFT JOIN users ON posts.user_id = users.id GROUP BY posts.id, comments.post_id;
-
-// SELECT posts.id, posts.title, posts.category, posts.tim, likes.type, COUNT(likes.type_id) AS postlikes, users.user, COUNT(comments.post_id) FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id WHERE likes.type = "post" GROUP BY posts.id;
-
 //Root
 app.get("/", function(req, res) {
-    // sql to select and order posts based on # of likes
-    connection.query('SELECT posts.id, posts.title, posts.category, posts.tim, COUNT(likes.liked) AS num_likes, users.username FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id WHERE likes.type = "post" OR posts.id > 0 GROUP BY posts.id ORDER BY posts.tim DESC;', function(err, results1, fields) {
-        likesData = results1;
-        connection.query('SELECT COUNT(comments.comment) AS num_comments FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id GROUP BY posts.id ORDER BY posts.tim DESC', function(err, results2, fields) {
-            commentData = results2;
-            var topHits = {
-            posts: likesData,
-            comments: commentData
+    // sql to select and order posts based on top likes
+    connection.query('SELECT posts.*, SUM((liked=1)-(liked=0)) AS num_likes, users.username, total_comm FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id LEFT JOIN (SELECT posts.id, COUNT(comments.comment) AS total_comm FROM posts LEFT JOIN comments ON posts.id = comments.post_id GROUP BY posts.id) C ON posts.id = C.id WHERE likes.type = "post" OR likes.type IS NULL GROUP BY posts.id ORDER BY num_likes DESC', function(err, results, fields) {
+        var topPosts = {
+            user: req.session.user,
+            username: req.session.username,
+            posts: results,
         }
-        res.render('pages/', topHits);
-        // res.json(topHits);
-        });
+        res.render('pages/', topPosts);
+        // res.json(topPosts);
     });
-
 });
 
 //Full Post Page route
 app.get('/post/:id', function(req, res) {
     var postId = req.params.id;
-    connection.query('SELECT * FROM posts LEFT JOIN comments ON posts.id = comments.post_id WHERE posts.id = ?', postId, function(err, results, fields) {
-        // res.json(results);
-        var postInfo = {
-            user: req.session.ID,
-            post_id: postId,
-            title: results[0].title,
-            category: results[0].category,
-            post: results[0].post,
-            comments: results,
-            loginErr: req.flash()
-        }
-        res.render('pages/post', postInfo);
-        // res.json(req.session.username);
+    // selecting all from posts and its likes
+    connection.query('SELECT posts.*, users.username, SUM((liked=1)-(liked=0)) AS total_likes FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN likes ON posts.id = likes.type_id AND likes.type = "post" WHERE posts.id = ?', postId, function(err, postsResults, fields) {
+        // selecting all comments and its likes
+        connection.query('SELECT comments.*, users.username, SUM((liked=1)-(liked=0)) AS total_likes FROM comments LEFT JOIN users ON comments.user_id = users.id LEFT JOIN likes ON comments.id = likes.type_id AND likes.type = "comment" LEFT JOIN posts ON comments.post_id = posts.id WHERE posts.id = ? GROUP BY comments.id ORDER BY comments.tim DESC', postId, function(err, commResults, fields) {
+            // selecting users likes for dynamic like/dislike (work in progress)
+            connection.query('SELECT * FROM likes WHERE user_id = ?', req.session.ID, function(err, likesResults, fields) {
+                var postInfo = {
+                    user: req.session.user,
+                    username: req.session.username,
+                    posts: postsResults,
+                    comments: commResults,
+                    likes: likesResults,
+                    loginErr: req.flash()
+                };
+                res.render('pages/post', postInfo);
+                // res.json(likesResults[0]);
+            });
+        });
     });
 });
 
@@ -82,41 +79,44 @@ app.get('/post/:id', function(req, res) {
 app.post('/createcomment', function(req, res) {
     var comPId = req.body.post_id;
     var comment = req.body.comment;
+    // if logged in
     if (req.session.username) {
         var commentData = {
+            user_Id: req.session.ID,
             post_id: comPId,
             comment: comment,
-            user_id: req.session.ID
         };
-        connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
+        // if there's a comment
+        if (comment.length > 0) {
+            // inserting into comments table
+            connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
+                res.redirect('/post/' + comPId);
+            });
+        // if no comment
+        } else {
+            req.flash("commErr", "Don't forget to write your comment");
             res.redirect('/post/' + comPId);
-        });
+        }
+    // if not logged in
     } else {
         req.flash("errLogin", "Please log in.");
         res.redirect('/post/' + comPId);
     }
 });
 
-//Create Post Page route
+//Create New Post Page
 app.get('/newpost', function(req, res) {
-    var userLogin;
-    if (req.session.username) {
-        userLogin = {
-            loginErrPost: "",
-            user_id: req.session.ID
-        }
-        res.render('pages/newpost', userLogin);
-    } else {
-        userLogin = {
-            loginErrPost: "Login to create post.",
-            user_id: req.session.ID
-        }
-        res.render('pages/newpost', userLogin);
+    var userLogin = {
+        loginErrPost: "",
+        postErr: req.flash(),
+        user_id: req.session.ID,
+        user: req.session.user,
+        username: req.session.username
     }
-
+    res.render('pages/newpost', userLogin);
 });
 
-//Create Post Form
+//Create New Post Form Route
 app.post('/createpost', function(req, res) {
     var title = req.body.title;
     var category = req.body.category;
@@ -127,19 +127,26 @@ app.post('/createpost', function(req, res) {
         category: category,
         post: post
     };
-    connection.query('INSERT INTO posts SET ?', postData, function(err, response) {
-
-        if (err) {
-            req.flash("errLogin", "Please log in.");
-            res.redirect('/newpost');
-        } else {
-            connection.query('SELECT * FROM posts WHERE id = (SELECT MAX(id) FROM posts)', function(err, response) {
-
-                res.redirect('/post/' + response[0].id);
-
-            });
-        }
-    });
+    // if title and textarea has something
+    if (title.length > 0 && post.length > 0) {
+        //Insert a new post into posts table
+        connection.query('INSERT INTO posts SET ?', postData, function(err, response) {
+            // err msg if not logged in
+            if (err) {
+                req.flash("errLogin", "Please log in.");
+                res.redirect('/newpost');
+            // selecting most recent post and redirecting page
+            } else {
+                connection.query('SELECT * FROM posts WHERE id = ( SELECT MAX(id) FROM posts)', function(err, response) {
+                    res.redirect('/post/' + response[0].id);
+                });
+            }
+        });
+    // if title and textarea does not have something
+    } else {
+        req.flash("postErr", "Please enter all fields");
+        res.redirect('/newpost')
+    }
 });
 
 //Inserting likes
@@ -150,6 +157,7 @@ app.post('/likes', function(req, res) {
         type_id: req.body.type_id,
         liked: req.body.like
     };
+    //Insert a new like row in likes db table
     connection.query('INSERT INTO likes SET ?', likeData, function(err, response) {
         if (err) {
             req.flash("errLogin", "Please log in.");
@@ -160,9 +168,20 @@ app.post('/likes', function(req, res) {
     });
 });
 
+// //Search Bar (work in progress)
+// app.post('/search', function(req, rest) {
+//     var input = req.body.input;
+//     var inputSplit = input.split(' ');
+//     console.log(inputSplit);
+// });
+
 //Signup route
 app.get("/signup", function(req, res) {
-    res.render('pages/signup', { err: req.flash() });
+    var info = {
+        err: req.flash(),
+        user: req.session.ID
+    }
+    res.render('pages/signup', info);
 });
 
 //Signup field
@@ -192,7 +211,11 @@ app.post("/signing-in", function(req, res) {
 
 //Log In
 app.get("/login", function(req, res) {
-    res.render('pages/login', { err: req.flash() });
+    var info = {
+        err: req.flash(),
+        user: req.session.ID
+    }
+    res.render('pages/login', info);
 });
 
 app.post("/logging-in", function(req, res) {

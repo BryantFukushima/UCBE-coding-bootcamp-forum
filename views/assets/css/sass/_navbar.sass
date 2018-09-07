@@ -1,0 +1,52 @@
+// _navbar.sass
+
+// navbar styles
+nav
+    width: 100%
+    background: #fff
+    box-shadow: 0 .5rem 1rem #222
+
+    &:after
+        @extend %clearfix
+
+    h1
+        float: left
+        margin-left: 4rem
+        a
+            text-decoration: none
+            font-size: 2.4rem
+            color: darken($content-border-color, 40)
+
+    .stuff
+        float: right
+        margin: 1.3rem 4rem 0
+
+        div
+            margin-right: 2rem
+
+            &.search-bar
+                width: 40vw
+                float: left
+                input
+                    font-size: $info-font-size
+                    width: 100%
+
+            &.user-profile
+                float: left
+                a
+                    text-decoration: none
+                    font-size: 2rem
+                    color: $primary-color
+
+        .new-post
+            color: $primary-color
+            width: 3.5rem
+            height: 3.5rem
+            cursor: pointer
+            border: .2rem solid $primary-color
+            border-radius: .5rem
+            font-size: 3rem
+            padding: 0
+            line-height: 0
+            transform: translate(0, -15%)
+            float: left

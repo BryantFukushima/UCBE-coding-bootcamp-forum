@@ -2,35 +2,55 @@
 <html>
 
 <head>
-    <title>UCBE Forum</title>
-    <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <!-- head.ejs -->
+    <% include ../partials/head %>
 </head>
 
 <body>
     <header>
+        <!-- header.ejs -->
+        <% include ../partials/header %>
     </header>
-    <div class="login-err-msg">
-        <% if(loginErrPost) { %>
-            <%= loginErrPost %>
-        <% } %>
+    <!-- new post form -->
+    <div class="new-post-form">
+        <form method="POST" action="/createpost">
+            <div class="row">
+                <span>Topic:</span>
+                <!-- topic -->
+                <select name="category">
+                    <option value="UCBE Class">UCBE Class</option>
+                    <option value="Html&Css">HTML & CSS</option>
+                    <option value="SCSS/SASS">SCSS/SASS</option>
+                    <option value="Javascript">Javascript</option>
+                    <option value="Node.js">Node.js</option>
+                    <option value="Mysql">Mysql</option>
+                </select>
+            </div>
+            <div class="row">
+                <!-- title -->
+                <input type="text" name="title" placeholder="Title">
+            </div>
+            <div class="row">
+                <!-- post -->
+                <textarea rows="10" name="post" placeholder="Type Something..."></textarea>
+            </div>
+            <!-- if logged in shows submit button -->
+            <% if(user_id) { %>
+            <!-- login err message -->
+                <div class="login-err-msg">
+                    <%= postErr.postErr %>
+                </div>
+                <button type="submit">Submit Post</button>
+                <!-- if not logged in shows sign up/login button -->
+                <% } else { %>
+                    <div class="signup-login">
+                        <p>Like to leave a comment? Log In or Sign Up</p>
+                        <a href="/login">Log In</a>
+                        <a href="/signup">Sign Up</a>
+                    </div>
+                    <% } %>
+        </form>
     </div>
-    <form method="POST" action="/createpost">
-        <select name="category">
-            <option value="Html&Css">HTML & CSS</option>
-            <option value="Javascript">Javascript</option>
-            <option value="Node.js">Node.js</option>
-            <option value="Mysql">Mysql</option>
-        </select>
-        <input type="text" name="title" placeholder="Title">
-        <textarea rows="5" name="post" placeholder="Type Something..."></textarea>
-        <% if(user_id) { %>
-            <button type="submit">Submit</button>
-        <% } else { %>
-            <a href="/login">Sign In</a>
-            <button type="submit" disabled>Submit</button>
-        <% } %>
-    </form>
 </body>
 
 </html>

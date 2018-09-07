@@ -2,10 +2,17 @@
 <html>
 
 <head>
+    <!-- head.ejs -->
     <% include ../partials/head %>
 </head>
 
 <body>
+
+	<header>
+	    <!-- header.ejs -->
+	    <% include ../partials/header %>
+	</header>
+	
     <div class="user-page">
 		<div class="user-info_avatar">
 	        <% if(avatar == 1) { %>
@@ -35,23 +42,23 @@
         <div class="user-info_main">
 	        <h1><%= user %></h1>
 	        <h2><%= username %></h2>
-	        <!-- <h3>
-	        	merit:
-	        		
-        	</h3> -->
         </div>
     </div>
-    <div class="main-posts">
+    <div class="user-posts">
     	<h2><%= user %>'s Posts</h2>
     	<% if(posts[0].post != null) { %>
 	        <% for (var i in posts) { %>
 	            <div class="posts" onclick="location.href='/post/<%= posts[i].id %>'">
-	                <div class="posts-text">
-	                    <div class="text-rowone">
+	                <div class="posts-text-all">
+	                    <div class="post-title-user">
 	                        <p>
 	                            <%= posts[i].title %>
 	                        </p>
 	                        <p>
+	                            <a href="/userpage/<%= username %>">- <%= posts[i].username %>
+	                            </a>
+	                        </p>
+
 	                        <% if(avatar == 1) { %>
 					        	<div class="mini-avatar red">
 
@@ -65,13 +72,8 @@
 
 					    		</div>
 					        <% } %>
-					        </p>
-	                        <p>
-	                            <a href="/userpage/<%= username %>">- <%= posts[i].username %>
-	                            </a>
-	                        </p>
 	                    </div>
-	                    <div class="text-rowtwo">
+	                    <div class="post-cat-comm">
 	                        <p>
 	                            Topic:
 	                            <%= posts[i].category %> 
@@ -96,6 +98,7 @@
                     			0
                     		<% } %>
 	                    </p>
+	                    <div class="star"></div>
 	                </div>
 	            </div>
 	            <% } %>

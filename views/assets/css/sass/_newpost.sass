@@ -1,0 +1,57 @@
+//_newpost.sass 
+
+// new post form styles
+.new-post-form
+    @extend %posts-bg
+    &:after
+        @extend %clearfix
+
+    form
+        width: 100%
+        margin: auto
+
+        .login-err-msg
+            fload: left
+            display: inline-block
+            font-size: 1.6rem
+
+        .row 
+            display: block
+
+            span
+                font-size: $info-font-size
+                margin-right: 1rem
+
+            select
+                font-size: $info-font-size
+
+            input
+                width: 99.6%
+                margin: 2rem 0
+                height: 2rem
+                font-size: $info-font-size
+
+                &:focus
+                    outline: 0
+
+            textarea
+                width: 99.6%
+                font-size: $info-font-size
+
+                &:focus
+                    outline: 0
+
+        button
+            @extend %primary-button
+
+        .signup-login
+            p
+                float: left
+                font-size: $info-font-size
+            a
+                @extend %primary-button
+                text-decoration: none
+
+                &:last-child
+                    background: #fff
+                    color: $primary-color
