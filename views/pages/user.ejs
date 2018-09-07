@@ -17,15 +17,15 @@
 		<div class="user-info_avatar">
 	        <% if(avatar == 1) { %>
 	        	<div class="avatar red">
-
+	        		<img src="../assets/images/smile.png">
 	    		</div>
 	        <% } else if (avatar == 2) { %>
 		        <div class="avatar blue">
-
+		        	<img src="../assets/images/o.png">
 	    		</div>
 	        <% } else if (avatar == 3) { %>
 		        <div class="avatar green">
-
+		        	<img src="../assets/images/smirk.png">
 	    		</div>
 	        <% } %>
 	        <% if (log_user == user_id) { %>
@@ -58,18 +58,17 @@
 	                            <a href="/userpage/<%= username %>">- <%= posts[i].username %>
 	                            </a>
 	                        </p>
-
 	                        <% if(avatar == 1) { %>
 					        	<div class="mini-avatar red">
-
+					        		<img src="../assets/images/smile.png">
 					    		</div>
 					        <% } else if (avatar == 2) { %>
 						        <div class="mini-avatar blue">
-
+						        	<img src="../assets/images/o.png">
 					    		</div>
 					        <% } else if (avatar == 3) { %>
 						        <div class="mini-avatar green">
-
+						        	<img src="../assets/images/smirk.png">
 					    		</div>
 					        <% } %>
 	                    </div>

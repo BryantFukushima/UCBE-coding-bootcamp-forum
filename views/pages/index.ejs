@@ -30,8 +30,23 @@
                             <p>
                                 <%= posts[i].title %>
                             </p>
-                            <a href="/userpage/<%= posts[i].username %>">- <%= posts[i].username %>
-                            </a>
+                            <p>
+                                <a href="/userpage/<%= posts[i].username %>">- <%= posts[i].username %>
+                                </a>
+                            </p>
+                            <% if(posts[i].avatar == 1) { %>
+                                <div class="mini-avatar red">
+                                    <img src="../assets/images/smile.png">
+                                </div>
+                            <% } else if (posts[i].avatar == 2) { %>
+                                <div class="mini-avatar blue">
+                                    <img src="../assets/images/o.png">
+                                </div>
+                            <% } else if (posts[i].avatar == 3) { %>
+                                <div class="mini-avatar green">
+                                    <img src="../assets/images/smirk.png">
+                                </div>
+                            <% } %>
                         </div>
                         <div class="post-cat-comm">
                             <p>

@@ -180,6 +180,9 @@ nav .stuff .new-post {
   top: 50%;
   transform: translateY(-50%);
 }
+.mini-avatar img {
+  height: 25px;
+}
 
 .red {
   background-color: red;

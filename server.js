@@ -40,7 +40,7 @@ var connection = mysql.createConnection({
 //Root
 app.get("/", function(req, res) {
     // sql to select and order posts based on top likes
-    connection.query('SELECT posts.*, SUM((liked=1)-(liked=0)) AS num_likes, users.username, total_comm FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id LEFT JOIN (SELECT posts.id, COUNT(comments.comment) AS total_comm FROM posts LEFT JOIN comments ON posts.id = comments.post_id GROUP BY posts.id) C ON posts.id = C.id WHERE likes.type = "post" OR likes.type IS NULL GROUP BY posts.id ORDER BY num_likes DESC', function(err, results, fields) {
+    connection.query('SELECT posts.*, SUM((liked=1)-(liked=0)) AS num_likes, users.username, users.avatar, total_comm FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id LEFT JOIN (SELECT posts.id, COUNT(comments.comment) AS total_comm FROM posts LEFT JOIN comments ON posts.id = comments.post_id GROUP BY posts.id) C ON posts.id = C.id WHERE likes.type = "post" OR likes.type IS NULL GROUP BY posts.id ORDER BY num_likes DESC', function(err, results, fields) {
         var topPosts = {
             user: req.session.user,
             username: req.session.username,
