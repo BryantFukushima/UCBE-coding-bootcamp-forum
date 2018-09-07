@@ -68,8 +68,8 @@ app.get('/post/:id', function(req, res) {
                     likes: likesResults,
                     loginErr: req.flash()
                 };
-                res.render('pages/post', postInfo);
-                // res.json(likesResults[0]);
+                // res.render('pages/post', postInfo);
+                res.json(likesResults.length);
             });
         });
     });

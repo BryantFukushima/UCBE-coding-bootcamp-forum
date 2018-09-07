@@ -1,4 +1,19 @@
 //_posts.sass
+.uparrow
+    @extend %main-arrow
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%)
+.downarrow
+    @extend %main-arrow
+    clip-path: polygon(50% 100%, 0 0, 100% 0)
+
+.enabled
+    background: $primary-color
+    cursor: pointer
+
+.disabled
+    background: lighten($primary-color, 20)
+    cursor: default
+
 
 // ind-posts mixin
 @include ind-posts
@@ -28,14 +43,6 @@
             transform: translateY(-.5rem)
             margin-left: 1rem
 
-        [disabled]
-            @extend %disabled-arrow
-
-        .uparrow
-            @extend %uparrow
-            
-        .downarrow
-            @extend %downarrow
                     
 // creating comment sec styles
 .create-com-sec
@@ -115,11 +122,11 @@
                 margin-left: 1rem
             
 
-            [disabled]
-                @extend %disabled-arrow
+            // [disabled]
+            //     @extend %disabled-arrow
 
-            .uparrow
-                @extend %uparrow
+            // .uparrow
+            //     @extend %uparrow
 
-            .downarrow
-                @extend %downarrow
+            // .downarrow
+            //     @extend %downarrow
