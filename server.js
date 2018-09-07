@@ -68,8 +68,8 @@ app.get('/post/:id', function(req, res) {
                     likes: likesResults,
                     loginErr: req.flash()
                 };
-                // res.render('pages/post', postInfo);
-                res.json(likesResults.length);
+                res.render('pages/post', postInfo);
+                // res.json(likesResults);
             });
         });
     });
@@ -179,7 +179,8 @@ app.post('/likes', function(req, res) {
 app.get("/signup", function(req, res) {
     var info = {
         err: req.flash(),
-        user: req.session.ID
+        user: req.session.ID,
+        username: req.session.username
     }
     res.render('pages/signup', info);
 });
