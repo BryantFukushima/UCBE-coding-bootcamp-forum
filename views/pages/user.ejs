@@ -28,7 +28,7 @@
 		        	<img src="../assets/images/smirk.png">
 	    		</div>
 	        <% } %>
-	        <% if (log_user == user_id) { %>
+	        <% if (user == page_user) { %>
 		        <div onclick="avatarChange()">Change Avatar</div>
 		        <form method="POST" action="/newavatar">
 		        	<input type="hidden" name="username" value="<%= username %>">
@@ -40,12 +40,12 @@
 	        <% } %>
         </div>
         <div class="user-info_main">
-	        <h1><%= user %></h1>
+	        <h1><%= page_user %></h1>
 	        <h2><%= username %></h2>
         </div>
     </div>
     <div class="user-posts">
-    	<h2><%= user %>'s Posts</h2>
+    	<h2><%= page_user %>'s Posts</h2>
     	<% if(posts[0].post != null) { %>
 	        <% for (var i in posts) { %>
 	            <div class="posts" onclick="location.href='/post/<%= posts[i].id %>'">
@@ -80,7 +80,7 @@
 	                        <p>
 		                    	Comments: <%= posts[i].total_comments %>
 		                    </p>
-		                    <% if (log_user == user_id) { %>
+		                    <% if (user == page_user) { %>
 		                    	<form class="delete-post" method="POST" action="/delete-post">
 		                    		<input type="hidden" name="post_id" value="<%= posts[i].id %>">
 		                    		<input type="hidden" name="username" value="<%= posts[i].username %>">

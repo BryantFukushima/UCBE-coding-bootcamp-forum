@@ -50,10 +50,10 @@ app.get("/", function(req, res) {
         // res.json(topPosts);
     });
 });
-
 //Full Post Page route
 app.get('/post/:id', function(req, res) {
     var postId = req.params.id;
+    res.locals.commTotal = 0;
     // selecting all from posts and its likes
     connection.query('SELECT posts.*, users.username, SUM((liked=1)-(liked=0)) AS total_likes FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN likes ON posts.id = likes.type_id AND likes.type = "post" WHERE posts.id = ?', postId, function(err, postsResults, fields) {
         // selecting all comments and its likes
@@ -257,9 +257,9 @@ function login(req, res) {
 app.get('/userpage/:username', function(req, res) {
     connection.query('SELECT users.id AS main_id, users.user, users.username, users.avatar,posts.*, SUM((liked=1)-(liked=0)) AS total_posts_likes, sum_comments.total_comments AS total_comments FROM users LEFT JOIN posts ON posts.user_id = users.id LEFT JOIN likes ON likes.type="post" AND likes.type_id = posts.id LEFT JOIN (SELECT posts.*, COUNT(comments.post_id) as total_comments, users.username FROM posts LEFT JOIN comments ON comments.post_id = posts.id LEFT JOIN users ON users.id = posts.user_id WHERE users.username = ? GROUP BY posts.id) AS sum_comments ON sum_comments.id = posts.id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC',[req.params.username,req.params.username], function(err,results,fields) {
             var info = {
-                log_user: req.session.ID,
+                user: req.session.user,
                 user_id: results[0].main_id,
-                user: results[0].user,
+                page_user: results[0].user,
                 username: results[0].username,
                 avatar: results[0].avatar,
                 posts: results
