@@ -50,13 +50,26 @@
                     <input type="hidden" name="type" value="post">
                     <!-- if user is logged in -->
                     <% if(user) { %>
-                        <button class="uparrow" name="like" value="1"></button>
-                        <button class="downarrow" name="like" value="0"></button>
-                        <!-- if user is not logged in -->
-                        <% } else { %>
-                            <button class="uparrow" type="submit" disabled></button>
-                            <button class="downarrow" type="submit" disabled></button>
+                        <% if (likes.length == 0) { %>
+                            like plz
+                        <% } else {%>
+                            <% for(var i in likes) { %>
+                            <% var total = 0 %>
+                                <% if (likes[i].liked == 1 && likes[i].type == "post" && likes[i].type_id == posts[0].id) { %>
+                                    <% total++; %>
+                                <% } else if (likes[i].liked == 0 && likes[i].type == "post" && likes[i].type_id == posts[0].id) { %>
+                                    <% total-- %>
+                                <% } %>
+                                <% if (total == 1) { %> 
+                                    liked
+                                <% } %>
                             <% } %>
+                         <% } %>
+                        <!-- if user is not logged in -->
+                    <% } else { %>
+                        <button class="uparrow" name="like" value="1" disabled></button>
+                        <button class="downarrow" name="like" value="0" disabled></button>
+                    <% } %>
                 </form>
             </div>
             <!-- shows number of likes -->
