@@ -8,15 +8,23 @@
 </head>
 
 <body>
-    <h1>Sign Up</h1>
-    <form method="POST" action="/signing-in">
-        <input type="text" name="username" placeholder="Username">
-        <input type="text" name="user" placeholder="Full Name">
-        <input type="text" name="password" placeholder="Password">
-        <button>submit</button>
-    </form>
-    <div class="error-msg">
-        <%= err.errorM %>
+
+    <header>
+        <!-- header.ejs -->
+        <% include ../partials/header %>
+    </header>
+    
+    <div class="login-main">
+        <h1>Sign Up to UCBE Coding Bootcamp Forum</h1>
+        <form method="POST" action="/signing-in">
+            <input type="text" name="username" placeholder="Username">
+            <input type="text" name="user" placeholder="Full Name">
+            <input type="password" name="password" placeholder="Password">
+            <div class="error-msg">
+                <%= err.errorM %>
+            </div>
+            <button type="submit">submit</button>
+        </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </body>

@@ -29,7 +29,7 @@ CREATE TABLE comments(
     tim TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     comment TEXT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (post_id) REFERENCES posts(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 

@@ -2,21 +2,27 @@
 <html>
 
 <head>
-    <title>UCBE Forum</title>
-    <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <!-- head.ejs -->
+    <% include ../partials/head %>
 </head>
 
-
 <body>
-    <h1>Login</h1>
-    <form method="POST" action="/logging-in">
-        <input type="text" name="username" placeholder="Username">
-        <input type="text" name="password" placeholder="Password">
-        <button>submit</button>
-    </form>
-    <div class="error-msg">
-        <%= err.errorM %>
+
+    <header>
+        <!-- header.ejs -->
+        <% include ../partials/header %>
+    </header>
+    
+    <div class="login-main">
+        <h1>Login To UCBE Coding Bootcamp Forum</h1>
+        <form method="POST" action="/logging-in">
+            <input type="text" name="username" placeholder="Username"><br>
+            <input type="password" name="password" placeholder="Password"><br>
+            <div class="error-msg">
+                <%= err.errorM %>
+            </div>
+            <button type="submit">submit</button>
+        </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </body>

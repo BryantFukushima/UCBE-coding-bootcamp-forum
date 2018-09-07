@@ -15,14 +15,17 @@ $info-font-size: 1.6rem
     display: table
     clear: both
 
+%ind-posts
+    background: $content-bg-color
+    border: $content-border-color 2px solid 
+
 // posts styling
 %posts-bg
-    // height: 100px
     background: $content-bg-color
     border: $content-border-color .2rem solid
     border-radius: 1rem
     margin: 3rem
-    padding: 4rem 3rem
+    padding: 1.5rem 3rem
 
 //post and comment button
 %primary-button
@@ -41,7 +44,7 @@ $info-font-size: 1.6rem
     float: right
     width: 3rem
     height: 3rem
-    margin: .1rem 1rem 0
+    margin: 0 1rem
     clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)
     background: #ffbf00
 
@@ -72,6 +75,8 @@ $info-font-size: 1.6rem
 // main post style mixin
 @mixin ind-posts
     .posts
+        cursor: pointer
+        position: relative
         // individual posts background
         @extend %posts-bg
         &:after
@@ -88,6 +93,8 @@ $info-font-size: 1.6rem
             float: left
             // title and username
             .post-title-user
+                position: relative
+                margin-bottom: 1.5rem
                 // title styles
                 p
                     font-size: 2.4rem
@@ -110,6 +117,11 @@ $info-font-size: 1.6rem
                     
                     &:last-child
                         margin-left: 2rem
+        .posts-likes
+            position: absolute
+            top: 50%
+            right: 4rem
+            transform: translateY(-50%)
 
 html 
     font-size: 10px

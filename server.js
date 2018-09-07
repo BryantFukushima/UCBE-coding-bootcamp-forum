@@ -84,7 +84,7 @@ app.post('/createcomment', function(req, res) {
         var commentData = {
             user_Id: req.session.ID,
             post_id: comPId,
-            comment: comment
+            comment: comment,
         };
         // if there's a comment
         if (comment.length > 0) {
@@ -177,7 +177,11 @@ app.post('/likes', function(req, res) {
 
 //Signup route
 app.get("/signup", function(req, res) {
-    res.render('pages/signup', { err: req.flash() });
+    var info = {
+        err: req.flash(),
+        user: req.session.ID
+    }
+    res.render('pages/signup', info);
 });
 
 //Signup field
@@ -207,7 +211,11 @@ app.post("/signing-in", function(req, res) {
 
 //Log In
 app.get("/login", function(req, res) {
-    res.render('pages/login', { err: req.flash() });
+    var info = {
+        err: req.flash(),
+        user: req.session.ID
+    }
+    res.render('pages/login', info);
 });
 
 app.post("/logging-in", function(req, res) {
@@ -245,24 +253,41 @@ function login(req, res) {
 }
 
 //User Profile Page
-app.get('/userpage/:user', function(req, res) {
-    //sql to select users posts ordering by time posted
-    connection.query('SELECT posts.id, posts.title, posts.category, posts.tim, COUNT(likes.liked) AS num_likes, users.username FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id WHERE users.username = ? AND (likes.type = "post" OR likes.type IS NULL) GROUP BY posts.id ORDER BY posts.tim DESC;', req.params.user, function(err, results1, fields) {
-        userP = results1;
-        //sql to select and display number of comments 
-        connection.query('SELECT COUNT(comments.comment) AS num_comments FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN comments ON posts.id = comments.post_id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC', req.params.user, function(err, results2, fields) {
-            userC = results2;
-            var user_info = {
-                user: req.session.user,
-                username: req.session.username,
-                avatar: req.session.avatar,
-                id: req.session.ID,
-                userP: userP,
-                comments: userC
+app.get('/userpage/:username', function(req, res) {
+    connection.query('SELECT users.id AS main_id, users.user, users.username, users.avatar,posts.*, SUM((liked=1)-(liked=0)) AS total_posts_likes, sum_comments.total_comments AS total_comments FROM users LEFT JOIN posts ON posts.user_id = users.id LEFT JOIN likes ON likes.type="post" AND likes.type_id = posts.id LEFT JOIN (SELECT posts.*, COUNT(comments.post_id) as total_comments, users.username FROM posts LEFT JOIN comments ON comments.post_id = posts.id LEFT JOIN users ON users.id = posts.user_id WHERE users.username = ? GROUP BY posts.id) AS sum_comments ON sum_comments.id = posts.id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC',[req.params.username,req.params.username], function(err,results,fields) {
+            var info = {
+                log_user: req.session.ID,
+                user_id: results[0].main_id,
+                user: results[0].user,
+                username: results[0].username,
+                avatar: results[0].avatar,
+                posts: results
             }
-            res.render("pages/user", user_info);
-            // res.json(user_info);
-        });
+            res.render('pages/user' , info);
+    })
+});
+
+//change avatar
+app.post('/newavatar' , function(req,res) {
+    connection.query('UPDATE users SET ? WHERE ?',[ 
+        {
+            avatar: req.body.avatar
+        },
+        {
+            username: req.body.username
+        }] , function(err, results, fields) {
+        res.redirect('/userpage/' + req.body.username);
+    });
+});
+
+//delete post
+app.post('/delete-post' , function(req,res) {
+    connection.query('DELETE FROM posts WHERE ?', 
+    {
+        id: req.body.post_id        
+    }, 
+    function(err, results, fields) {
+        res.redirect('/userpage/' + req.body.username);
     });
 });
 

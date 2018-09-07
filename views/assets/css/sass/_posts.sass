@@ -13,17 +13,20 @@
 
     .star
         @extend %main-star
-        margin-top: 1rem
 
     p
         float: right
         font-size: 2rem
         transform: translate(0, 15%)
-        margin-top: 1rem
+        margin: 0
 
     .post-lik-disl
         float: right
-        margin: 1.8rem 1.2rem
+
+        form
+            position: absolute
+            transform: translateY(-.5rem)
+            margin-left: 1rem
 
         [disabled]
             @extend %disabled-arrow
@@ -69,6 +72,8 @@
 
 // comment sec styles
 .comments
+    position: relative
+
     @extend %posts-bg
     &:after
         @extend %clearfix
@@ -86,7 +91,10 @@
 
     .comments-like
         float: right
-        margin-top: 1rem
+        position: absolute
+        top: 50%
+        right: 4rem
+        transform: translateY(-50%)
 
         .star
             @extend %main-star
@@ -100,7 +108,12 @@
 
         .comm-like-disl
             float: right
-            margin: 1.8rem 1.2rem
+
+            form
+                position: absolute
+                transform: translateY(.5rem)
+                margin-left: 1rem
+            
 
             [disabled]
                 @extend %disabled-arrow
