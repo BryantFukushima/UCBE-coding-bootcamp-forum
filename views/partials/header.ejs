@@ -2,10 +2,24 @@
     <h1><a href="/">UCBE Coding Bootcamp Forum</a></h1>
     <div class="stuff">
         <div class="search-bar">
-            <div class="mag-glass"></div>
             <form method="POST" action="/search">
-            <input type="text" name="input" placeholder="Search">
-            <button type="submit" hidden></button>
+            <div>Search by category:</div>
+            <select name="topic">
+                <option value="[">All</option>
+                <option value="UCBE Class">UCBE Class</option>
+                <option value="Html&Css">HTML & CSS</option>
+                <option value="SCSS&SASS">SCSS/SASS</option>
+                <option value="Javascript">Javascript</option>
+                <option value="Node.js">Node.js</option>
+                <option value="Mysql">Mysql</option>
+            </select>
+            <div>Order By:</div>
+            <select name="order">
+                <option value="tim">Most Recent</option>
+                <option value="num_likes">Top Liked</option>
+                <option value="total_comm">Most Comments</option>
+            </select>
+            <button type="submit">GO</button>
             </form>
         </div>
         <div class="user-profile">

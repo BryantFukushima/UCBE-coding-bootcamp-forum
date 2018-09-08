@@ -25,11 +25,28 @@ nav
             margin-right: 2rem
 
             &.search-bar
-                width: 40vw
                 float: left
-                input
-                    font-size: $info-font-size
-                    width: 100%
+                form
+                    display: inline-block
+                    div
+                        font-size: $info-font-size
+                        display: inline-block
+                        margin: 0
+                    select
+                        font-size: $info-font-size
+                        width: 14rem
+                        height: 3rem
+                    button
+                        font-size: $info-font-size
+                        width: 3rem
+                        height: 3rem
+                        border-radius: .3rem
+                        padding: 0
+                        background: #f8f8f8
+                        cursor: pointer
+                        &:hover
+                            background: #777
+                            color: #fff
 
             &.user-profile
                 float: left

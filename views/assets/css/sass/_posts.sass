@@ -17,36 +17,35 @@
 
 // ind-posts mixin
 @include ind-posts
+.posts:hover
+    cursor: default
+    box-shadow: none
+    transform: none
 
-// post
-.post-post
-    p
-        font-size: $info-font-size
+#post-page
 
-.posts-likes
-    float: right
+    .posts-text-all
+        margin-bottom: 2rem
+        // post
+        .post-post
+            p
+                font-size: $info-font-size
 
-    .star
-        @extend %main-star
+    .posts-likes
+        top: 10%
 
-    p
-        float: right
-        font-size: 2rem
-        transform: translate(0, 15%)
-        margin: 0
+        .post-lik-disl
+            float: right
 
-    .post-lik-disl
-        float: right
-
-        form
-            position: absolute
-            transform: translateY(-.5rem)
-            margin-left: 1rem
+            form
+                position: absolute
+                transform: translateY(-.5rem)
+                margin-left: 1rem
 
                     
 // creating comment sec styles
 .create-com-sec
-    @extend %posts-bg
+    margin-top: 2rem
     &:after
         @extend %clearfix
 
@@ -95,6 +94,10 @@
             color: $primary-color
             font-size: $info-font-size
             text-decoration: none
+
+        .mini-avatar
+            transform: translateY(10%)
+            position: static
 
     .comments-like
         float: right
