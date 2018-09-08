@@ -1,6 +1,6 @@
-.comments:after, .create-com-sec:after, .posts:after, .new-post-form:after, .main-posts .posts:after, .user-post .posts:after, .user-page:after, nav:after {
+.comments:after, .create-com-sec:after, .posts:after, .new-post-form:after, .main-posts .posts:after, .user-post .posts:after, .user:after, nav:after {
   content: "";
-  display: table;
+  display: block;
   clear: both;
 }
 
@@ -141,47 +141,96 @@ nav .stuff .new-post {
   cursor: pointer;
 }
 
-.user-page {
-  background: #F1F1F1;
-  border: #979797 0.2rem solid;
-  border-radius: 1rem;
-  margin: 3rem;
-  padding: 1.5rem 3rem;
-  cursor: pointer;
+.user {
+  height: 25vh;
+  background: #4AB0C6;
+  padding: 3rem 0;
+  color: #F1F1F1;
+  position: relative;
+  border-bottom: 0.5rem #F1F1F1 solid;
 }
-.user-info_avatar {
-  float: left;
+.user .user-info {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .user-info_avatar form {
   display: none;
+  color: #000;
+  text-align: center;
+  position: absolute;
+  width: 20rem;
+  height: 15rem;
+  background-color: #D8D8D8;
+  border-radius: 1rem;
+  border: 0.2rem #979797 solid;
+  cursor: initial;
+}
+.user-info_avatar:hover {
+  cursor: pointer;
+}
+.user-info_avatar .avatar-form {
+  width: 100%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.user-info_avatar .avatar-form .radio {
+  display: inline-block;
+  margin: 0 1rem;
+}
+.user-info_avatar .avatar-form .radio .change-avatar {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+.user-info_avatar .avatar-form .radio .change-avatar img {
+  height: 2.5rem;
+}
+.user-info_avatar .avatar-form input {
+  cursor: pointer;
+}
+.user-info_avatar .avatar-form button {
+  display: block;
+  margin: 1rem auto;
 }
 
 .user-info_main {
-  float: left;
-  margin-left: 3rem;
-  line-height: 10px;
+  text-align: center;
+  margin-top: 3rem;
 }
 .user-info_main h1 {
   font-size: 30px;
   font-weight: 900;
 }
+.user-info_main h2 {
+  margin-bottom: 0;
+}
 
 .avatar {
-  height: 100px;
-  width: 100px;
+  height: 10rem;
+  width: 10rem;
   background-color: #FFFFFF;
+  margin: auto;
+  border-radius: 1rem;
+  border: 0.5rem #F1F1F1 solid;
+}
+.avatar div {
+  margin-top: 0.5rem;
+  text-align: center;
 }
 
 .mini-avatar {
   display: inline-block;
-  height: 25px;
-  width: 25px;
+  height: 2.5rem;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
 }
 .mini-avatar img {
-  height: 25px;
+  height: 2.5rem;
 }
 
 .red {
@@ -198,6 +247,7 @@ nav .stuff .new-post {
 
 .user-posts h2 {
   text-align: center;
+  color: #4AB0C6;
 }
 
 .delete-post {
