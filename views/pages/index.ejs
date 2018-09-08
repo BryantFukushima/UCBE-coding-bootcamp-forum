@@ -17,7 +17,13 @@
         <div class="intro-text-but">
             <h1>UCBE Forum</h1>
             <p>Building a comminty of UCBE students to talk about code.</p>
-            <a href="/signup">Sign Up Now!</a>
+            <% if(user) { %>
+                <a href="/">Sign Up Now!</a>
+
+            <% } else { %>
+                <a href="/signup">Sign Up Now!</a>
+            <% } %>
+
         </div>
     </div>
     <!-- posts section -->
