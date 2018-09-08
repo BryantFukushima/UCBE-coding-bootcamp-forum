@@ -13,39 +13,66 @@
 	    <% include ../partials/header %>
 	</header>
 	
-    <div class="user-page">
+<div class="user-page">
+	<div class="user">
+		<% if(user == page_user) { %>
+			<div class="logout">
+				<a href="/logout">Logout</a>
+			</div>
+		<% } %>
+		<div class="user-info">
 		<div class="user-info_avatar">
 	        <% if(avatar == 1) { %>
 	        	<div class="avatar red">
 	        		<img src="../assets/images/smile.png">
-	    		</div>
+	    		
 	        <% } else if (avatar == 2) { %>
 		        <div class="avatar blue">
 		        	<img src="../assets/images/o.png">
-	    		</div>
+	    		
 	        <% } else if (avatar == 3) { %>
 		        <div class="avatar green">
 		        	<img src="../assets/images/smirk.png">
-	    		</div>
+	    		
 	        <% } %>
 	        <% if (user == page_user) { %>
 		        <div onclick="avatarChange()">Change Avatar</div>
 		        <form method="POST" action="/newavatar">
-		        	<input type="hidden" name="username" value="<%= username %>">
-		        	<input type="radio" name="avatar" value="1"> 1 <br>
-		        	<input type="radio" name="avatar" value="2"> 2 <br>
-		        	<input type="radio" name="avatar" value="3"> 3 <br>
-		        	<button type="submit">submit</button>
+		        	<div class="avatar-form">
+			        	<input type="hidden" name="username" value="<%= username %>">
+			        	<label class="radio">
+				        	<input type="radio" name="avatar" value="1">
+				        	<div class="change-avatar red">
+				        		<img src="../assets/images/smile.png">
+				    		</div>
+		        		</label>
+			        	<label class="radio">
+				        	<input type="radio" name="avatar" value="2">
+				        	<div class="change-avatar blue">
+					        	<img src="../assets/images/o.png">
+				    		</div>
+						</label>
+			        	<label class="radio">
+				        	<input type="radio" name="avatar" value="3"> 
+				        	<div class="change-avatar green">
+					        	<img src="../assets/images/smirk.png">
+				    		</div>
+			    		</label>
+			    		<button type="submit">Change</button>
+		        	</div>	
 		        </form>
 	        <% } %>
+		    </div>
         </div>
         <div class="user-info_main">
 	        <h1><%= page_user %></h1>
 	        <h2><%= username %></h2>
         </div>
+        </div>
     </div>
+
     <div class="user-posts">
-    	<h2><%= page_user %>'s Posts</h2>
+    	<h2> - <%= page_user %>'s Posts - </h2>
     	<% if(posts[0].post != null) { %>
 	        <% for (var i in posts) { %>
 	            <div class="posts" onclick="location.href='/post/<%= posts[i].id %>'">
@@ -54,10 +81,8 @@
 	                        <p>
 	                            <%= posts[i].title %>
 	                        </p>
-	                        <p>
-	                            <a href="/userpage/<%= username %>">- <%= posts[i].username %>
-	                            </a>
-	                        </p>
+                            <a href="/userpage/<%= username %>">- <%= posts[i].page_username %>
+                            </a>
 	                        <% if(avatar == 1) { %>
 					        	<div class="mini-avatar red">
 					        		<img src="../assets/images/smile.png">
@@ -83,7 +108,7 @@
 		                    <% if (user == page_user) { %>
 		                    	<form class="delete-post" method="POST" action="/delete-post">
 		                    		<input type="hidden" name="post_id" value="<%= posts[i].id %>">
-		                    		<input type="hidden" name="username" value="<%= posts[i].username %>">
+		                    		<input type="hidden" name="username" value="<%= posts[i].page_username %>">
 		                    		<p onclick="javascript:this.parentNode.submit()">Delete</p>
 		                    	</form>
 		                    <% } %>
@@ -104,8 +129,8 @@
             <% } else { %>
             	<p style="text-align: center">No Posts</p>
             <% } %>
-
     </div>
+</div>    
 
 
 <script
@@ -114,10 +139,10 @@
   crossorigin="anonymous"></script>
 <script type="text/javascript">
 	function avatarChange() {
-    if ($('form').css("display") == "none") {
-        $('form').css("display" , "block");
+    if ($('.user-info_avatar > .avatar > form').css("display") == "none") {
+        $('.user-info_avatar > .avatar > form').css("display" , "block");
     } else {
-        $('form').css("display" , "none");
+        $('.user-info_avatar > .avatar > form').css("display" , "none");
     }
 }
 </script>

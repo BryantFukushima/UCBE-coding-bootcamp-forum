@@ -57,7 +57,7 @@ app.get('/post/:id', function(req, res) {
     // selecting all from posts and its likes
     connection.query('SELECT posts.*, users.username, users.avatar, SUM((liked=1)-(liked=0)) AS total_likes FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN likes ON posts.id = likes.type_id AND likes.type = "post" WHERE posts.id = ?', postId, function(err, postsResults, fields) {
         // selecting all comments and its likes
-        connection.query('SELECT comments.*, users.username, SUM((liked=1)-(liked=0)) AS total_likes FROM comments LEFT JOIN users ON comments.user_id = users.id LEFT JOIN likes ON comments.id = likes.type_id AND likes.type = "comment" LEFT JOIN posts ON comments.post_id = posts.id WHERE posts.id = ? GROUP BY comments.id ORDER BY comments.tim DESC', postId, function(err, commResults, fields) {
+        connection.query('SELECT comments.*, users.username, users.avatar, SUM((liked=1)-(liked=0)) AS total_likes FROM comments LEFT JOIN users ON comments.user_id = users.id LEFT JOIN likes ON comments.id = likes.type_id AND likes.type = "comment" LEFT JOIN posts ON comments.post_id = posts.id WHERE posts.id = ? GROUP BY comments.id ORDER BY comments.tim DESC', postId, function(err, commResults, fields) {
             // selecting users likes for dynamic like/dislike (work in progress)
             connection.query('SELECT * FROM likes WHERE user_id = ?', req.session.ID, function(err, likesResults, fields) {
                 var postInfo = {
@@ -267,16 +267,17 @@ function login(req, res) {
 
 //User Profile Page
 app.get('/userpage/:username', function(req, res) {
-    connection.query('SELECT users.id AS main_id, users.user, users.username, users.avatar,posts.*, SUM((liked=1)-(liked=0)) AS total_posts_likes, sum_comments.total_comments AS total_comments FROM users LEFT JOIN posts ON posts.user_id = users.id LEFT JOIN likes ON likes.type="post" AND likes.type_id = posts.id LEFT JOIN (SELECT posts.*, COUNT(comments.post_id) as total_comments, users.username FROM posts LEFT JOIN comments ON comments.post_id = posts.id LEFT JOIN users ON users.id = posts.user_id WHERE users.username = ? GROUP BY posts.id) AS sum_comments ON sum_comments.id = posts.id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC', [req.params.username, req.params.username], function(err, results, fields) {
-        var info = {
-            user: req.session.user,
-            user_id: results[0].main_id,
-            page_user: results[0].user,
-            username: results[0].username,
-            avatar: results[0].avatar,
-            posts: results
-        }
-        res.render('pages/user', info);
+    connection.query('SELECT users.id AS main_id, users.user, users.username, users.avatar,posts.*, SUM((liked=1)-(liked=0)) AS total_posts_likes, sum_comments.total_comments AS total_comments FROM users LEFT JOIN posts ON posts.user_id = users.id LEFT JOIN likes ON likes.type="post" AND likes.type_id = posts.id LEFT JOIN (SELECT posts.*, COUNT(comments.post_id) as total_comments, users.username FROM posts LEFT JOIN comments ON comments.post_id = posts.id LEFT JOIN users ON users.id = posts.user_id WHERE users.username = ? GROUP BY posts.id) AS sum_comments ON sum_comments.id = posts.id WHERE users.username = ? GROUP BY posts.id ORDER BY posts.tim DESC',[req.params.username,req.params.username], function(err,results,fields) {
+            var info = {
+                user: req.session.user,
+                username: req.session.username,
+                user_id: results[0].main_id,
+                page_user: results[0].user,
+                page_username: results[0].username,
+                avatar: results[0].avatar,
+                posts: results
+            }
+            res.render('pages/user' , info);
     })
 });
 
@@ -306,7 +307,7 @@ app.post('/delete-post', function(req, res) {
 //Session Logout
 app.get('/logout', function(req, res) {
     req.session.destroy(function(err) {
-        res.redirect('/login');
+        res.redirect('/');
     })
 });
 
