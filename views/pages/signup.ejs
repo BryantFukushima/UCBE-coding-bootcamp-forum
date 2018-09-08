@@ -2,18 +2,12 @@
 <html>
 
 <head>
-    <title>UCBE Forum</title>
-    <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <!-- head.ejs -->
+    <% include ../partials/head %>
 </head>
 
 <body>
-
-    <header>
-        <!-- header.ejs -->
-        <% include ../partials/header %>
-    </header>
-    
+<div class="sign-in">
     <div class="login-main">
         <h1>Sign Up to UCBE Coding Bootcamp Forum</h1>
         <form method="POST" action="/signing-in">
@@ -26,6 +20,7 @@
             <button type="submit">submit</button>
         </form>
     </div>
+</div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </body>
 

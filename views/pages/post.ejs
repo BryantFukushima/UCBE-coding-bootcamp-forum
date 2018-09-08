@@ -25,6 +25,19 @@
                 </p>
                 <a href="/userpage/<%= posts[0].username %>">- <%= posts[0].username %>
                 </a>
+                <% if(posts[0].avatar == 1) { %>
+		        	<div class="mini-avatar red">
+		        		<img src="../assets/images/smile.png">
+		    		</div>
+		        <% } else if (posts[0].avatar == 2) { %>
+			        <div class="mini-avatar blue">
+			        	<img src="../assets/images/o.png">
+		    		</div>
+		        <% } else if (posts[0].avatar == 3) { %>
+			        <div class="mini-avatar green">
+			        	<img src="../assets/images/smirk.png">
+		    		</div>
+		        <% } %>
             </div>
             <div class="post-cat-comm">
                 <p>
@@ -125,7 +138,7 @@
                         </p>
                         <a href="/userpage/<%= comments[i].username %>">
                         - <%= comments[i].username %>
-                    </a>
+	                    </a>
                     </div>
                     <div class="comments-like">
                         <div class="comm-like-disl">

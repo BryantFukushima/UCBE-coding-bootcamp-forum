@@ -55,9 +55,9 @@ app.get('/post/:id', function(req, res) {
     var postId = req.params.id;
     res.locals.commTotal = 0;
     // selecting all from posts and its likes
-    connection.query('SELECT posts.*, users.username, SUM((liked=1)-(liked=0)) AS total_likes FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN likes ON posts.id = likes.type_id AND likes.type = "post" WHERE posts.id = ?', postId, function(err, postsResults, fields) {
+    connection.query('SELECT posts.*, users.username, users.avatar, SUM((liked=1)-(liked=0)) AS total_likes FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN likes ON posts.id = likes.type_id AND likes.type = "post" WHERE posts.id = ?', postId, function(err, postsResults, fields) {
         // selecting all comments and its likes
-        connection.query('SELECT comments.*, users.username, SUM((liked=1)-(liked=0)) AS total_likes FROM comments LEFT JOIN users ON comments.user_id = users.id LEFT JOIN likes ON comments.id = likes.type_id AND likes.type = "comment" LEFT JOIN posts ON comments.post_id = posts.id WHERE posts.id = ? GROUP BY comments.id ORDER BY comments.tim DESC', postId, function(err, commResults, fields) {
+        connection.query('SELECT comments.*, users.username, users.avatar, SUM((liked=1)-(liked=0)) AS total_likes FROM comments LEFT JOIN users ON comments.user_id = users.id LEFT JOIN likes ON comments.id = likes.type_id AND likes.type = "comment" LEFT JOIN posts ON comments.post_id = posts.id WHERE posts.id = ? GROUP BY comments.id ORDER BY comments.tim DESC', postId, function(err, commResults, fields) {
             // selecting users likes for dynamic like/dislike (work in progress)
             connection.query('SELECT * FROM likes WHERE user_id = ?', req.session.ID, function(err, likesResults, fields) {
                 var postInfo = {

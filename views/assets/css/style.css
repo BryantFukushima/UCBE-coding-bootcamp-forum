@@ -110,26 +110,35 @@ nav .stuff .new-post {
   color: blue;
 }
 
-.login-main {
-  background: #F1F1F1;
+.sign-in {
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/login-signup.jpg") center/cover no-repeat;
+  position: relative;
+}
+.sign-in .login-main {
+  background: rgba(241, 241, 241, 0.95);
   border: #979797 0.2rem solid;
   border-radius: 1rem;
-  margin: 25%;
   padding: 5rem;
+  width: 35%;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.login-main h1 {
+.sign-in .login-main h1 {
   margin-bottom: 2.5rem;
   text-align: center;
 }
-.login-main form {
+.sign-in .login-main form {
   text-align: center;
 }
-.login-main form input {
+.sign-in .login-main form input {
   margin: 5px;
   height: 20px;
   width: 75%;
 }
-.login-main form button {
+.sign-in .login-main form button {
   background-color: #4AB0C6;
   border: #4AB0C6 0.2rem solid;
   border-radius: 7rem;
@@ -137,13 +146,13 @@ nav .stuff .new-post {
   padding: 5px 20px;
   color: #fff;
 }
-.login-main form button:hover {
+.sign-in .login-main form button:hover {
   cursor: pointer;
 }
 
 .user {
   height: 25vh;
-  background: #4AB0C6;
+  background: linear-gradient(rgba(74, 176, 198, 0.95), rgba(74, 176, 198, 0.95)), url("../images/user-bg.jpg") center/cover no-repeat;
   padding: 3rem 0;
   color: #F1F1F1;
   position: relative;
@@ -228,6 +237,9 @@ nav .stuff .new-post {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  border-radius: 0.5rem;
+  border: 0.2rem #F1F1F1 solid;
+  cursor: initial;
 }
 .mini-avatar img {
   height: 2.5rem;
@@ -282,6 +294,7 @@ nav .stuff .new-post {
   text-decoration: none;
   color: #4AB0C6;
   font-size: 1.6rem;
+  margin-right: 1rem;
 }
 .user-post .posts .posts-text-all .post-title-user a:hover {
   color: #297281;
@@ -357,6 +370,7 @@ nav .stuff .new-post {
   text-decoration: none;
   color: #4AB0C6;
   font-size: 1.6rem;
+  margin-right: 1rem;
 }
 .main-posts .posts .posts-text-all .post-title-user a:hover {
   color: #297281;
@@ -468,6 +482,7 @@ nav .stuff .new-post {
   text-decoration: none;
   color: #4AB0C6;
   font-size: 1.6rem;
+  margin-right: 1rem;
 }
 .posts .posts-text-all .post-title-user a:hover {
   color: #297281;

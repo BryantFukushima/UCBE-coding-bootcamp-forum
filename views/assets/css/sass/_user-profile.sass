@@ -4,7 +4,7 @@
 
 .user
      height: 25vh
-     background: $primary-color
+     background: linear-gradient(rgba($primary-color, .95) , rgba($primary-color, .95)) , url('../images/user-bg.jpg') center/cover no-repeat
      padding: 3rem 0
      color: $content-bg-color
      position: relative
@@ -92,6 +92,9 @@
      position: absolute
      top: 50%
      transform: translateY(-50%)
+     border-radius: .5rem
+     border: .2rem $content-bg-color solid
+     cursor: initial
 
      img
         height:2.5rem
