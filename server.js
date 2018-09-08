@@ -69,7 +69,7 @@ app.get('/post/:id', function(req, res) {
                     loginErr: req.flash()
                 };
                 res.render('pages/post', postInfo);
-                // res.json(likesResults);
+                // res.json(postInfo);
             });
         });
     });
@@ -92,12 +92,12 @@ app.post('/createcomment', function(req, res) {
             connection.query('INSERT INTO comments SET ?', commentData, function(err, response) {
                 res.redirect('/post/' + comPId);
             });
-        // if no comment
+            // if no comment
         } else {
             req.flash("commErr", "Don't forget to write your comment");
             res.redirect('/post/' + comPId);
         }
-    // if not logged in
+        // if not logged in
     } else {
         req.flash("errLogin", "Please log in.");
         res.redirect('/post/' + comPId);
@@ -135,14 +135,14 @@ app.post('/createpost', function(req, res) {
             if (err) {
                 req.flash("errLogin", "Please log in.");
                 res.redirect('/newpost');
-            // selecting most recent post and redirecting page
+                // selecting most recent post and redirecting page
             } else {
                 connection.query('SELECT * FROM posts WHERE id = ( SELECT MAX(id) FROM posts)', function(err, response) {
                     res.redirect('/post/' + response[0].id);
                 });
             }
         });
-    // if title and textarea does not have something
+        // if title and textarea does not have something
     } else {
         req.flash("postErr", "Please enter all fields");
         res.redirect('/newpost')
@@ -168,12 +168,24 @@ app.post('/likes', function(req, res) {
     });
 });
 
-// //Search Bar (work in progress)
-// app.post('/search', function(req, rest) {
-//     var input = req.body.input;
-//     var inputSplit = input.split(' ');
-//     console.log(inputSplit);
-// });
+// search route
+app.get('/search/:topic/:order', function(req,res) {
+    connection.query('SELECT posts.*, SUM((liked=1)-(liked=0)) AS num_likes, users.username, users.avatar, total_comm FROM posts LEFT JOIN likes ON posts.id = likes.type_id LEFT JOIN users ON posts.user_id = users.id LEFT JOIN (SELECT posts.id, COUNT(comments.comment) AS total_comm FROM posts LEFT JOIN comments ON posts.id = comments.post_id GROUP BY posts.id) C ON posts.id = C.id WHERE (likes.type = "post" OR likes.type IS NULL) AND posts.category LIKE ? GROUP BY posts.id ORDER BY ' + req.params.order + ' DESC', '%' + req.params.topic + '%', function(err, results, fields) {
+        var filterPosts = {
+            user: req.session.user,
+            username: req.session.username,
+            posts: results,
+        }
+        res.render('pages/filter', filterPosts);
+        // res.json(order);
+    });
+});
+
+//Search form
+app.post('/search', function(req, res) {
+    res.redirect('/search/' + req.body.topic + '/' + req.body.order)
+    // console.log(req.body.order)
+});
 
 //Signup route
 app.get("/signup", function(req, res) {
@@ -270,27 +282,26 @@ app.get('/userpage/:username', function(req, res) {
 });
 
 //change avatar
-app.post('/newavatar' , function(req,res) {
-    connection.query('UPDATE users SET ? WHERE ?',[ 
-        {
+app.post('/newavatar', function(req, res) {
+    connection.query('UPDATE users SET ? WHERE ?', [{
             avatar: req.body.avatar
         },
         {
             username: req.body.username
-        }] , function(err, results, fields) {
+        }
+    ], function(err, results, fields) {
         res.redirect('/userpage/' + req.body.username);
     });
 });
 
 //delete post
-app.post('/delete-post' , function(req,res) {
-    connection.query('DELETE FROM posts WHERE ?', 
-    {
-        id: req.body.post_id        
-    }, 
-    function(err, results, fields) {
-        res.redirect('/userpage/' + req.body.username);
-    });
+app.post('/delete-post', function(req, res) {
+    connection.query('DELETE FROM posts WHERE ?', {
+            id: req.body.post_id
+        },
+        function(err, results, fields) {
+            res.redirect('/userpage/' + req.body.username);
+        });
 });
 
 //Session Logout

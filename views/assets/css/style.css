@@ -1,12 +1,16 @@
+<<<<<<< HEAD
 .comments:after, .create-com-sec:after, .posts:after, .new-post-form:after, .main-posts .posts:after, .user-post .posts:after, .user:after, nav:after {
+=======
+.comments:after, .create-com-sec:after, .posts:after, .new-post-form:after, .main-posts .posts:after, .intro:after, .user-post .posts:after, .user-page:after, nav:after {
+>>>>>>> master
   content: "";
   display: block;
   clear: both;
 }
 
-.comments, .create-com-sec, .posts, .new-post-form, .main-posts .posts, .user-post .posts {
-  background: #F1F1F1;
-  border: #979797 0.2rem solid;
+.comments, .posts, .new-post-form, .main-posts .posts, .user-post .posts {
+  background: #E0E0E0;
+  border: #525252 0.2rem solid;
   border-radius: 1rem;
   margin: 3rem;
   padding: 1.5rem 3rem;
@@ -15,7 +19,7 @@
 .create-com-sec form .signup-login a, .create-com-sec form button, .new-post-form form .signup-login a, .new-post-form form button {
   float: right;
   background: #4AB0C6;
-  border: 1px solid #979797;
+  border: 1px solid #525252;
   border-radius: 1rem;
   color: #fff;
   font-size: 2rem;
@@ -24,7 +28,7 @@
   margin: 2rem 0 2rem 2rem;
 }
 
-.comments .comments-like .star, .posts-likes .star {
+.comments .comments-like .star, .posts .posts-likes .star, .main-posts .posts .posts-likes .star, .user-post .posts .posts-likes .star {
   float: right;
   width: 3rem;
   height: 3rem;
@@ -42,11 +46,16 @@
 
 html {
   font-size: 10px;
-  font-family: "Roboto", sans-serif;
+  font-family: "Source Code Pro", sans-serif;
 }
 
 body {
-  background: #D8D8D8;
+  background: #858585;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.5rem;
 }
 
 body, html {
@@ -68,7 +77,7 @@ nav h1 {
 nav h1 a {
   text-decoration: none;
   font-size: 2.4rem;
-  color: #313131;
+  color: black;
 }
 nav .stuff {
   float: right;
@@ -78,12 +87,33 @@ nav .stuff div {
   margin-right: 2rem;
 }
 nav .stuff div.search-bar {
-  width: 40vw;
   float: left;
 }
-nav .stuff div.search-bar input {
+nav .stuff div.search-bar form {
+  display: inline-block;
+}
+nav .stuff div.search-bar form div {
   font-size: 1.6rem;
-  width: 100%;
+  display: inline-block;
+  margin: 0;
+}
+nav .stuff div.search-bar form select {
+  font-size: 1.6rem;
+  width: 14rem;
+  height: 3rem;
+}
+nav .stuff div.search-bar form button {
+  font-size: 1.6rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.3rem;
+  padding: 0;
+  background: #f8f8f8;
+  cursor: pointer;
+}
+nav .stuff div.search-bar form button:hover {
+  background: #777;
+  color: #fff;
 }
 nav .stuff div.user-profile {
   float: left;
@@ -111,6 +141,7 @@ nav .stuff .new-post {
   color: blue;
 }
 
+<<<<<<< HEAD
 .sign-in {
   height: calc(100vh - 5rem);
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/login-signup.jpg") center/cover no-repeat;
@@ -119,6 +150,11 @@ nav .stuff .new-post {
 .sign-in .login-main {
   background: rgba(241, 241, 241, 0.95);
   border: #979797 0.2rem solid;
+=======
+.login-main {
+  background: #E0E0E0;
+  border: #525252 0.2rem solid;
+>>>>>>> master
   border-radius: 1rem;
   padding: 5rem;
   width: 35%;
@@ -151,6 +187,7 @@ nav .stuff .new-post {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .user {
   height: 25vh;
   background: linear-gradient(rgba(74, 176, 198, 0.95), rgba(74, 176, 198, 0.95)), url("../images/user-bg.jpg") center/cover no-repeat;
@@ -158,6 +195,15 @@ nav .stuff .new-post {
   color: #F1F1F1;
   position: relative;
   border-bottom: 0.5rem #F1F1F1 solid;
+=======
+.user-page {
+  background: #E0E0E0;
+  border: #525252 0.2rem solid;
+  border-radius: 1rem;
+  margin: 3rem;
+  padding: 1.5rem 3rem;
+  cursor: pointer;
+>>>>>>> master
 }
 .user .user-info {
   width: 100%;
@@ -268,18 +314,29 @@ nav .stuff .new-post {
   background-color: green;
 }
 
+<<<<<<< HEAD
 .user-posts h2 {
   text-align: center;
   color: #4AB0C6;
 }
 
+=======
+>>>>>>> master
 .delete-post {
   display: inline;
 }
 
 .user-post .posts {
-  cursor: pointer;
   position: relative;
+}
+.user-post .posts:hover {
+  transform: translateY(-3%);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+.user-post .posts:active {
+  transform: translateY(-2%);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8);
 }
 .user-post .posts [class^=post] {
   display: block;
@@ -288,7 +345,7 @@ nav .stuff .new-post {
   display: inline-block;
 }
 .user-post .posts .posts-text-all {
-  width: 100%;
+  width: 90%;
   float: left;
 }
 .user-post .posts .posts-text-all .post-title-user {
@@ -320,39 +377,84 @@ nav .stuff .new-post {
   right: 4rem;
   transform: translateY(-50%);
 }
+.user-post .posts .posts-likes p {
+  float: right;
+  font-size: 2rem;
+  margin: 0;
+}
 
-.intro-main {
-  height: 500px;
-  background: #000;
+.intro {
+  background: #262626;
   width: 100%;
-  position: relative;
+  padding: 3rem;
 }
-.intro-main .intro-text-but {
-  display: inline-block;
-  position: absolute;
-  top: 20%;
-  left: 10%;
-}
-.intro-main .intro-text-but h1 {
-  font-size: 6rem;
-  color: #F1F1F1;
-}
-.intro-main .intro-text-but p {
-  font-size: 2rem;
-  color: #F1F1F1;
-}
-.intro-main .intro-text-but a {
-  background: #4AB0C6;
-  border-radius: 0.5rem;
+.intro #intro-numbers {
   color: #fff;
-  font-size: 2rem;
-  padding: 1rem;
+  float: left;
+  font-size: 2.5rem;
+  margin: 0 2rem;
+}
+.intro #intro-numbers div:nth-child(13) {
+  margin: 1rem 0 0.8rem;
+}
+.intro #intro-numbers .right {
+  transform: translateX(50%);
+}
+.intro #intro-numbers .right:nth-child(7) {
+  margin: 1.3rem 0 0.5rem;
+}
+.intro .intro-main {
+  font-size: 2.5rem;
+  color: #E0E0E0;
+}
+.intro .intro-main .tag {
+  color: #e12977;
+}
+.intro .intro-main .intro-main-indent {
+  text-indent: 5rem;
+  margin-left: 7rem;
+  border-left: 0.1rem solid #777;
+}
+.intro .intro-main .intro-main-indent:nth-of-type(3) {
+  margin-left: 5rem;
+}
+.intro .intro-main h1 {
+  font-size: 4rem;
+  color: #E0E0E0;
+  margin: 0;
+}
+.intro .intro-main #intro-main-text {
+  margin: 3.3rem 0 3.3rem 5rem;
+  width: 90%;
+  text-indent: 0;
+}
+.intro .intro-main button {
+  background: transparent;
+  color: #fff;
+  font-size: 2.5rem;
+  padding: 0.5rem 1rem;
   text-decoration: none;
+  font-family: "Source Code Pro", sans-serif;
+  border: 0.2rem solid #fff;
+  transition: all 0.3s;
+  border-radius: 0.5rem;
+}
+.intro .intro-main button:hover {
+  background: #4AB0C6;
+  cursor: pointer;
 }
 
 .main-posts .posts {
-  cursor: pointer;
   position: relative;
+}
+.main-posts .posts:hover {
+  transform: translateY(-3%);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+.main-posts .posts:active {
+  transform: translateY(-2%);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8);
 }
 .main-posts .posts [class^=post] {
   display: block;
@@ -361,7 +463,7 @@ nav .stuff .new-post {
   display: inline-block;
 }
 .main-posts .posts .posts-text-all {
-  width: 100%;
+  width: 90%;
   float: left;
 }
 .main-posts .posts .posts-text-all .post-title-user {
@@ -392,6 +494,11 @@ nav .stuff .new-post {
   top: 50%;
   right: 4rem;
   transform: translateY(-50%);
+}
+.main-posts .posts .posts-likes p {
+  float: right;
+  font-size: 2rem;
+  margin: 0;
 }
 
 .new-post-form form {
@@ -460,8 +567,16 @@ nav .stuff .new-post {
 }
 
 .posts {
-  cursor: pointer;
   position: relative;
+}
+.posts:hover {
+  transform: translateY(-3%);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+.posts:active {
+  transform: translateY(-2%);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8);
 }
 .posts [class^=post] {
   display: block;
@@ -470,7 +585,7 @@ nav .stuff .new-post {
   display: inline-block;
 }
 .posts .posts-text-all {
-  width: 100%;
+  width: 90%;
   float: left;
 }
 .posts .posts-text-all .post-title-user {
@@ -502,29 +617,39 @@ nav .stuff .new-post {
   right: 4rem;
   transform: translateY(-50%);
 }
-
-.post-post p {
-  font-size: 1.6rem;
-}
-
-.posts-likes {
-  float: right;
-}
-.posts-likes p {
+.posts .posts-likes p {
   float: right;
   font-size: 2rem;
-  transform: translate(0, 15%);
   margin: 0;
 }
-.posts-likes .post-lik-disl {
+
+.posts:hover {
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+}
+
+#post-page .posts-text-all {
+  margin-bottom: 2rem;
+}
+#post-page .posts-text-all .post-post p {
+  font-size: 1.6rem;
+}
+#post-page .posts-likes {
+  top: 10%;
+}
+#post-page .posts-likes .post-lik-disl {
   float: right;
 }
-.posts-likes .post-lik-disl form {
+#post-page .posts-likes .post-lik-disl form {
   position: absolute;
   transform: translateY(-0.5rem);
   margin-left: 1rem;
 }
 
+.create-com-sec {
+  margin-top: 2rem;
+}
 .create-com-sec form {
   width: 100%;
 }
@@ -563,6 +688,10 @@ nav .stuff .new-post {
   font-size: 1.6rem;
   text-decoration: none;
 }
+.comments .comments-text .mini-avatar {
+  transform: translateY(10%);
+  position: static;
+}
 .comments .comments-like {
   float: right;
   position: absolute;
@@ -586,6 +715,66 @@ nav .stuff .new-post {
   position: absolute;
   transform: translateY(0.5rem);
   margin-left: 1rem;
+}
+
+.main-posts .posts {
+  position: relative;
+}
+.main-posts .posts:hover {
+  transform: translateY(-3%);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+.main-posts .posts:active {
+  transform: translateY(-2%);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8);
+}
+.main-posts .posts [class^=post] {
+  display: block;
+}
+.main-posts .posts p {
+  display: inline-block;
+}
+.main-posts .posts .posts-text-all {
+  width: 90%;
+  float: left;
+}
+.main-posts .posts .posts-text-all .post-title-user {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.main-posts .posts .posts-text-all .post-title-user p {
+  font-size: 2.4rem;
+  text-decoration: underline;
+  margin: 0;
+  margin-right: 1rem;
+}
+.main-posts .posts .posts-text-all .post-title-user a {
+  text-decoration: none;
+  color: #4AB0C6;
+  font-size: 1.6rem;
+  margin-right: 1rem;
+}
+.main-posts .posts .posts-text-all .post-title-user a:hover {
+  color: #297281;
+}
+.main-posts .posts .posts-text-all .post-cat-comm p {
+  margin: 0;
+  font-size: 1.6rem;
+}
+.main-posts .posts .posts-text-all .post-cat-comm p:last-child {
+  margin-left: 2rem;
+}
+.main-posts .posts .posts-likes {
+  position: absolute;
+  top: 50%;
+  right: 4rem;
+  transform: translateY(-50%);
+}
+.main-posts .posts .posts-likes p {
+  float: right;
+  font-size: 2rem;
+  margin: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
