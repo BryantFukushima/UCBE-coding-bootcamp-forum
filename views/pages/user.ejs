@@ -15,9 +15,11 @@
 	
 <div class="user-page">
 	<div class="user">
-		<div class="logout">
-			<a href="/logout">Logout</a>
-		</div>
+		<% if(user == page_user) { %>
+			<div class="logout">
+				<a href="/logout">Logout</a>
+			</div>
+		<% } %>
 		<div class="user-info">
 		<div class="user-info_avatar">
 	        <% if(avatar == 1) { %>
@@ -79,7 +81,7 @@
 	                        <p>
 	                            <%= posts[i].title %>
 	                        </p>
-                            <a href="/userpage/<%= username %>">- <%= posts[i].username %>
+                            <a href="/userpage/<%= username %>">- <%= posts[i].page_username %>
                             </a>
 	                        <% if(avatar == 1) { %>
 					        	<div class="mini-avatar red">
@@ -106,7 +108,7 @@
 		                    <% if (user == page_user) { %>
 		                    	<form class="delete-post" method="POST" action="/delete-post">
 		                    		<input type="hidden" name="post_id" value="<%= posts[i].id %>">
-		                    		<input type="hidden" name="username" value="<%= posts[i].username %>">
+		                    		<input type="hidden" name="username" value="<%= posts[i].page_username %>">
 		                    		<p onclick="javascript:this.parentNode.submit()">Delete</p>
 		                    	</form>
 		                    <% } %>
