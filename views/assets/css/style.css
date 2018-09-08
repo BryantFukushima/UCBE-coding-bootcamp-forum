@@ -301,18 +301,21 @@ nav .stuff .new-post {
 .delete-post {
   display: inline;
 }
+.delete-post button {
+  margin-top: 1rem;
+}
 
 .user-post .posts {
   position: relative;
 }
 .user-post .posts:hover {
-  transform: translateY(-3%);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6);
-  cursor: pointer;
+  transform: translateY(-3%) !important;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6) !important;
+  cursor: pointer !important;
 }
 .user-post .posts:active {
-  transform: translateY(-2%);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8);
+  transform: translateY(-2%) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8) !important;
 }
 .user-post .posts [class^=post] {
   display: block;
@@ -427,13 +430,13 @@ nav .stuff .new-post {
   position: relative;
 }
 .main-posts .posts:hover {
-  transform: translateY(-3%);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6);
-  cursor: pointer;
+  transform: translateY(-3%) !important;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6) !important;
+  cursor: pointer !important;
 }
 .main-posts .posts:active {
-  transform: translateY(-2%);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8);
+  transform: translateY(-2%) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8) !important;
 }
 .main-posts .posts [class^=post] {
   display: block;
@@ -552,13 +555,13 @@ nav .stuff .new-post {
   position: relative;
 }
 .posts:hover {
-  transform: translateY(-3%);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6);
-  cursor: pointer;
+  transform: translateY(-3%) !important;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6) !important;
+  cursor: pointer !important;
 }
 .posts:active {
-  transform: translateY(-2%);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8);
+  transform: translateY(-2%) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8) !important;
 }
 .posts [class^=post] {
   display: block;
@@ -706,13 +709,13 @@ nav .stuff .new-post {
   position: relative;
 }
 .main-posts .posts:hover {
-  transform: translateY(-3%);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6);
-  cursor: pointer;
+  transform: translateY(-3%) !important;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.6) !important;
+  cursor: pointer !important;
 }
 .main-posts .posts:active {
-  transform: translateY(-2%);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8);
+  transform: translateY(-2%) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.8) !important;
 }
 .main-posts .posts [class^=post] {
   display: block;
